@@ -1,0 +1,25 @@
+{
+  "name": "iro",
+  "version": "1.0.0",
+  "description": "color inspect for HEX, RGB, and CMYK",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "build": "parcel build src/index.html",
+    "build:gh": "parcel build src/index.html --no-source-map",
+    "deploy:gh": "git subtree push --prefix dist origin gh-pages"
+  },
+  "author": "Ryan Aunur Rassyid",
+  "license": "MIT",
+  "dependencies": {
+    "color-convert": "^2.0.1",
+    "gradstop": "^2.2.3",
+    "preact": "^10.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.23.7"
+  }
+}
