@@ -5,12 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel src/index.html --open",
-    "build": "parcel build src/index.html",
-    "build:gh": "parcel build src/index.html --no-source-map",
-    "deploy:gh": "git subtree push --prefix dist origin gh-pages"
+    "build": "parcel build src/index.html --out-dir dist",
+    "build:gh": "parcel build src/index.html --no-source-maps --out-dir public",
+    "deploy:gh": "git subtree push --prefix public origin gh-pages"
   },
-  "author": "Ryan Aunur Rassyid",
+  "author": "Ryan Aunur Rassyid <ryandevstudio@gmail.com>",
+  "contributors": [
+    "Muhammad Zainul Mutaqqin"
+  ],
   "license": "MIT",
+  "repository": "github:nyancodeid/iro",
   "dependencies": {
     "color-convert": "^2.0.1",
     "gradstop": "^2.2.3",
@@ -20,6 +24,26 @@
     "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-pwa-manifest": "^2.8.2",
+    "parcel-plugin-sw-precache": "^1.1.1",
     "sass": "^1.23.7"
+  },
+  "pwaManifest": {
+    "name": "IRO - Amazing Color Tools",
+    "shortName": "IRO",
+    "startURL": "/",
+    "theme": "#212121",
+    "generateIconOptions": {
+      "baseIcon": "./icon.svg",
+      "sizes": [
+        192,
+        384,
+        512
+      ],
+      "genFavicons": true
+    }
+  },
+  "sw-precache": {
+    "maximumFileSizeToCacheInBytes": 10485760
   }
 }

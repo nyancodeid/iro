@@ -77,7 +77,7 @@ class App extends Component {
       <header>
         <div>
           <h1>IRO</h1>
-          <span>Amazing colors tool</span>
+          <span>Amazing color tools</span>
         </div>
         <img src={(contrastResult === "white") ? IconWhite : IconBlack} alt=""/>
       </header>
@@ -97,3 +97,11 @@ class App extends Component {
 }
 
 render(<App />, document.getElementById('root'))
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+    console.log('ServiceWorker registration successful!');
+  }).catch(function(err) {
+    console.log('ServiceWorker registration failed: ', err);
+  });
+}

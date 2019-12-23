@@ -2905,7 +2905,7 @@ function (_Component) {
       var contrastResult = contrast >= 128 ? 'black' : 'white';
       return (0, _preact.h)("div", {
         id: "content"
-      }, (0, _preact.h)("header", null, (0, _preact.h)("div", null, (0, _preact.h)("h1", null, "IRO"), (0, _preact.h)("span", null, "Amazing colors tool")), (0, _preact.h)("img", {
+      }, (0, _preact.h)("header", null, (0, _preact.h)("div", null, (0, _preact.h)("h1", null, "IRO"), (0, _preact.h)("span", null, "Amazing color tools")), (0, _preact.h)("img", {
         src: contrastResult === "white" ? _iconWhite.default : _iconBlack.default,
         alt: ""
       })), (0, _preact.h)("div", {
@@ -2938,7 +2938,15 @@ function (_Component) {
 }(_preact.Component);
 
 (0, _preact.render)((0, _preact.h)(App, null), document.getElementById('root'));
-},{"preact":"../node_modules/preact/dist/preact.module.js","./style.scss":"style.scss","./assets/icon-white.svg":"assets/icon-white.svg","./assets/icon-black.svg":"assets/icon-black.svg","./components/Colors/Convert":"components/Colors/Convert.jsx","./components/Colors/Input":"components/Colors/Input.jsx","./components/Colors/GrandStop":"components/Colors/GrandStop.jsx","./components/Colors/Contrast":"components/Colors/Contrast.jsx","./components/Colors/RandomColor":"components/Colors/RandomColor.jsx","./components/calculate":"components/calculate.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register("/service-worker.js").then(function (registration) {
+    console.log('ServiceWorker registration successful!');
+  }).catch(function (err) {
+    console.log('ServiceWorker registration failed: ', err);
+  });
+}
+},{"preact":"../node_modules/preact/dist/preact.module.js","./style.scss":"style.scss","./assets/icon-white.svg":"assets/icon-white.svg","./assets/icon-black.svg":"assets/icon-black.svg","./components/Colors/Convert":"components/Colors/Convert.jsx","./components/Colors/Input":"components/Colors/Input.jsx","./components/Colors/GrandStop":"components/Colors/GrandStop.jsx","./components/Colors/Contrast":"components/Colors/Contrast.jsx","./components/Colors/RandomColor":"components/Colors/RandomColor.jsx","./components/calculate":"components/calculate.js","/media/ryanaunur/Project/playground/color-inspect/src/service-worker.js":[["service-worker.js","service-worker.js"],"service-worker.js.map","service-worker.js"]}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2966,7 +2974,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40099" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40373" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
