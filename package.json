@@ -1,0 +1,44 @@
+{
+  "private": true,
+  "name": "iro-colors",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "per-env",
+    "start:production": "npm run -s serve",
+    "start:development": "npm run -s dev",
+    "build": "preact build --template src/index.html",
+    "serve": "preact build --template src/index.html && serve build --single --template src/index.html",
+    "dev": "preact watch --template src/index.html",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-preact-pure": "^2.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.9.0",
+    "jest-preset-preact": "^1.0.0",
+    "node-sass": "^4.13.0",
+    "per-env": "^1.0.2",
+    "preact-cli": "^3.0.0-rc.6",
+    "preact-render-spy": "^1.2.1",
+    "sass-loader": "^7.3.1",
+    "serve": "^11.1.0"
+  },
+  "dependencies": {
+    "color-convert": "^2.0.1",
+    "gradstop": "^2.2.3",
+    "history": "^4.10.1",
+    "preact": "^10.0.1",
+    "preact-render-to-string": "^5.1.0",
+    "preact-router": "^3.0.0",
+    "unistore": "^3.5.1"
+  },
+  "jest": {
+    "preset": "jest-preset-preact",
+    "setupFiles": [
+      "<rootDir>/tests/__mocks__/browserMocks.js",
+      "<rootDir>/tests/__mocks__/setupTests.js"
+    ]
+  }
+}
