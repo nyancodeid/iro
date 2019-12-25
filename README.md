@@ -6,8 +6,12 @@ amazing color tools. Build with [PreactJS](https://preactjs.com)
 [![Issues](https://img.shields.io/github/issues/nyancodeid/iro)](https://github.com/nyancodeid/iro/issues)
 
 ## Description
-This application is only an experimental application. Made just for fun and to learn more about PreactJS.
-This application also uses Parcel Bundle
+Amazing tool to convert and inspect color from and to HEX, RGB, CMYK. Build using Preact, Unistore, and Preact-CLI.
+
+## Demo
+You can visit this web for demo and ready PWA so you can used it when internet goes down.
+[https://iro.nyandev.id](https://iro.nyandev.id)
+
 
 ## CLI Commands
 
@@ -28,4 +32,7 @@ npm run serve
 npm run test
 ```
 
-For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
+## Preview
+<p align="center">
+  <img alt="IRO" src="screenshot.png" />
+</p>
