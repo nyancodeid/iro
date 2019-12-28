@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { route } from 'preact-router';
 
 import ColorConvert from './color-converter/convert';
 import ColorInput from './color-converter/input';
@@ -24,18 +25,37 @@ class ColorConverter extends Component {
 		types: [
 			{ title: 'HEX', id: 'hex', selected: true, value: '212121' },
 			{ title: 'RGB', id: 'rgb', selected: false, value: [33,33,33] },
+			{ title: 'HSL', id: 'hsl', selected: false, value: [0,0,12.9] },
 			{ title: 'CMYK', id: 'cmyk', selected: false, value: [0, 0, 0, 87] }
 		]
 	}
 
 	componentDidMount () {
+		if (Object.keys(this.props.matches).length == 2) {
+			const { type: selectedType, hex } = this.props
+			const { colors, contrast, grandStop } = this._colorChangeCalculation("hex", hex.toUpperCase(), false);
+
+			const types = this.state.types.map(type => {
+				let colorValues = (type.id !== 'hex') ? colors[type.id].map(i => Number(Number(i).toFixed(1))) : colors[type.id]; 
+
+				return {
+					...type,
+					value: colorValues,
+					selected: (type.id == selectedType) ? true : false
+				}
+			});
+
+			this.setState({ contrast: contrast.yiq, grandStop, hex: colors.hex, types });
+			return;
+		}
+
 		const active = this.state.types.find(type => type.selected);
-		const { colors, contrast, grandStop } = this.colorChangeCalculation(active.id, active.value, false);
+		const { colors, contrast, grandStop } = this._colorChangeCalculation(active.id, active.value, false);
 
 		this.setState({ contrast: contrast.yiq, grandStop, hex: colors.hex });
 	}
 
-	colorChangeCalculation (id, value, animated) {
+	_colorChangeCalculation (id, value, animated) {
 		const colors = colorConvert(id, value);
 		const contrast = yiqContrastRatio(colors.rgb);
 		const grandStop = generateGrandStop(colors.hex);
@@ -43,8 +63,18 @@ class ColorConverter extends Component {
 		const textColor = (contrast.result === 'black') ? grandStop[7] : `#${colors.hex}`;
 		const secondaryColor = (contrast.result === 'black') ? grandStop[1] : grandStop[7];
 
-		document.body.style.cssText = 
-			`--primary-color: #${colors.hex};--secondary-color: ${secondaryColor};--text-color: ${textColor};${(animated) ? `transition: background-color 0.5s ease-in-out;` : ``}`;
+		const cssVariable = [
+			['primary-color', `#${colors.hex}`],
+			['secondary-color', secondaryColor],
+			['text-color', textColor]
+		]
+
+		document.body.style.cssText = cssVariable.filter(css => (css[1] !== null)).map(css => {
+			return `--${css[0]}: ${css[1]};`
+		}).join('')
+
+		document.body.style.cssText += (animated) ? `transition: background-color 0.5s ease-in-out;` : ''
+		
 		if (contrast.result === 'black') document.body.classList.add('dark');
 		else document.body.classList.remove('dark');
 
@@ -61,10 +91,13 @@ class ColorConverter extends Component {
 		});
 
 		this.setState({ types: colorTypes });
+
+		route(`/${id}/${this.state.hex.toLowerCase()}`)
 	}
 
 	onColorChanged = (id, value) => {
-		const { colors, contrast, grandStop } = this.colorChangeCalculation(id, value, true);
+		const { colors, contrast, grandStop } = this._colorChangeCalculation(id, value, true);
+		const active = this.state.types.find(type => type.selected);
 
 		const changed = this.state.types.map(type => {
 			let colorValues = (type.id === 'rgb') ? colors[type.id].map(i => Number(Number(i).toFixed(0))) : colors[type.id]; 
@@ -74,6 +107,8 @@ class ColorConverter extends Component {
 
 		this.setState({ types: changed, contrast: contrast.yiq, grandStop, hex: colors.hex });
 		this.props.setColorContrast(contrast.result)
+
+		route(`/${active.id}/${colors.hex.toLowerCase()}`)
 	}
 
 	render (props, { types, contrast, grandStop, hex }) {
