@@ -106,6 +106,7 @@ class ColorConverter extends Component {
 		});
 
 		this.setState({ types: changed, contrast: contrast.yiq, grandStop, hex: colors.hex });
+		// event dispatch for setColorContrast
 		this.props.setColorContrast(contrast.result)
 
 		route(`/${active.id}/${colors.hex.toLowerCase()}`)
