@@ -7,7 +7,7 @@
     "start": "per-env",
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
-    "build": "preact build --template src/index.html",
+    "build": "preact build --template src/index.html --no-prerender",
     "serve": "preact build --template src/index.html && serve build --single --template src/index.html",
     "dev": "preact watch --template src/index.html",
     "test": "jest"
