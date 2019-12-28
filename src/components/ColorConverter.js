@@ -73,7 +73,7 @@ class ColorConverter extends Component {
 			return `--${css[0]}: ${css[1]};`
 		}).join('')
 
-		document.body.style.cssText += (animated) ? `transition: background-color 0.5s ease-in-out;` : ''
+		document.body.style.cssText += (animated) ? `transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);` : ''
 		
 		if (contrast.result === 'black') document.body.classList.add('dark');
 		else document.body.classList.remove('dark');
