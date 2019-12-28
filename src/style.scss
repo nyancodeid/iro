@@ -5,6 +5,10 @@
   letter-spacing: 0.05786em;
 }
 body {
+  --primary-color:#212121;
+  --secondary-color:rgb(196,196,196);
+  --text-color:#212121;
+
   background-color: var(--primary-color);
 
   padding: 0;
