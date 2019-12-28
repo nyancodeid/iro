@@ -32,7 +32,7 @@ body {
 		align-items: flex-start;
 
     padding: 2em 64px 1.5em 64px;
-    border-bottom: 2px dashed;
+    border-bottom: 2px dashed var(--secondary-color);
 
     > div {
       display: inline-block;
@@ -75,7 +75,7 @@ body {
       justify-content: space-between;
       display: flex;
       padding: 1.5em 64px 1.5em 64px;
-      border-top: 2px dashed;
+      border-top: 2px dashed var(--secondary-color);
 
       > div.section {
         width: calc((100% / 3) - (16px * 3));
@@ -138,6 +138,10 @@ body {
         cursor: pointer;
       }
     }
+
+    .hidden-label {
+      display: none;
+    }
   }
   .color-input {
     position: relative;
@@ -178,8 +182,9 @@ body {
         font-size: 2em;
       }
     }
-    &.rgb input {
-      width: calc(100% / 3 - (3px * 3) + (8px / 4));
+    &.rgb input,
+    &.hsl input {
+      width: calc((100% / 3) - 8px);
       margin-right: 8px;
 
       &:last-child {
@@ -187,7 +192,7 @@ body {
       }
     }
     &.cmyk input {
-      width: calc(100% / 4 - (3px * 3) + (8px / 4));
+      width: calc(25% - 8px);
       margin-right: 8px;
 
       &:last-child {
@@ -199,12 +204,13 @@ body {
   .convert-wrapper {
     padding-inline-start: unset;
 
-    > .button:first-child {
-      margin-right: 16px;
+    > .button:last-child {
+      margin-right: 0;
     }
     > .button {
+      margin-right: 16px;
       display: inline-block;
-      width: calc((100% / 2) - (32px + 8px));
+      width: calc((100% / 3) - (43px));
     }
   }
 
@@ -227,7 +233,8 @@ body {
 }
 @media only screen and (max-width: 768px) {
   #app {
-		padding: 16px;
+    padding: 16px;
+    height: calc(100% - 32px);
 		
 		header {
 			padding: 0 0 1em 0;
