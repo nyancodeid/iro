@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import { h, Component, Fragment } from 'preact'
 import { colorConvert, colorValidate } from './color-calculation'
 
 export default class ColorInput extends Component {
@@ -18,8 +18,6 @@ export default class ColorInput extends Component {
     const value = event.target.value
     const stateValue = this.state.value
 
-    console.log(value, stateValue, index)
-
     switch (id) {
       case "hex":
         if (colorValidate(id, value)) {
@@ -28,6 +26,15 @@ export default class ColorInput extends Component {
         break;
       case "rgb":
         stateValue[index] = (Number(value) > 255) ? 255 : Number(value)
+        stateValue[index] = Number.isNaN(stateValue[index]) ? 0 : stateValue[index]
+        this.setState({ value: stateValue })
+
+        if (colorValidate(id, stateValue)) {
+          this.props.onChange(id, stateValue)
+        }
+        break;
+      case "hsl":
+        stateValue[index] = (Number(value) > 100) ? 100 : Number(value)
         stateValue[index] = Number.isNaN(stateValue[index]) ? 0 : stateValue[index]
         this.setState({ value: stateValue })
 
@@ -60,6 +67,9 @@ export default class ColorInput extends Component {
       case "rgb":
         this.copyText(`rgb(${type.value.join(', ')})`)
         break;
+      case "hsl":
+        this.copyText(`hsl(${type.value.join(', ')})`)
+        break;
       case "cmyk":
         this.copyText(`cmyk(${type.value.join(', ')})`)
         break;
@@ -71,7 +81,6 @@ export default class ColorInput extends Component {
   copyText (value) {
     const textArea = document.createElement('textarea')
     textArea.value = value
-    
     document.body.appendChild(textArea)
     textArea.select()
     document.execCommand('copy')
@@ -83,19 +92,52 @@ export default class ColorInput extends Component {
 
     switch (type.id) {
       case "hex":
-        inputElement = <input type="text" value={value} onInput={this.onChange.bind(this, type.id, 0)} maxLength={6} />
+        const elementId = `${type.id}-input-0`
+        inputElement = (
+          <Fragment>
+            <input type="text" id={elementId} value={value} onInput={this.onChange.bind(this, type.id, 0)} maxLength={6} />
+            <label for={elementId} className="hidden-label">{elementId}</label>
+          </Fragment>
+        )
         break;
       case "rgb":
         inputElement = <div>
           {value.map((val, index) => {
-            return <input type="text" value={val} onInput={this.onChange.bind(this, type.id, index)} maxLength={3} />
+            const elementId = `${type.id}-input-${index}`
+
+            return (
+              <Fragment>
+                <input id={elementId} type="text" value={val} onInput={this.onChange.bind(this, type.id, index)} maxLength={3} />
+                <label for={elementId} className="hidden-label">{elementId}</label>
+              </Fragment>
+            )
+          })}
+        </div>
+        break;
+      case "hsl":
+        inputElement = <div>
+          {value.map((val, index) => {
+            const elementId = `${type.id}-input-${index}`
+
+            return (
+              <Fragment>
+                <input id={elementId} type="text" value={val} onInput={this.onChange.bind(this, type.id, index)} maxLength={3} />
+                <label for={elementId} className="hidden-label">{elementId}</label>
+              </Fragment>
+            )
           })}
         </div>
         break;
       case "cmyk":
         inputElement = <div>
           {value.map((val, index) => {
-            return <input type="text" value={val} onInput={this.onChange.bind(this, type.id, index)} maxLength={3} />
+            const elementId = `${type.id}-input-${index}`
+            return (
+              <Fragment>
+                <input id={elementId} type="text" value={val} onInput={this.onChange.bind(this, type.id, index)} maxLength={3} />
+                <label for={elementId} className="hidden-label">{elementId}</label>
+              </Fragment>
+            )
           })}
         </div>
         break;
