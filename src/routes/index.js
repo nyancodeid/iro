@@ -10,6 +10,7 @@ export default () => (
     <Header />
     <Router history={createHashHistory()}>
       <ColorConvert path="/" />
+      <ColorConvert path="/:type/:hex" />
     </Router>
   </div>
 )
