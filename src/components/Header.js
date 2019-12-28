@@ -1,19 +1,12 @@
 import { h } from 'preact';
 import { connect } from 'unistore/preact'
 
-import IconBlack from '../assets/icon-black.svg'
-import IconWhite from '../assets/icon-white.svg'
+const Header = ({ contrast }) => (<header>
+	<div>
+		<h1>IRO</h1>
+		<span>Amazing color tools</span>
+	</div>
+	<img src={`/assets/icon-${contrast}.svg`} alt={`icon-${contrast}`} />
+</header>);
 
-const Header = connect('contrast')(
-	({ contrast }) => (
-		<header>
-			<div>
-				<h1>IRO</h1>
-				<span>Amazing color tools</span>
-			</div>
-			<img src={(contrast === "black") ? IconBlack : IconWhite } />
-		</header>
-	)
-);
-
-export default Header;
+export default connect('contrast')(Header);
