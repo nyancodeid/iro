@@ -17,6 +17,14 @@ export const colorValidate = (from, value) => {
       } else {
         return false
       }
+    case 'hsl': 
+      if (typeof value === 'object' && value.length === 3) {
+        const mapValue = value.filter(item => (typeof item === "number" && item <= 200))
+
+        return (mapValue.length === 3) ? true : false
+      } else {
+        return false
+      }
     case 'cmyk': 
       if (typeof value === 'object' && value.length === 4) {
         const mapValue = value.filter(item => (typeof item === "number" && item <= 255))
@@ -35,18 +43,28 @@ export const colorConvert = (from, value) => {
       return {
         hex: value,
         rgb: convert.hex.rgb(value),
+        hsl: convert.hex.hsl(value),
         cmyk: convert.hex.cmyk(value)
       }
     case 'rgb':
       return {
         hex: convert.rgb.hex(value),
         rgb: value,
+        hsl: convert.rgb.hsl(value),
         cmyk: convert.rgb.cmyk(value)
+      }
+    case 'hsl':
+      return {
+        hex: convert.cmyk.hex(value),
+        rgb: convert.cmyk.rgb(value),
+        hsl: convert.cmyk.hsl(value),
+        cmyk: value
       }
     case 'cmyk':
       return {
         hex: convert.cmyk.hex(value),
         rgb: convert.cmyk.rgb(value),
+        hsl: convert.cmyk.hsl(value),
         cmyk: value
       }
     default:
