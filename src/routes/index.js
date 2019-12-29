@@ -4,6 +4,7 @@ import { createHashHistory } from 'history'
 
 import Header from '../components/Header'
 import ColorConvert from './ColorConverter'
+import ColorExtractor from './ColorExtractor'
 
 export default () => (
   <div id="app">
@@ -11,6 +12,7 @@ export default () => (
     <Router history={createHashHistory()}>
       <ColorConvert path="/" />
       <ColorConvert path="/:type/:hex" />
+      <ColorExtractor path="/extract" />
     </Router>
   </div>
 )
