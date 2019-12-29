@@ -218,15 +218,17 @@ body {
     }
   }
 
-  .gradient-wrapper {
+  .gradient-boxs,
+  .color-boxs {
     padding-inline-start: unset;
     list-style: none;
     
-    > li {
-      height: 40px;
-      width: 40px;
+    > .gradient-box,
+    > .color-box {
       display: inline-block;
       cursor: pointer;
+      height: 40px;
+      width: 40px;
 
       &:hover {
         transform: scale(1.5);
@@ -234,6 +236,8 @@ body {
       }
     }
   }
+
+
 }
 @media only screen and (max-width: 768px) {
   #app {
@@ -273,8 +277,8 @@ body {
       }
     }
 
-    .gradient-wrapper {
-      > li {
+    .gradient-boxs {
+      > .gradient-box {
         height: calc((100vw - 32px) / 8);
         width: calc((100vw - 32px) / 8);
       }
