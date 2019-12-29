@@ -29,6 +29,7 @@
     "color-convert": "^2.0.1",
     "gradstop": "^2.2.3",
     "history": "^4.10.1",
+    "node-vibrant": "^3.1.5",
     "preact": "^10.0.1",
     "preact-render-to-string": "^5.1.0",
     "preact-router": "^3.0.0",
