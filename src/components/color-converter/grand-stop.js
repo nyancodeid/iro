@@ -10,7 +10,7 @@ export default class GrandStop extends Component {
 
   render ({ gradients }) {
     const gradientItems = gradients.map(grandient => {
-      return <li title="Click to set color" onClick={this.changeColor.bind(this, grandient)} style={`background-color: ${grandient};`}></li>
+      return <li className="gradient-box" title="Click to set color" onClick={this.changeColor.bind(this, grandient)} style={`background-color: ${grandient};`}></li>
     })
 
     return (
@@ -19,7 +19,7 @@ export default class GrandStop extends Component {
           <span className="heading">Gradient</span> color stops:
         </div>
         <div className="content">
-          <ul className="gradient-wrapper">
+          <ul className="gradient-boxs">
             {gradientItems}
           </ul>
         </div>
