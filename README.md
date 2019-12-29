@@ -6,10 +6,10 @@ amazing color tools. Build with [PreactJS](https://preactjs.com)
 [![Issues](https://img.shields.io/github/issues/nyancodeid/iro)](https://github.com/nyancodeid/iro/issues)
 
 ## Description
-Amazing tool to convert and inspect color from and to HEX, RGB, CMYK. Build using Preact, Unistore, and Preact-CLI.
+Amazing tool to convert and inspect color from and to HEX, RGB, CMYK, and HSL. Build using Preact, Unistore, and Preact-CLI.
 
 ## Demo
-You can visit this web for demo and ready PWA so you can used it when internet goes down.
+You can visit this web for demo and PWA Ready so you can used it event internet goes down (Offline).
 [https://iro.nyandev.id](https://iro.nyandev.id)
 
 
