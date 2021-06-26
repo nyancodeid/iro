@@ -14,7 +14,7 @@ export const colorValidate = (from, value) => {
     case "hex":
       if (typeof value == "object" && value.length == 1) {
         value = value[0];
-      } 
+      }
 
       return (
         typeof value === "string" &&
@@ -117,7 +117,7 @@ export const yiqContrastRatio = ([r, g, b]) => {
  */
 export const yiqContrastColor = (yiq) => {
   return yiq >= 128 ? "black" : "white";
-}
+};
 
 /**
  * Generate Gradient
@@ -157,12 +157,11 @@ export const calculateColor = (id, value, animated) => {
     contrast.result === "black" ? gradients[7] : `#${colors.hex}`;
   const secondaryColor =
     contrast.result === "black" ? gradients[1] : gradients[7];
-  const darkColor =
-    contrast.result === "black" ? gradients[7] : gradients[1];
+  const darkColor = contrast.result === "black" ? gradients[7] : gradients[1];
 
   const darkTransparent = darkColor
-    .replace('rgb', 'rgba')
-    .replace(')', ', 0.98)');
+    .replace("rgb", "rgba")
+    .replace(")", ", 0.98)");
 
   const cssVariable = [
     ["dark-color", darkColor],
@@ -207,60 +206,39 @@ export const getColorProperties = (id) => {
       inputLength: 1,
       inputMaxLength: 6,
       inputType: "text",
-      toString (color) {
+      toString(color) {
         if (typeof color == "object" && color.length == 1) {
           color = color[0];
         }
 
-        return `#${color}`
-      }
+        return `#${color}`;
+      },
     },
     rgb: {
       inputLength: 3,
       inputMaxLength: 255,
       inputType: "number",
-      toString (color) {
-        return `rgb(${normalize(color).join(', ')})`
-      }
+      toString(color) {
+        return `rgb(${normalize(color).join(", ")})`;
+      },
     },
     hsl: {
       inputLength: 3,
       inputMaxLength: 200,
       inputType: "number",
-      toString (color) {
-        return `hsl(${normalize(color).join(', ')})`
-      }
+      toString(color) {
+        return `hsl(${normalize(color).join(", ")})`;
+      },
     },
     cmyk: {
       inputLength: 4,
       inputMaxLength: 255,
       inputType: "number",
-      toString (color) {
-        return `cmyk(${normalize(color).join(', ')})`
-      }
-    }
+      toString(color) {
+        return `cmyk(${normalize(color).join(", ")})`;
+      },
+    },
   };
 
   return properties[id];
-}
-
-export const colorDiffPercentage = (prev, now) => {
-  if (!prev && !now) return;
-
-  let [ _r, _g, _b ] = prev;
-  let [ __r, __g, __b ] = now;
-
-  var p1 = (_r / 255) * 100;
-  var p2 = (_g / 255) * 100;
-  var p3 = (_b / 255) * 100;
-
-  var perc1 = Math.round((p1 + p2 + p3) / 3);
-
-  var p1 = (__r / 255) * 100;
-  var p2 = (__g / 255) * 100;
-  var p3 = (__b / 255) * 100;
-
-  var perc2 = Math.round((p1 + p2 + p3) / 3);
-
-  return Math.abs(perc1 - perc2);   
-}
+};
