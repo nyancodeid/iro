@@ -11,12 +11,13 @@ IRO (色 / iro / color) is a web-based application that has the main feature to 
 ## Tech
 IRO build with Latest Web Technology that makes us can access this app even in offline mode (cache-first). And the other cool thing is PWA (Progressive Web App) makes this app installable on Android devices, allow us to use this app to run natively on an Android.
 
-| Tools      | Desc                                          | Website                                                |
-| ---------- | --------------------------------------------- | ------------------------------------------------------ |
-| Vue 3      | Web Framework                                 | [https://v3.vuejs.org/](https://v3.vuejs.org/)         |
-| Vite       | Next Generation Frontend Tooling              | [https://vitejs.dev/](https://vitejs.dev/)             |
-| Vuex       | State Management Pattern + Library for Vue.js | [https://vuex.vuejs.org/](https://vuex.vuejs.org/)     |
-| Vue-Router | The official router for Vue.js.               | [https://router.vuejs.org/](https://router.vuejs.org/) |
+| Tools      | Version  | Desc                                          | Website                                                |
+| ---------- | -------- | --------------------------------------------- | ------------------------------------------------------ |
+| Vue        | `^3.0.5` | Web Framework                                 | [https://v3.vuejs.org/](https://v3.vuejs.org/)         |
+| Vite       | `^2.3.7` | Next Generation Frontend Tooling              | [https://vitejs.dev/](https://vitejs.dev/)             |
+| Vuex       | `^4.0.1` | State Management Pattern + Library for Vue.js | [https://vuex.vuejs.org/](https://vuex.vuejs.org/)     |
+| Vue-Router | `^4.0.8` | The official router for Vue.js.               | [https://router.vuejs.org/](https://router.vuejs.org/) |
+| LowDB      | `^2.1.0` | Tiny local JSON database                      | [typicode/lowdb](https://github.com/typicode/lowdb)    |
 
 ## Development
 ```bash
