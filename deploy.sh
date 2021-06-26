@@ -7,20 +7,20 @@ set -e
 npm run build
 
 # navigate into the build output directory
-cd dist
+cd dist/
 
 # if you are deploying to a custom domain
 echo 'iro.nyandev.id' > CNAME
 
 cd -
 
-git add dist -f
+git add dist/ -f
 git commit -m 'deplyer(gh-pages): deploy to github pages'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git subtree push --prefix dist origin gh-pages
+git push origin `git subtree split --prefix dist next`:gh-pages --force
 
 
