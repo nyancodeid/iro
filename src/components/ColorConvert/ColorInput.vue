@@ -163,7 +163,7 @@ export default {
 
     &.hex {
       > input {
-        width: calc(100% - 26px);
+        width: calc(100% - 32px);
         padding-left: 1em;
       }
 
@@ -180,7 +180,7 @@ export default {
 
     &.rgb input,
     &.hsl input {
-      width: calc((100% / 3) - 6px);
+      width: calc((100% / 3) - 12px);
       margin-right: 8px;
 
       &:last-child {
@@ -189,7 +189,7 @@ export default {
     }
 
     &.cmyk input {
-      width: calc(25% - 6px);
+      width: calc(25% - 12px);
       margin-right: 8px;
 
       &:last-child {
