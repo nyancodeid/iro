@@ -15,7 +15,7 @@ echo 'iro.nyandev.id' > CNAME
 cd -
 
 git add dist/ -f
-git commit -m 'deplyer(gh-pages): deploy to github pages'
+git commit -m 'deployer(gh-pages): deploy to github pages'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
