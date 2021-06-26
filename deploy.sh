@@ -20,6 +20,6 @@ git commit -m 'deplyer(gh-pages): deploy to github pages'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:nyancodeid/iro.git next:gh-pages
+git push -f https://github.com/nyancodeid/iro.git next:gh-pages
 
 cd -
