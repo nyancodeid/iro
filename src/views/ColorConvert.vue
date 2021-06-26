@@ -2,20 +2,28 @@
   <div id="content">
     <div class="main">
       <div class="main-wrapper">
-        <color-input :type="activeColor" :hex="hex" :color="contrastColor" @changed="onColorChanged"></color-input>
+        <color-input
+          :type="activeColor"
+          :hex="hex"
+          :color="contrastColor"
+          @colorChanged="onColorChanged"
+        ></color-input>
         <color-contrast :contrast="contrast"></color-contrast>
       </div>
     </div>
     <div class="navbar">
       <color-gradient
         :gradients="gradients"
-        @changed="onColorChanged"
+        @colorChanged="onColorChanged"
       ></color-gradient>
-      <button-convert :types="inactiveColor" @changed="onColorTypeChanged"></button-convert>
-      <button-random-color @changed="onColorChanged"></button-random-color>
+      <button-convert
+        :types="inactiveColor"
+        @typeChanged="onColorTypeChanged"
+      ></button-convert>
+      <button-random-color @colorChanged="onColorChanged"></button-random-color>
     </div>
 
-    <history @changed="onColorChanged"></history>
+    <history @colorChanged="onColorChanged"></history>
   </div>
 </template>
 
@@ -33,17 +41,24 @@ import { calculateColor, yiqContrastColor } from "../services/colors";
 import { normalize } from "../services/utils";
 
 export default {
-  components: { ColorContrast, ButtonRandomColor, ColorGradient, ColorInput, ButtonConvert, History },
+  components: {
+    ColorContrast,
+    ButtonRandomColor,
+    ColorGradient,
+    ColorInput,
+    ButtonConvert,
+    History,
+  },
   data() {
     return {
       contrast: 0,
       gradients: [],
       hex: "212121",
       types: [
-        { title: "HEX", id: "hex", selected: false, value: "212121" },
+        { title: "HEX", id: "hex", selected: true, value: "212121" },
         { title: "RGB", id: "rgb", selected: false, value: [33, 33, 33] },
         { title: "HSL", id: "hsl", selected: false, value: [0, 0, 12.9] },
-        { title: "CMYK", id: "cmyk", selected: true, value: [0, 0, 0, 87] },
+        { title: "CMYK", id: "cmyk", selected: false, value: [0, 0, 0, 87] },
       ],
     };
   },
@@ -51,18 +66,16 @@ export default {
     this.setSelectedType();
   },
   computed: {
-    ...mapState([
-      "bookmarks", "history"
-    ]),
+    ...mapState(["bookmarks", "history"]),
     activeColor() {
-      return this.types.find(type => type.selected);
+      return this.types.find((type) => type.selected);
     },
     inactiveColor() {
-      return this.types.filter(type => !type.selected);
+      return this.types.filter((type) => !type.selected);
     },
-    contrastColor () {
+    contrastColor() {
       return yiqContrastColor(this.contrast);
-    }
+    },
   },
   methods: {
     setSelectedType() {
@@ -85,9 +98,7 @@ export default {
       this.gradients = gradients;
       this.types = this.types.map((type) => {
         let colorValues =
-          type.id !== "hex"
-            ? normalize(colors[type.id])
-            : colors[type.id];
+          type.id !== "hex" ? normalize(colors[type.id]) : colors[type.id];
 
         return { ...type, value: colorValues };
       });
@@ -96,11 +107,11 @@ export default {
       this.$store.dispatch("addHistory", {
         type: this.activeColor.id,
         value: this.activeColor.value,
-        colors
+        colors,
       });
     },
-    onColorTypeChanged (id) {
-      this.types = this.types.map(type => {
+    onColorTypeChanged(id) {
+      this.types = this.types.map((type) => {
         return { ...type, selected: type.id === id };
       });
     },

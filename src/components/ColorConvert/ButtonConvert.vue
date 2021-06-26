@@ -3,7 +3,14 @@
     <div class="label"><span class="heading">Convert</span> to:</div>
     <div class="content">
       <ul class="convert-wrapper">
-        <li v-for="type in types" :key="type.id" class="button" @click="$emit('changed', type.id)">to {{type.title}}</li>
+        <li
+          v-for="type in types"
+          :key="type.id"
+          class="button"
+          @click="$emit('typeChanged', type.id)"
+        >
+          to {{ type.title }}
+        </li>
       </ul>
     </div>
   </div>
@@ -13,7 +20,7 @@
 export default {
   name: "ButtonConvert",
   props: {
-    types: Array
-  }
-}
+    types: Array,
+  },
+};
 </script>

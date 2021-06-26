@@ -1,36 +1,51 @@
 <template>
-	<div class="history" :class="{open: historyPage}">
-		<div class="history-title">
-			<div class="history-title--content">
-				<h1>History</h1>
-				<span>Last color you generate: </span>
-			</div>
+  <div class="history" :class="{ open: historyPage }">
+    <div class="history-title">
+      <div class="history-title--content">
+        <h1>History</h1>
+        <span>Last color you generate: </span>
+      </div>
 
-			<div class="history-title--close icon" :class="`icon-close--${contrast}`" @click="closePage">
-			</div>
-		</div>
-		<div class="history-items">
-			<div class="history-item" v-for="(history, index) in histories" :key="index">
-				<div 
-					class="history-item--color" 
-					:style="`background-color: ${history.colorStyle}`"
-					@click="openHistory(history)"
-				></div>
+      <div
+        class="history-title--close icon"
+        :class="`icon-close--${contrast}`"
+        @click="closePage"
+      ></div>
+    </div>
+    <div class="history-items">
+      <div
+        class="history-item"
+        v-for="(history, index) in histories"
+        :key="index"
+      >
+        <div
+          class="history-item--color"
+          :style="`background-color: ${history.colorStyle}`"
+          @click="openHistory(history)"
+        ></div>
 
-				<div class="history-item--content">
-					<span class="title">{{ history.title }}</span>
-					<span class="subtitle">{{ history.colorText }}</span>
-				</div>
+        <div class="history-item--content">
+          <span class="title">{{ history.title }}</span>
+          <span class="subtitle">{{ history.colorText }}</span>
+        </div>
 
-				<div class="history-item--action">
-					<div class="history-item--action-item bookmarked icon" :class="`icon-bookmark--${contrast}`" title="Add to bookmark" @click="addToBookmark(history)">
-					</div>
-					<div class="history-item--action-item copy icon" :class="`icon-copy--${contrast}`" title="Copy to clipboard" @click="addToClipboard(history)">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="history-item--action">
+          <div
+            class="history-item--action-item bookmarked icon"
+            :class="`icon-bookmark--${contrast}`"
+            title="Add to bookmark"
+            @click="addToBookmark(history)"
+          ></div>
+          <div
+            class="history-item--action-item copy icon"
+            :class="`icon-copy--${contrast}`"
+            title="Copy to clipboard"
+            @click="addToClipboard(history)"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,131 +54,132 @@ import { mapGetters, mapState } from "vuex";
 import { copyToClipboard } from "../services/utils";
 
 export default {
-  name: 'History',
+  name: "History",
   inject: ["notyf"],
   computed: {
-  	...mapState(["historyPage", "contrast"]),
-  	...mapGetters([ "histories" ])
+    ...mapState(["historyPage", "contrast"]),
+    ...mapGetters(["histories"]),
   },
   methods: {
-  	openHistory (history) {
-  		this.$emit("changed", [ history.type, history.value ]);
-  		this.$store.commit("toggleHistoryPage");
-  	},
-  	addToBookmark (history) {
-  		const clean = JSON.parse(JSON.stringify(history));
+    openHistory(history) {
+      this.$emit("colorChanged", [history.type, history.value]);
+      this.$store.commit("toggleHistoryPage");
+    },
+    addToBookmark(history) {
+      const clean = JSON.parse(JSON.stringify(history));
 
-  		this.$store.dispatch("addBookmarks", clean);
-  		this.notyf.success("Color successfuly bookmarked!");
-  	},
-  	addToClipboard (history) {
-  		copyToClipboard(history.colorText);
-  		this.notyf.success("Copied!");
-  	},
-  	closePage () {
-  		this.$store.commit("toggleHistoryPage");
-  	}
-  }
-}
+      this.$store.dispatch("addBookmarks", clean);
+      this.notyf.success("Color successfuly bookmarked!");
+    },
+    addToClipboard(history) {
+      copyToClipboard(history.colorText);
+      this.notyf.success("Copied!");
+    },
+    closePage() {
+      this.$store.commit("toggleHistoryPage");
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 .history {
-	left: 0;
-	bottom: -16px;
+  left: 0;
+  bottom: -16px;
 
-	position: fixed;
-	background-color: var(--dark-transparent-color);
-	height: 0;
-	width: calc(100vw - 32px);
+  position: fixed;
+  background-color: var(--dark-transparent-color);
+  height: 0;
+  width: calc(100vw - 32px);
 
-	box-shadow: 0 -3px 4px rgba(0, 0, 0, .1);
+  box-shadow: 0 -3px 4px rgba(0, 0, 0, 0.1);
 
-	padding: 0 16px;
-	
-	transition: all 0.3s cubic-bezier(.65,.05,.36,1);
-	-moz-transition: all 0.3s cubic-bezier(.65,.05,.36,1);
+  padding: 0 16px;
 
-	border-top-left-radius: 16px;
-	border-top-right-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  -moz-transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
 
-	&.open {
-		height: calc(100vh - 92px);
-	}
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 
-	.history-title {
-		padding-bottom: 16px;
-	  	margin-bottom: 16px;
-	  	display: flex;
-	  	justify-content: space-between;
-	  	align-items: center;
+  &.open {
+    height: calc(100vh - 92px);
+  }
 
-		border-top-left-radius: 16px;
-		border-top-right-radius: 16px;
+  .history-title {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-		.history-title--content	{
-			h1 {
-				font-size: 1.2em;
-				font-weight: bold;
-				margin-bottom: 0;
-			}
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
 
-			span {
-				font-size: 0.7rem;
-			}
-		}
-		.history-title--close {
-			cursor: pointer;
-		}
-	}
+    .history-title--content {
+      h1 {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
 
-	.history-items {
-		overflow-y: scroll;
-		height: 100%;
+      span {
+        font-size: 0.7rem;
+      }
+    }
+    .history-title--close {
+      cursor: pointer;
+    }
+  }
 
-		.history-item:last-child {
-			margin-bottom: 120px;
-		}
-	}
-	.history-item {
-		padding: 8px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+  .history-items {
+    overflow-y: scroll;
+    height: 100%;
 
-		.history-item--color {
-			width: 32px;
-			height: 32px;
-			border-radius: 100%;
-			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.20);
+    .history-item:last-child {
+      margin-bottom: 120px;
+    }
+  }
+  .history-item {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-			margin-right: 16px;
-			cursor: pointer;
-		}
+    .history-item--color {
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+        0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 
-		.history-item--content {
-			display: flex;
-			flex: 1;
-			flex-direction: column;
+      margin-right: 16px;
+      cursor: pointer;
+    }
 
-			.title {
-				font-weight: bold;
-			}
-			.subtitle {
-				color: --text-color;
-				font-size: 12.5px;
-			}
-		}
+    .history-item--content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
 
-		.history-item--action {
-			display: flex;
-			flex-direction: row;
+      .title {
+        font-weight: bold;
+      }
+      .subtitle {
+        color: --text-color;
+        font-size: 12.5px;
+      }
+    }
 
-			.history-item--action-item {
-				padding: 0 8px;
-				cursor: pointer;
-			}
-		}
-	}
+    .history-item--action {
+      display: flex;
+      flex-direction: row;
+
+      .history-item--action-item {
+        padding: 0 8px;
+        cursor: pointer;
+      }
+    }
+  }
 }
 </style>

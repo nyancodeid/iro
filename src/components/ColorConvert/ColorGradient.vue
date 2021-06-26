@@ -26,7 +26,7 @@ export default {
     onColorChanged(color) {
       const extract = color.replace("rgb(", "").replace(")", "").split(", ");
 
-      this.$emit("changed", ["rgb", extract]);
+      this.$emit("colorChanged", ["rgb", extract]);
     },
   },
 };
@@ -42,8 +42,8 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
-  >.gradient-box,
-  >.color-box {
+  > .gradient-box,
+  > .color-box {
     cursor: pointer;
     height: 40px;
     width: 40px;

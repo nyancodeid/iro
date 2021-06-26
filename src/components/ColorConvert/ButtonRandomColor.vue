@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     onRandomColor() {
-      this.$emit("changed", ["rgb", generateRandomColor()]);
+      this.$emit("colorChanged", ["rgb", generateRandomColor()]);
     },
   },
 };
