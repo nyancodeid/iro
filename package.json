@@ -1,0 +1,31 @@
+{
+  "name": "iro",
+  "version": "2.0.0",
+  "description": "color inspect for HEX, RGB, and CMYK",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "deploy:gh": "git subtree push --prefix public origin gh-pages"
+  },
+  "author": "Ryan Aunur Rassyid <ryandevstudio@gmail.com>",
+  "contributors": [
+    "Muhammad Zainul Mutaqqin <zalepik@outlook.com>"
+  ],
+  "dependencies": {
+    "color-convert": "^2.0.1",
+    "gradstop": "^2.2.3",
+    "lowdb": "^2.1.0",
+    "notyf": "^3.10.0",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.8",
+    "vuex": "^4.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.3",
+    "@vue/compiler-sfc": "^3.0.5",
+    "sass": "^1.34.1",
+    "vite": "^2.3.7",
+    "vite-plugin-pwa": "^0.8.1"
+  }
+}
