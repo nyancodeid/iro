@@ -12,14 +12,14 @@ cd dist
 # if you are deploying to a custom domain
 echo 'iro.nyandev.id' > CNAME
 
-git init
-git add -A
+cd -
+
+git add dist
 git commit -m 'deplyer(gh-pages): deploy to github pages'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/nyancodeid/iro.git next:gh-pages
+git subtree push --prefix dist origin gh-pages
 
-cd -
