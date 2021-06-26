@@ -11,9 +11,9 @@ import ColorResult from "../components/ColorPicker/ColorResult.vue";
 import VideoPicker from "../components/ColorPicker/VideoPicker.vue";
 
 export default {
-  name: 'ColorPicker',
+  name: "ColorPicker",
   components: { ColorResult, VideoPicker },
-}
+};
 </script>
 
 <style lang="scss">
@@ -31,14 +31,13 @@ export default {
   .video-wrapper {
     margin: 0;
     width: 100%;
-  }
 
-  .video-control {
-    width: calc(100% - 16px);
+    .video-wrapper--control {
+      width: calc(100% - 16px);
+    }
   }
   .video-wrapper--result {
     width: calc(100% - 25px);
   }
-
 }
 </style>
