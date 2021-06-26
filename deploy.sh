@@ -14,7 +14,7 @@ echo 'iro.nyandev.id' > CNAME
 
 cd -
 
-git add dist
+git add dist -f
 git commit -m 'deplyer(gh-pages): deploy to github pages'
 
 # if you are deploying to https://<USERNAME>.github.io
@@ -22,4 +22,5 @@ git commit -m 'deplyer(gh-pages): deploy to github pages'
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 git subtree push --prefix dist origin gh-pages
+
 
