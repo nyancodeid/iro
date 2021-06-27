@@ -1,6 +1,6 @@
 <template>
   <div class="video-wrapper">
-    <div class="video-wrapper--view">
+    <div class="video-wrapper--view" :class="`bg-${contrast}-contrast`">
       <video
         class="video-wrapper--view-video"
         autoplay="true"
@@ -17,6 +17,10 @@
           <div class="color-indicator--label-text">#{{ hexColor }}</div>
         </div>
         <div class="color-indicator--circle"></div>
+      </div>
+
+      <div class="helper-initialize" v-if="!isInitialized">
+        <span>Start Video</span>
       </div>
     </div>
 
@@ -241,8 +245,6 @@ $box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12)
   }
 
   .video-wrapper--view {
-    background-color: var(--secondary-color);
-
     .video-wrapper--view-video {
       width: 100%;
       height: 436px;
@@ -305,13 +307,50 @@ $box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12)
         background-color: rgba($color: #ffffff, $alpha: 0.5);
       }
     }
+    .helper-initialize {
+      bottom: 90px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+
+      > span {
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        border-radius: 1.5em;
+        background-color: white;
+
+        padding: 8px 16px;
+        color: #313131;
+
+        &:after {
+          border: 1em solid transparent;
+          border-top-color: white;
+          content: '';
+          margin-left: -1em;
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          width: 0;
+          height: 0;
+        }
+      }
+    }
   }
 
   .video-wrapper--control {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 400px;
+    width: 398px;
 
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
