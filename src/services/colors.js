@@ -149,34 +149,11 @@ export const generateRandomColor = () => {
 };
 
 export const calculateColor = (id, value, animated) => {
-  const colors = colorConvert(id, value);
-  const contrast = yiqContrastRatio(colors.rgb);
-  const gradients = generateGrandients(colors.hex);
-
-  const textColor =
-    contrast.result === "black" ? gradients[7] : `#${colors.hex}`;
-  const secondaryColor =
-    contrast.result === "black" ? gradients[1] : gradients[7];
-  const darkColor = contrast.result === "black" ? gradients[7] : gradients[1];
-
-  const darkTransparent = darkColor
-    .replace("rgb", "rgba")
-    .replace(")", ", 0.98)");
-
-  const cssVariable = [
-    ["dark-color", darkColor],
-    ["dark-transparent-color", darkTransparent],
-    ["primary-color", `#${colors.hex}`],
-    ["secondary-color", secondaryColor],
-    ["text-color", textColor],
-    ["contrast-color", contrast.result],
-  ];
+  const { cssVariable, colors, contrast, gradients } = generateCssColor({
+    id, value
+  });
 
   document.body.style.cssText = cssVariable
-    .filter(([name, value]) => name !== null)
-    .map(([name, value]) => {
-      return `--${name}: ${value};`;
-    })
     .join("");
 
   document.body.style.cssText += animated
@@ -192,9 +169,49 @@ export const calculateColor = (id, value, animated) => {
   return {
     colors,
     contrast,
-    gradients,
+    gradients: gradients.reverse(),
   };
 };
+
+export const generateCssColor = ({ id, value }) => {
+  const colors = colorConvert(id, value);
+  const contrast = yiqContrastRatio(colors.rgb);
+  const gradients = generateGrandients(colors.hex);
+
+  const textColor =
+    contrast.result === "black" ? gradients[7] : `rgb(${colors.rgb.join(", ")})`;
+  const secondaryColor =
+    contrast.result === "black" ? gradients[1] : gradients[7];
+  const darkColor = contrast.result === "black" ? gradients[7] : gradients[1];
+
+  const darkTransparent = darkColor
+    .replace("rgb", "rgba")
+    .replace(")", ", 0.98)");
+
+  let cssVariable = [
+    ["primary-color", `rgb(${colors.rgb.join(", ")})`],
+    ["secondary-color", secondaryColor],
+    ["text-color", textColor],
+    ["dark-color", darkColor],
+    ["dark-transparent-color", darkTransparent],
+    ["contrast-color", contrast.result],
+  ];
+
+  cssVariable = cssVariable.filter(([name, value]) => name !== null)
+    .map(([name, value]) => {
+      return `--${name}: ${value};`;
+    });
+
+  for (const [ index, gradient ] of Object.entries(gradients.reverse())) {
+    const n = ((Number(index) + 1) * 100);
+
+    cssVariable.push(`--gradient-${n}: ${gradient};`);
+  }
+
+  return {
+    colors, contrast, gradients, cssVariable
+  }
+}
 
 /**
  * Get color properties by type

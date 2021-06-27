@@ -7,6 +7,7 @@
           :hex="hex"
           :color="contrastColor"
           @colorChanged="onColorChanged"
+          @toggleStyle="toggleModalStyle"
         ></color-input>
         <color-contrast :contrast="contrast"></color-contrast>
       </div>
@@ -25,6 +26,15 @@
 
     <history @colorChanged="onColorChanged"></history>
   </div>
+
+  <div id="modal" :class="{active: modalStatus}">
+    <modal-style
+      :status="modalStatus"
+      :colors="types"
+      :gradients="gradients"
+      @closed="toggleModalStyle"
+    ></modal-style>
+  </div>
 </template>
 
 <script>
@@ -36,6 +46,7 @@ import ColorGradient from "../components/ColorConvert/ColorGradient.vue";
 import ColorInput from "../components/ColorConvert/ColorInput.vue";
 import ButtonConvert from "../components/ColorConvert/ButtonConvert.vue";
 import ButtonRandomColor from "../components/ColorConvert/ButtonRandomColor.vue";
+import ModalStyle from "../components/ColorConvert/ModalStyle.vue";
 
 import { calculateColor, yiqContrastColor } from "../services/colors";
 import { normalize } from "../services/utils";
@@ -47,10 +58,12 @@ export default {
     ColorGradient,
     ColorInput,
     ButtonConvert,
+    ModalStyle,
     History,
   },
   data() {
     return {
+      modalStatus: false,
       contrast: 0,
       gradients: [],
       hex: "212121",
@@ -61,6 +74,21 @@ export default {
         { title: "CMYK", id: "cmyk", selected: false, value: [0, 0, 0, 87] },
       ],
     };
+  },
+  beforeMount () {
+    const params = this.$route.params;
+
+    if (params?.type && params?.color) {
+      let { type, color } = params;
+
+      if (type != "hex") {
+        color = color.split(",");
+
+        this.onColorTypeChanged(type);
+      }
+
+      this.onColorChanged([ type, color ]);
+    }
   },
   mounted() {
     this.setSelectedType();
@@ -115,6 +143,9 @@ export default {
         return { ...type, selected: type.id === id };
       });
     },
+    toggleModalStyle () {
+      this.modalStatus = !this.modalStatus;
+    }
   },
 };
 </script>
