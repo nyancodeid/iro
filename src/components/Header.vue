@@ -7,8 +7,8 @@
     <nav>
       <a v-if="$route.name == 'convert'" @click="toggleHistory">History</a>
 
-      <router-link to="/" active-class="active">Convert</router-link>
-      <router-link to="/picker" active-class="active">Picker</router-link>
+      <router-link :to="{name: 'convert'}" active-class="active" exact>Convert</router-link>
+      <router-link :to="{name: 'picker'}" active-class="active" exact>Picker</router-link>
     </nav>
 
     <img :src="`/icon-${contrast}.svg`" :alt="`icon-${contrast}`" />

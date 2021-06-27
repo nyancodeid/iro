@@ -88,6 +88,8 @@ export default {
       }
 
       this.onColorChanged([ type, color ]);
+    } else {
+      this.$store.commit("setContrast", "white");
     }
   },
   mounted() {

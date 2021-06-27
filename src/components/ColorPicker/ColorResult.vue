@@ -2,6 +2,10 @@
   <div class="video-color--result" :class="`bg-${contrast}-contrast`">
     <div class="video-color--result-label"><span class="heading">Result</span> color:</div>
     <div class="video-color--result-wrapper">
+      <div class="video-color--result-empty" v-if="pickers.length == 0">
+        <span>Your captured color will show here.</span>
+      </div>
+
       <div
         class="video-color--result-item"
         v-for="(item, index) in pickers"
@@ -66,6 +70,17 @@ export default {
     flex-wrap: wrap;
     justify-content: start;
 
+    .video-color--result-empty {
+      background-color: var(--black-contrast);
+      text-align: center;
+      width: 100%;
+      border-radius: .5em;
+      padding: 16px;
+      margin: 8px 8px 16px 8px;
+      color: var(--darker-color);
+      font-size: 14px;
+    }
+
     .video-color--result-item {
       margin-bottom: 12px;
       margin-right: 8px;
@@ -95,6 +110,14 @@ export default {
     margin-top: 16px;
     justify-content: center;
     width: calc(100% - 24px);
+
+    .video-color--result-wrapper .video-color--result-item {
+      width: calc((100% / 6) - 5px);
+
+      .result-item--text {
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>
