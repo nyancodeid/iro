@@ -20,7 +20,7 @@
       </div>
 
       <div class="helper-initialize" v-if="!isInitialized">
-        <span>Start Video</span>
+        <span>Start Camera</span>
       </div>
     </div>
 
