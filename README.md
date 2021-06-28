@@ -27,3 +27,9 @@ $ npm run dev
 # build 
 $ npm run build
 ```
+
+## Screenshot
+
+<p align="center">
+  <img alt="IRO" src="public/thumbnail/iro.screenshot.png" width="100%" />
+</p>
