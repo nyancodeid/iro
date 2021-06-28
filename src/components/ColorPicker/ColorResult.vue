@@ -40,7 +40,10 @@ export default {
   },
   methods: {
     openColor (item) {
-      this.$router.push(`/hex/${item.value}`)
+      this.$router.push({ name: "convert", params: {
+        type: "hex",
+        color: item.value
+      }});
     }
   }
 }
