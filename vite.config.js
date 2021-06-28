@@ -11,6 +11,7 @@ export default defineConfig({
         name: "IRO - Amazing Color Tools",
         shortName: "IRO",
         theme_color: "#212121",
+        registerType: "autoUpdate",
         includeAssets: ["/favicon.ico"],
         icons: [
           {
