@@ -1,6 +1,6 @@
-import convert from "color-convert";
 import gradstop from "gradstop";
 
+import * as converter from "./converter";
 import { getRange, normalize } from "./utils";
 
 /**
@@ -66,29 +66,29 @@ export const colorConvert = (from, value) => {
     case "hex":
       return {
         hex: value,
-        rgb: convert.hex.rgb(value),
-        hsl: convert.hex.hsl(value),
-        cmyk: convert.hex.cmyk(value),
+        rgb: converter.hex.toRgb(value),
+        hsl: converter.hex.toHsl(value),
+        cmyk: converter.hex.toCmyk(value),
       };
     case "rgb":
       return {
-        hex: convert.rgb.hex(value),
+        hex: converter.rgb.toHex(value),
         rgb: value,
-        hsl: convert.rgb.hsl(value),
-        cmyk: convert.rgb.cmyk(value),
+        hsl: converter.rgb.toHsl(value),
+        cmyk: converter.rgb.toCmyk(value),
       };
     case "hsl":
       return {
-        hex: convert.cmyk.hex(value),
-        rgb: convert.cmyk.rgb(value),
-        hsl: convert.cmyk.hsl(value),
+        hex: converter.cmyk.toHex(value),
+        rgb: converter.cmyk.toRgb(value),
+        hsl: converter.cmyk.toHsl(value),
         cmyk: value,
       };
     case "cmyk":
       return {
-        hex: convert.cmyk.hex(value),
-        rgb: convert.cmyk.rgb(value),
-        hsl: convert.cmyk.hsl(value),
+        hex: converter.cmyk.toHex(value),
+        rgb: converter.cmyk.toRgb(value),
+        hsl: converter.cmyk.toHsl(value),
         cmyk: value,
       };
     default:
@@ -125,7 +125,7 @@ export const yiqContrastColor = (yiq) => {
  * @returns {String[]}
  */
 export const generateGrandients = (hex) => {
-  const rgbColor = convert.hex.rgb(hex);
+  const rgbColor = converter.hex.toRgb(hex);
   const hexResult = gradstop({
     stops: 8,
     inputFormat: "hex",
