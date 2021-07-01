@@ -1,11 +1,18 @@
 <template>
 	<div class="modal-style">
 		<div class="modal-style--header">
-      <div class="label">
+      <div class="modal-style--header-title label">
         <span class="heading">Style</span> color:
       </div>
 
-      <div class="icon" :class="`icon-close--${contrast}`" @click="$emit('closed')"></div>
+      <div class="model-style--header-action">
+        <div class="action-switch">
+          <div class="action-switch--item" :class="{ active: isCSS }" @click="toggleActiveClass">CSS</div>
+          <div class="action-switch--item" :class="{ active: isSCSS }" @click="toggleActiveClass">SCSS</div>
+        </div>
+
+        <div class="icon" :class="`icon-close--${contrast}`" @click="$emit('closed')"></div>
+      </div>
     </div>
     <div class="modal-style--content">
       <pre>{{ code }}</pre>
@@ -27,6 +34,8 @@ export default {
   },
   data () {
     return {
+      isCSS: true,
+      isSCSS: false
     }
   },
   computed: {
@@ -46,13 +55,27 @@ export default {
         value: color.value
       });
 
-      let css = style.cssVariable.map((item, index) => {
-        if (style.cssVariable.length-1 != index) return `  ${item}\n`;
+      if (this.isCSS) {
+        let css = style.cssVariable.map((item, index) => {
+          if (style.cssVariable.length-1 != index) return `  ${item}\n`;
 
-        return `  ${item}`;
-      }).join("");
+          return `  ${item}`;
+        }).join("");
 
-      return `:host {\n${css}\n}`;
+        return `:host {\n${css}\n}`;
+      } else {
+        let css = style.cssVariable.map((item, index) => {
+          if (style.cssVariable.length-1 != index) return `  ${item.replace("--", "$")}\n`;
+
+          return `  ${item.replace("--", "$")}`;
+        }).join("");
+
+        return `body {\n${css}\n}`;
+      }
+    },
+    toggleActiveClass () {
+      this.isCSS = !this.isCSS;
+      this.isSCSS = !this.isSCSS;
     }
   }
 }
@@ -75,12 +98,40 @@ export default {
   .modal-style--header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
-    .icon {
-      width: 18px !important;
-      height: 18px !important;
+    .model-style--header-action {
+      display: flex;
+      align-items: center;
 
-      cursor: pointer;
+      .action-switch {
+        margin-right: 16px;
+        display: flex;
+
+        > .action-switch--item {
+          padding: 4px 8px;
+          border: 1px solid var(--secondary-color);
+          cursor: pointer;
+
+          &:first-child {
+            border-radius: 4px 0 0 4px;
+          }
+          &:last-child {
+            border-radius: 0 4px 4px 0;
+          }
+          &.active {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+          }
+        }
+      }
+
+      .icon {
+        width: 18px !important;
+        height: 18px !important;
+
+        cursor: pointer;
+      }
     }
   }
 }
