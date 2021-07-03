@@ -12,42 +12,46 @@ import { getRange, normalize } from "./utils";
 export const colorValidate = (from, value) => {
   switch (from) {
     case "hex":
-      if (typeof value == "object" && value.length == 1) {
+      const hex = getColorProperties("hex");
+      if (typeof value == "object" && value.length == hex.inputLength) {
         value = value[0];
       }
 
       return (
         typeof value === "string" &&
-        value.length === 6 &&
+        value.length === hex.inputMaxLength() &&
         !isNaN(Number("0x" + value))
       );
     case "rgb":
-      if (typeof value === "object" && value.length === 3) {
+      const rgb = getColorProperties("rgb");
+      if (typeof value === "object" && value.length === rgb.inputLength) {
         const mapValue = value.filter(
-          (item) => typeof item === "number" && item <= 255
+          (item) => typeof item === "number" && item <= rgb.inputMaxLength()
         );
 
-        return mapValue.length === 3 ? true : false;
+        return mapValue.length === rgb.inputLength ? true : false;
       } else {
         return false;
       }
     case "hsl":
-      if (typeof value === "object" && value.length === 3) {
+      const hsl = getColorProperties("hsl");
+      if (typeof value === "object" && value.length === hsl.inputLength) {
         const mapValue = value.filter(
-          (item) => typeof item === "number" && item <= 200
+          (item, index) =>  (typeof item === "number" && item <= hsl.inputMaxLength(index))
         );
 
-        return mapValue.length === 3 ? true : false;
+        return mapValue.length === hsl.inputLength ? true : false;
       } else {
         return false;
       }
     case "cmyk":
-      if (typeof value === "object" && value.length === 4) {
+      const cmyk = getColorProperties("cmyk");
+      if (typeof value === "object" && value.length === cmyk.inputLength) {
         const mapValue = value.filter(
-          (item) => typeof item === "number" && item <= 255
+          (item) => typeof item === "number" && item <= cmyk.inputMaxLength()
         );
 
-        return mapValue.length === 4 ? true : false;
+        return mapValue.length === cmyk.inputLength ? true : false;
       } else {
         return false;
       }
@@ -57,12 +61,12 @@ export const colorValidate = (from, value) => {
 };
 /**
  * Color Convert
- * @param {String} from hex, rgb, hsl, cmyk
+ * @param {String} type hex, rgb, hsl, cmyk
  * @param {String} value
  * @returns
  */
-export const colorConvert = (from, value) => {
-  switch (from) {
+export const colorConvert = (type, value) => {
+  switch (type) {
     case "hex":
       return {
         hex: value,
@@ -79,10 +83,10 @@ export const colorConvert = (from, value) => {
       };
     case "hsl":
       return {
-        hex: converter.cmyk.toHex(value),
-        rgb: converter.cmyk.toRgb(value),
-        hsl: converter.cmyk.toHsl(value),
-        cmyk: value,
+        hex: converter.hsl.toHex(value),
+        rgb: converter.hsl.toRgb(value),
+        hsl: value,
+        cmyk: converter.hsl.toCmyk(value),
       };
     case "cmyk":
       return {
@@ -125,6 +129,10 @@ export const yiqContrastColor = (yiq) => {
  * @returns {String[]}
  */
 export const generateGrandients = (hex) => {
+  const isValidColor = colorValidate("hex", hex);
+
+  if (!isValidColor) return [];
+
   const rgbColor = converter.hex.toRgb(hex);
   const hexResult = gradstop({
     stops: 8,
@@ -138,6 +146,7 @@ export const generateGrandients = (hex) => {
     colorArray: [hexResult[1], `rgb(${rgbColor.join(",")})`, hexResult[6]],
   });
 };
+
 /**
  * Random RGB Color
  * @returns {Number[]}
@@ -148,9 +157,14 @@ export const generateRandomColor = () => {
     .map(() => getRange(1, 255));
 };
 
-export const calculateColor = (id, value, animated) => {
+/**
+ * @param {String} type
+ * @param {String|Number[]} value
+ * @param {Boolean} animated
+ **/
+export const calculateColor = (type, value, animated) => {
   const { cssVariable, colors, contrast, gradients } = generateCssColor({
-    id, value
+    type, value
   });
 
   document.body.style.cssText = cssVariable
@@ -173,8 +187,8 @@ export const calculateColor = (id, value, animated) => {
   };
 };
 
-export const generateCssColor = ({ id, value }) => {
-  const colors = colorConvert(id, value);
+export const generateCssColor = ({ type, value }) => {
+  const colors = colorConvert(type, value);
   const contrast = yiqContrastRatio(colors.rgb);
   const gradients = generateGrandients(colors.hex);
 
@@ -217,11 +231,17 @@ export const generateCssColor = ({ id, value }) => {
  * Get color properties by type
  * @param {String} id hex,rgb,rgba,hsl
  */
-export const getColorProperties = (id) => {
+/**
+ * Get color properties by type
+ * @param {String} type hex,rgb,rgba,hsl
+ */
+export const getColorProperties = (type) => {
   const properties = {
     hex: {
       inputLength: 1,
-      inputMaxLength: 6,
+      inputMaxLength () {
+        return 6;
+      },
       inputType: "text",
       toString(color) {
         if (typeof color == "object" && color.length == 1) {
@@ -233,7 +253,9 @@ export const getColorProperties = (id) => {
     },
     rgb: {
       inputLength: 3,
-      inputMaxLength: 255,
+      inputMaxLength () {
+        return 255;
+      },
       inputType: "number",
       toString(color) {
         return `rgb(${normalize(color).join(", ")})`;
@@ -241,7 +263,11 @@ export const getColorProperties = (id) => {
     },
     hsl: {
       inputLength: 3,
-      inputMaxLength: 200,
+      inputMaxLength (i) {
+        const length = [ 360, 100, 100 ];
+        if (typeof i == "undefined") return length;
+        return length[i];
+      },
       inputType: "number",
       toString(color) {
         return `hsl(${normalize(color).join(", ")})`;
@@ -249,7 +275,9 @@ export const getColorProperties = (id) => {
     },
     cmyk: {
       inputLength: 4,
-      inputMaxLength: 255,
+      inputMaxLength () {
+        return 100;
+      },
       inputType: "number",
       toString(color) {
         return `cmyk(${normalize(color).join(", ")})`;
@@ -257,5 +285,5 @@ export const getColorProperties = (id) => {
     },
   };
 
-  return properties[id];
+  return properties[type];
 };
