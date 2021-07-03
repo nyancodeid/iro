@@ -55,9 +55,12 @@ import { copyToClipboard } from "../services/utils";
 
 export default {
   name: "History",
+  props: {
+    contrast: String
+  },
   inject: ["notyf"],
   computed: {
-    ...mapState(["historyPage", "contrast"]),
+    ...mapState(["historyPage"]),
     ...mapGetters(["histories"]),
   },
   methods: {

@@ -24,7 +24,7 @@
       <button-random-color @colorChanged="onColorChanged"></button-random-color>
     </div>
 
-    <history @colorChanged="onColorChanged"></history>
+    <history :contrast="contrastColor" @colorChanged="onColorChanged"></history>
   </div>
 
   <div id="modal" :class="{active: modalStatus}">
