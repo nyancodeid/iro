@@ -64,7 +64,6 @@ export default {
   },
   data() {
     return {
-      isError: false,
       values: [],
     };
   },
@@ -72,6 +71,12 @@ export default {
     this.onInitialized();
   },
   computed: {
+  	isError () {
+      let color = [...this.values];
+  		let isColorValid = colorValidate(this.type.id, color);
+
+      return !isColorValid;
+  	},
     property() {
       return getColorProperties(this.type.id);
     },
@@ -93,17 +98,13 @@ export default {
     },
     onInputChanged($event) {
       let color = [...this.values];
-      let isColorValid = colorValidate(this.type.id, color);
 
       if (this.type.id == "hex") {
         color = color[0];
       }
 
-      if (isColorValid) {
-        this.isError = false;
-        this.$emit("colorChanged", [this.type.id, color]);
-      } else {
-        this.isError = true;
+      if (!this.isError) {
+      	this.$emit("colorChanged", [this.type.id, color]);
       }
     },
   },
