@@ -76,21 +76,10 @@ export default {
     };
   },
   beforeMount () {
-    const params = this.$route.params;
-
-    if (params?.type && params?.color) {
-      let { type, color } = params;
-
-      if (type != "hex") {
-        color = color.split(",");
-
-        this.onColorTypeChanged(type);
-      }
-
-      this.onColorChanged([ type, color ]);
-    } else {
-      this.$store.commit("setContrast", "white");
-    }
+    this.initialize();
+  },
+  activated () {
+    this.initialize();
   },
   mounted() {
     this.setSelectedType();
@@ -108,6 +97,23 @@ export default {
     },
   },
   methods: {
+    initialize () {
+      const params = this.$route.params;
+
+      if (params?.type && params?.color) {
+        let { type, color } = params;
+
+        if (type != "hex") {
+          color = color.split(",");
+
+          this.onColorTypeChanged(type);
+        }
+
+        this.onColorChanged([ type, color ]);
+      } else {
+        this.$store.commit("setContrast", "white");
+      }
+    },
     setSelectedType() {
       const selected = this.types.find((type) => type.selected);
       const { colors, contrast, gradients } = calculateColor(
@@ -149,5 +155,8 @@ export default {
       this.modalStatus = !this.modalStatus;
     }
   },
+  deactivate () {
+
+  }
 };
 </script>

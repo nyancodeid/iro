@@ -109,7 +109,7 @@ export const rgb = {
 export const hsl = {
   toHex (args) {
     const _rgb = hex.toRgb(args);
-    return rgb.toHex(_argb);
+    return rgb.toHex(_rgb);
   },
   toRgb (args) {
     const h = args[0] / 360;
@@ -158,9 +158,9 @@ export const hsl = {
 
     return rgb;
   },
-  toCmyk () {
+  toCmyk (args) {
     const _rgb = hex.toRgb(args);
-    return rgb.toCmyk(_argb);
+    return rgb.toCmyk(_rgb);
   }
 }
 
