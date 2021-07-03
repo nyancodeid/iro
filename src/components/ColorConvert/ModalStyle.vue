@@ -51,7 +51,7 @@ export default {
     generateStyleCode () {
       const color = this.colors.find(color => (color.id == "rgb"));
       const style = generateCssColor({
-        id: "rgb",
+        type: "rgb",
         value: color.value
       });
 
