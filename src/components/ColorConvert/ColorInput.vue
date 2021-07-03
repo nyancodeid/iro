@@ -23,28 +23,28 @@
 			:style="`color: ${hex}`"
 		>
 			<template v-if="property.inputType == 'number'">
-				<input
-					v-for="n in property.inputLength"
-					type="number"
-					name="values[]"
-					v-model.number="values[n - 1]"
-					:maxlength="property.inputMaxLength"
-					:key="`input-${n}`"
-					:id="`${type.id}-input-${n}`"
-					@input="onInputChanged"
-				/>
+				<div class="color-input--wrapper" v-for="n in property.inputLength" :key="`input-${n}`">
+					<input
+						type="number"
+						name="values[]"
+						v-model.number="values[n - 1]"
+						:maxlength="property.inputMaxLength((n-1))"
+						:id="`${type.id}-input-${n}`"
+						@input="onInputChanged"
+					/>
+				</div>
 			</template>
 			<template v-else>
-				<input
-					v-for="n in property.inputLength"
-					type="text"
-					name="values[]"
-					v-model="values[n - 1]"
-					:maxlength="property.inputMaxLength"
-					:key="`input-${n}`"
-					:id="`${type.id}-input-${n}`"
-					@input="onInputChanged"
-				/>
+				<div class="color-input--wrapper" v-for="n in property.inputLength" :key="`input-${n}`">
+					<input
+						type="text"
+						name="values[]"
+						v-model="values[n - 1]"
+						:maxlength="property.inputMaxLength()"
+						:id="`${type.id}-input-${n}`"
+						@input="onInputChanged"
+					/>
+				</div>
 			</template>
 		</div>
 	</div>
@@ -96,7 +96,7 @@ export default {
 
       this.notyf.success("Color copied to clipboard!");
     },
-    onInputChanged($event) {
+    onInputChanged() {
       let color = [...this.values];
 
       if (this.type.id == "hex") {
@@ -115,7 +115,7 @@ export default {
     type() {
       this.onInitialized();
     },
-  },
+  }
 };
 </script>
 
@@ -153,10 +153,10 @@ export default {
 
 	.color-input {
 		position: relative;
-		width: 100%;
+		display: flex;
 
 		&.error input {
-			border-inline: 3px solid #d32f2f;
+			color: #d32f2f;
 		}
 
 		input {
@@ -183,9 +183,12 @@ export default {
 		}
 
 		&.hex {
-			> input {
-				width: calc(100% - 32px);
-				padding-left: 1em;
+			> .color-input--wrapper {
+				width: calc(100% - 6px);
+
+				> input {				
+					width: 100%;
+				}
 			}
 
 			&:before {
@@ -199,19 +202,48 @@ export default {
 			}
 		}
 
-		&.rgb input,
-		&.hsl input {
-			width: calc((100% / 3) - 12px);
+		&.rgb .color-input--wrapper,
+		&.hsl .color-input--wrapper {
+			width: calc((100% / 3));
 			margin-right: 8px;
+
+			> input {
+				width: calc(100% - 6px);
+			}
 
 			&:last-child {
 				margin-right: 0;
 			}
 		}
 
-		&.cmyk input {
-			width: calc(25% - 12px);
+		&.hsl .color-input--wrapper {
+			position: relative;
+
+			&:not(:first-child)::after {
+				content: "%";
+				position: absolute;
+				top: 4px;
+				right: 4px;
+				color: #222222;
+			}
+		}
+
+		&.cmyk .color-input--wrapper {
+			width: calc((100% / 4));
 			margin-right: 8px;
+			position: relative;
+
+			> input {
+				width: calc(100% - 6px);
+			}
+
+			&::after {
+				content: "%";
+				position: absolute;
+				top: 4px;
+				right: 4px;
+				color: #222222;
+			}
 
 			&:last-child {
 				margin-right: 0;
