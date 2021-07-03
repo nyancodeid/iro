@@ -1,3 +1,8 @@
+Number.prototype.decimalLength = function () {
+  if(Math.floor(this.valueOf()) === this.valueOf()) return 0;
+  return this.toString().split(".")[1].length || 0; 
+}
+
 /**
  * Random Number from range min to max
  * @param {Number} min
@@ -21,7 +26,17 @@ export const copyToClipboard = (value) => {
   textArea.remove();
 };
 
-
+/**
+ * Normalize float number to number without decimal
+ * @param {String[]|Number[]} numbers
+ * @returns {Number[]}
+ **/
 export const normalize = (numbers) => {
-  return numbers.map(n => Number(Number(n).toFixed(0)));
+  return numbers.map(n => {
+    if (Number(n).decimalLength() > 0) {
+      return Number(Number(n).toFixed(0));
+    } else {
+      return Number(n);
+    }
+  });
 }
