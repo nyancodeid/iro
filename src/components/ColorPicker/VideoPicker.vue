@@ -47,16 +47,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 import { colorConvert } from "../../services/colors";
+import { useAppStore } from "../../store/app";
+import { useDataStore } from "../../store/data";
 
 const DEFAULT_WIDTH = 436;
 const DEFAULT_HEIGHT = 414;
 
 export default {
-  name: 'VideoPicker',
-  inject: [ 'notyf' ],
-  data () {
+  name: "VideoPicker",
+  inject: ["notyf"],
+  data() {
     return {
       isInitialized: false,
       color: "",
@@ -64,52 +66,58 @@ export default {
       cameraDevices: [],
       isTorch: false,
       isTorchAvailable: false,
-      isSwitchAvailable: false
-    }
+      isSwitchAvailable: false,
+    };
   },
-  async mounted () {
+  async mounted() {
     this.$refs.canvas_ctx.width = DEFAULT_WIDTH;
     this.$refs.canvas_ctx.height = DEFAULT_HEIGHT;
   },
   computed: {
-    ...mapState(["contrast"]),
-    hexColor () {
+    ...mapState(useAppStore, ["contrast"]),
+    hexColor() {
       const color = colorConvert("rgb", this.color);
       return color.hex;
     },
-    controlCaptureClass () {
+    controlCaptureClass() {
       return {
         active: this.isInitialized,
-        inactive: !this.isInitialized
-      }
-    }
+        inactive: !this.isInitialized,
+      };
+    },
   },
   methods: {
-    async initializeCamera (facingMode = "environment") {
+    ...mapActions(useDataStore, ["addPicker"]),
+    async initializeCamera(facingMode = "environment") {
       const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoDevices = devices
-        .find(device => (device.kind === 'videoinput' && device.label.indexOf("back") > 0));
+      const videoDevices = devices.find(
+        (device) =>
+          device.kind === "videoinput" && device.label.indexOf("back") > 0
+      );
 
-      this.cameraDevices = devices.filter(device => (device.kind === 'videoinput')).slice(0, 2);
+      this.cameraDevices = devices
+        .filter((device) => device.kind === "videoinput")
+        .slice(0, 2);
 
       const constraints = {
         audio: false,
-        video: true
+        video: true,
       };
 
       if (videoDevices) {
-        this.isSwitchAvailable = (devices.length > 1);
+        this.isSwitchAvailable = devices.length > 1;
 
         constraints.video = {
           facingMode,
         };
       }
 
-      return navigator.mediaDevices.getUserMedia(constraints)
+      return navigator.mediaDevices
+        .getUserMedia(constraints)
         .then(this.handlerVideoSuccess)
         .catch(this.handleVideoError);
     },
-    onCaptureColor () {
+    onCaptureColor() {
       if (!this.isInitialized) {
         this.initializeCamera().then(() => {
           // on initialize complete
@@ -118,17 +126,17 @@ export default {
         // Capture Color
         const hex = this.hexColor;
 
-        this.$store.dispatch("addPicker", {
+        this.addPicker({
           title: "HEX",
           type: "hex",
           value: hex,
           colorText: `#${hex}`,
-          colorStyle: `#${hex}`
-        })
+          colorStyle: `#${hex}`,
+        });
       }
     },
-    onCapabilitiesReady (track) {
-      if (typeof track.getCapabilities != 'function') return false;
+    onCapabilitiesReady(track) {
+      if (typeof track.getCapabilities != "function") return false;
 
       const capabilities = track.getCapabilities();
       const setting = track.getSettings();
@@ -136,15 +144,15 @@ export default {
       this.isTorchAvailable = capabilities.torch ? true : false;
       this.isTorch = setting.torch ? true : false;
     },
-    handlerVideoSuccess (stream) {
-      const [ track ] = stream.getVideoTracks();
+    handlerVideoSuccess(stream) {
+      const [track] = stream.getVideoTracks();
       const video = this.$refs.video_ctx;
-      const canvas = this.$refs.canvas_ctx
+      const canvas = this.$refs.canvas_ctx;
 
       window.stream = stream;
       video.srcObject = stream;
 
-      video.addEventListener('loadedmetadata', (e) => {  
+      video.addEventListener("loadedmetadata", (e) => {
         this.isInitialized = true;
 
         setTimeout(() => {
@@ -157,12 +165,12 @@ export default {
       }
 
       this.interval = setInterval(() => {
-        const ctx = canvas.getContext('2d');
-        
+        const ctx = canvas.getContext("2d");
+
         ctx.drawImage(video, 0, 0, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
-        const sx = DEFAULT_WIDTH/2;
-        const sy = DEFAULT_HEIGHT/2;
+        const sx = DEFAULT_WIDTH / 2;
+        const sy = DEFAULT_HEIGHT / 2;
 
         const imageData = ctx.getImageData(sx, sy, 1, 1);
         const rgbColor = imageData.data.slice(0, 3);
@@ -171,52 +179,60 @@ export default {
       }, 100);
     },
     handleVideoError(error) {
-      console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+      console.log(
+        "navigator.MediaDevices.getUserMedia error: ",
+        error.message,
+        error.name
+      );
 
       if (error.name == "NotAllowedError") {
-        this.notyf.error("Camera Permission is DENIED. Plase enable it to make function normally.")
+        this.notyf.error(
+          "Camera Permission is DENIED. Plase enable it to make function normally."
+        );
       }
 
       this.isInitialized = false;
       this.stopInterval();
     },
-    onSwitchCamera () {
+    onSwitchCamera() {
       const video = this.$refs.video_ctx;
 
       const stream = video.srcObject;
-      const [ track ] = stream.getVideoTracks();
+      const [track] = stream.getVideoTracks();
 
       if (this.isSwitchAvailable) {
-        const facingMode = track.getSettings().facingMode == "user" ? "environment" : "user";
+        const facingMode =
+          track.getSettings().facingMode == "user" ? "environment" : "user";
 
         track.stop();
-        
+
         this.initializeCamera(facingMode).catch((e) => {
           this.notyf.error("Error");
         });
-      }      
+      }
     },
-    onToggleTorch () {
+    onToggleTorch() {
       const video = this.$refs.video_ctx;
 
       const stream = video.srcObject;
-      const [ track ] = stream.getVideoTracks();
+      const [track] = stream.getVideoTracks();
 
       if (this.isTorchAvailable) {
-        track.applyConstraints({
-          advanced: [{torch: !this.isTorch}]
-        })
-        .then(() => {
-          const setting = track.getSettings();
+        track
+          .applyConstraints({
+            advanced: [{ torch: !this.isTorch }],
+          })
+          .then(() => {
+            const setting = track.getSettings();
 
-          this.isTorch = setting.torch;
-        })
-        .catch(e => {
-          this.notyf.error("Error while toggle torch/light");
-        });  
-      }      
+            this.isTorch = setting.torch;
+          })
+          .catch((e) => {
+            this.notyf.error("Error while toggle torch/light");
+          });
+      }
     },
-    stopInterval () {
+    stopInterval() {
       if (this.interval) {
         clearInterval(this.interval);
       }
@@ -229,7 +245,8 @@ export default {
 </script>
 
 <style lang="scss">
-$box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+$box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12),
+  0 1px 3px 0 rgba(0, 0, 0, 0.2);
 
 .video-wrapper {
   position: relative;
@@ -334,7 +351,7 @@ $box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12)
         &:after {
           border: 1em solid transparent;
           border-top-color: white;
-          content: '';
+          content: "";
           margin-left: -1em;
           position: absolute;
           top: 100%;

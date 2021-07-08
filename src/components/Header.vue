@@ -16,18 +16,25 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { useAppStore } from "../store/app";
 
 export default {
   name: "Header",
-  computed: {
-    ...mapState(["contrast"]),
+  setup() {
+    const store = useAppStore();
+    const toggleHistory = () => {
+      store.toggleHistoryPage();
+    };
+    return {
+      store,
+      toggleHistory,
+    };
   },
-  methods: {
-    toggleHistory () {
-      this.$store.commit("toggleHistoryPage");
-    }
-  }
+  computed: {
+    contrast() {
+      return this.store.contrast;
+    },
+  },
 };
 </script>
 

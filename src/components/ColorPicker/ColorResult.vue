@@ -1,6 +1,8 @@
 <template>
   <div class="video-color--result" :class="`bg-${contrast}-contrast`">
-    <div class="video-color--result-label"><span class="heading">Result</span> color:</div>
+    <div class="video-color--result-label">
+      <span class="heading">Result</span> color:
+    </div>
     <div class="video-color--result-wrapper">
       <div class="video-color--result-empty" v-if="pickers.length == 0">
         <span>Your captured color will show here.</span>
@@ -23,30 +25,32 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
+
+import { useAppStore } from "../../store/app";
+import { useDataStore } from "../../store/data";
 
 export default {
-  name: 'ColorResult',
+  name: "ColorResult",
   props: {
-  	colors: Array
-  },
-  data () {
-    return {
-
-    }
+    colors: Array,
   },
   computed: {
-    ...mapState([ "pickers", "contrast" ])
+    ...mapState(useAppStore, ["contrast"]),
+    ...mapState(useDataStore, ["pickers"]),
   },
   methods: {
-    openColor (item) {
-      this.$router.push({ name: "convert", params: {
-        type: "hex",
-        color: item.value
-      }});
-    }
-  }
-}
+    openColor(item) {
+      this.$router.push({
+        name: "convert",
+        params: {
+          type: "hex",
+          color: item.value,
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -63,7 +67,7 @@ export default {
     padding-left: 6px;
     margin-bottom: 8px;
 
-    >.heading {
+    > .heading {
       font-size: 1.5em;
       font-weight: bold;
     }
@@ -77,7 +81,7 @@ export default {
       background-color: var(--black-contrast);
       text-align: center;
       width: 100%;
-      border-radius: .5em;
+      border-radius: 0.5em;
       padding: 16px;
       margin: 8px 8px 16px 8px;
       color: var(--darker-color);
@@ -104,7 +108,7 @@ export default {
         font-weight: bold;
         margin-top: 8px;
       }
-    }  
+    }
   }
 }
 

@@ -49,29 +49,42 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
-
 import { copyToClipboard } from "../services/utils";
+import { useAppStore } from "../store/app";
+import { useDataStore } from "../store/data";
 
 export default {
   name: "History",
   props: {
-    contrast: String
+    contrast: String,
   },
   inject: ["notyf"],
+  setup() {
+    const appStore = useAppStore();
+    const dataStore = useDataStore();
+
+    return {
+      appStore,
+      dataStore,
+    };
+  },
   computed: {
-    ...mapState(["historyPage"]),
-    ...mapGetters(["histories"]),
+    historyPage() {
+      return this.appStore.historyPage;
+    },
+    histories() {
+      return this.dataStore.histories;
+    },
   },
   methods: {
     openHistory(history) {
       this.$emit("colorChanged", [history.type, history.value]);
-      this.$store.commit("toggleHistoryPage");
+      this.appStore.toggleHistoryPage();
     },
     addToBookmark(history) {
       const clean = JSON.parse(JSON.stringify(history));
 
-      this.$store.dispatch("addBookmarks", clean);
+      this.dataStore.addBookmarks(clean);
       this.notyf.success("Color successfuly bookmarked!");
     },
     addToClipboard(history) {
@@ -79,7 +92,7 @@ export default {
       this.notyf.success("Copied!");
     },
     closePage() {
-      this.$store.commit("toggleHistoryPage");
+      this.appStore.toggleHistoryPage();
     },
   },
 };

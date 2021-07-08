@@ -12,8 +12,8 @@ const routes = [
   {
     path: "/picker",
     name: "picker",
-    component: ColorPicker
-  }
+    component: ColorPicker,
+  },
 ];
 
 const router = createRouter({

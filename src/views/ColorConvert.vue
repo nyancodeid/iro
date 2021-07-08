@@ -4,7 +4,7 @@
       <div class="main-wrapper">
         <color-input
           :type="activeColor"
-          :hex="hex"
+          :hex="hexColor"
           :color="contrastColor"
           @colorChanged="onColorChanged"
           @toggleStyle="toggleModalStyle"
@@ -27,7 +27,7 @@
     <history :contrast="contrastColor" @colorChanged="onColorChanged"></history>
   </div>
 
-  <div id="modal" :class="{active: modalStatus}">
+  <div id="modal" :class="{ active: modalStatus }">
     <modal-style
       :status="modalStatus"
       :colors="types"
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "pinia";
 
 import History from "../components/History.vue";
 import ColorContrast from "../components/ColorConvert/ColorContrast.vue";
@@ -47,6 +47,9 @@ import ColorInput from "../components/ColorConvert/ColorInput.vue";
 import ButtonConvert from "../components/ColorConvert/ButtonConvert.vue";
 import ButtonRandomColor from "../components/ColorConvert/ButtonRandomColor.vue";
 import ModalStyle from "../components/ColorConvert/ModalStyle.vue";
+
+import { useAppStore } from "../store/app";
+import { useDataStore } from "../store/data";
 
 import { calculateColor, yiqContrastColor } from "../services/colors";
 import { normalize } from "../services/utils";
@@ -66,7 +69,6 @@ export default {
       modalStatus: false,
       contrast: 0,
       gradients: [],
-      hex: "212121",
       types: [
         { title: "HEX", id: "hex", selected: true, value: "212121" },
         { title: "RGB", id: "rgb", selected: false, value: [33, 33, 33] },
@@ -75,17 +77,21 @@ export default {
       ],
     };
   },
-  beforeMount () {
+  beforeMount() {
     this.initialize();
   },
-  activated () {
+  activated() {
     this.initialize();
   },
   mounted() {
     this.setSelectedType();
   },
   computed: {
-    ...mapState(["bookmarks", "history"]),
+    ...mapState(useDataStore, ["bookmarks", "history"]),
+    hexColor() {
+      const hex = this.types.find((type) => type.id === "hex");
+      return hex.value;
+    },
     activeColor() {
       return this.types.find((type) => type.selected);
     },
@@ -97,7 +103,9 @@ export default {
     },
   },
   methods: {
-    initialize () {
+    ...mapActions(useAppStore, ["setContrast"]),
+    ...mapActions(useDataStore, ["addHistory"]),
+    initialize() {
       const params = this.$route.params;
 
       if (params?.type && params?.color) {
@@ -109,14 +117,14 @@ export default {
           this.onColorTypeChanged(type);
         }
 
-        this.onColorChanged([ type, color ]);
+        this.onColorChanged([type, color]);
       } else {
-        this.$store.commit("setContrast", "white");
+        this.setContrast("white");
       }
     },
     setSelectedType() {
       const selected = this.types.find((type) => type.selected);
-      const { colors, contrast, gradients } = calculateColor(
+      const { contrast, gradients } = calculateColor(
         selected.id,
         selected.value,
         false
@@ -124,12 +132,10 @@ export default {
 
       this.contrast = contrast.yiq;
       this.gradients = gradients;
-      this.hex = colors.hex;
     },
     onColorChanged([id, value]) {
       const { colors, contrast, gradients } = calculateColor(id, value, true);
 
-      this.hex = colors.hex;
       this.contrast = contrast.yiq;
       this.gradients = gradients;
       this.types = this.types.map((type) => {
@@ -139,8 +145,8 @@ export default {
         return { ...type, value: colorValues };
       });
 
-      this.$store.commit("setContrast", contrast.result);
-      this.$store.dispatch("addHistory", {
+      this.setContrast(contrast.result);
+      this.addHistory({
         type: this.activeColor.id,
         value: this.activeColor.value,
         colors,
@@ -151,12 +157,10 @@ export default {
         return { ...type, selected: type.id === id };
       });
     },
-    toggleModalStyle () {
+    toggleModalStyle() {
       this.modalStatus = !this.modalStatus;
-    }
+    },
   },
-  deactivate () {
-
-  }
+  deactivate() {},
 };
 </script>
