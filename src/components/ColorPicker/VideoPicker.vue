@@ -236,12 +236,32 @@ export default {
       if (this.interval) {
         clearInterval(this.interval);
       }
-    }
+    },
+    stopVideoStream() {
+      if (this.$refs?.video_ctx?.srcObject) {
+        const stream = this.$refs.video_ctx.srcObject;
+        const [track] = stream.getVideoTracks();
+
+        track.stop();
+
+        this.$refs.video_ctx.srcObject = null;
+      }
+    },
   },
-  beforeUnmount () {
+  activated() {
+    this.stopVideoStream();
+
+    this.color = "";
+    this.isInitialized = false;
+  },
+  deactivated() {
+    this.stopVideoStream();
     this.stopInterval();
-  }
-}
+  },
+  beforeUnmount() {
+    this.stopInterval();
+  },
+};
 </script>
 
 <style lang="scss">
