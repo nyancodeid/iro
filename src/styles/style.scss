@@ -20,7 +20,7 @@ body {
   padding: 0;
   margin: 0;
 
-  color: white; //default
+  color: white;
 
   &.dark {
     color: black;
@@ -38,46 +38,43 @@ body {
   flex-direction: column;
   height: 100%;
 
-  >header {
-    align-items: flex-start;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     padding: 2em 64px 1.5em 64px;
     border-bottom: 2px dashed var(--secondary-color);
 
-    >div {
-      display: inline-block;
-      width: calc(50% - 51px);
-    }
-
-    >nav {
-      display: inline-block;
-      width: calc(50% - 32px);
-      height: 100%;
-      vertical-align: middle;
-      text-align: right;
-      padding-right: 32px;
-
-      >a {
-        color: var(--contrast-color);
-        margin-right: 16px;
-        padding-bottom: 8px;
-        text-decoration: none;
-
-        border-bottom: 1px solid;
-        cursor: pointer;
-
-        &.active {
-          font-weight: bold;
-        }
+    .header-title {
+      h1 {
+        margin: 0;
       }
     }
 
-    h1 {
-      margin-bottom: 0;
-    }
+    .header-menu {
+      display: flex;
+      align-items: center;
 
-    >img {
-      width: 51px;
+      nav {
+        display: flex;
+        text-align: right;
+        padding-right: 32px;
+
+        a {
+          color: var(--contrast-color);
+          margin-right: 16px;
+          padding-bottom: 8px;
+          text-decoration: none;
+
+          border-bottom: 1px solid;
+          cursor: pointer;
+
+          &.active {
+            font-weight: bold;
+          }
+        }
+      }
     }
   }
 
@@ -245,6 +242,11 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 
+    &.icon-lg {
+      height: 40px;
+      width: 40px;
+    }
+
     &.icon-bookmark--white {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' enable-background='new 0 0 24 24' height='24px' viewBox='0 0 24 24' width='24px' fill='%23FFFFFF'%3E%3Crect fill='none' height='24' width='24'/%3E%3Cpath d='M17,11v6.97l-5-2.14l-5,2.14V5h6V3H7C5.9,3,5,3.9,5,5v16l7-3l7,3V11H17z M21,7h-2v2h-2V7h-2V5h2V3h2v2h2V7z'/%3E%3C/svg%3E");
     }
@@ -281,6 +283,7 @@ body {
   .bg-white-contrast {
     background-color: var(--white-contrast);
   }
+
   .bg-black-contrast {
     background-color: var(--black-contrast);
   }
@@ -294,37 +297,34 @@ body {
     header {
       padding: 0 0 1em 0;
       border-bottom: none;
+      flex-direction: column;
 
-      >div {
-        display: block;
-        width: calc(100% - 51px);
-
-        h1 {
-          margin-top: 0;
-        }
+      .header-title {
+        width: 100%;
+        margin-bottom: 8px;
       }
 
-      >nav {
-        display: block;
+      .header-menu {
         width: 100%;
-        height: auto;
-        text-align: left;
-        padding: 8px 0;
 
-        >a {
-          font-size: 13px;
+        nav {
+          text-align: left;
+          padding: 8px 0;
 
-          &.active {
-            font-weight: bold;
+          >a {
+            font-size: 13px;
+
+            &.active {
+              font-weight: bold;
+            }
           }
         }
-      }
 
-      >img {
-        width: 32px;
-        position: fixed;
-        top: 16px;
-        right: 16px;
+        .icon.icon-lg {
+          position: fixed;
+          top: 2em;
+          right: 2em;
+        }
       }
     }
 

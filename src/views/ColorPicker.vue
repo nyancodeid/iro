@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import ColorResult from "../components/ColorPicker/ColorResult.vue";
 import VideoPicker from "../components/ColorPicker/VideoPicker.vue";
 
