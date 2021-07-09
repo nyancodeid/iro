@@ -37,7 +37,8 @@ export const colorValidate = (from, value) => {
       const hsl = getColorProperties("hsl");
       if (typeof value === "object" && value.length === hsl.inputLength) {
         const mapValue = value.filter(
-          (item, index) =>  (typeof item === "number" && item <= hsl.inputMaxLength(index))
+          (item, index) =>
+            typeof item === "number" && item <= hsl.inputMaxLength(index)
         );
 
         return mapValue.length === hsl.inputLength ? true : false;
@@ -314,4 +315,46 @@ export const getColorProperties = (type) => {
   };
 
   return properties[type];
+};
+
+/**
+ * @param {Number[]} rgb color
+ * @returns {Number}
+ */
+export const getLuminance = (rgb) => {
+  var a = rgb.map(function (v) {
+    v /= 255;
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+};
+
+/**
+ *
+ * @param {Number[]|String} foreground
+ * @param {Number[]|String} background
+ * @returns
+ */
+export const calculateContrast = (foreground, background) => {
+  if (typeof foreground === "string") {
+    foreground = converter.hex.toRgb(foreground);
+  }
+  if (typeof background === "string") {
+    background = converter.hex.toRgb(background);
+  }
+
+  const fg_luminance = getLuminance(foreground);
+  const bg_luminance = getLuminance(background);
+
+  const ratio =
+    fg_luminance > bg_luminance
+      ? (bg_luminance + 0.05) / (fg_luminance + 0.05)
+      : (fg_luminance + 0.05) / (bg_luminance + 0.05);
+
+  return {
+    aa_lvl_lg: ratio < 1 / 3,
+    aa_lvl_sm: ratio < 1 / 4.5,
+    aaa_lvl_lg: ratio < 1 / 4.5,
+    aaa_lvl_sm: ratio < 1 / 7,
+  };
 };
