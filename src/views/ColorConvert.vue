@@ -10,6 +10,11 @@
           @toggleStyle="toggleModalStyle"
         ></color-input>
         <color-contrast :contrast="contrast"></color-contrast>
+        <color-contrast-checker
+          :foreground="colors.text"
+          :background="colors.contrast"
+          :color="contrastColor"
+        ></color-contrast-checker>
       </div>
     </div>
     <div class="navbar">
@@ -42,6 +47,7 @@ import { mapState, mapActions } from "pinia";
 
 import History from "../components/History.vue";
 import ColorContrast from "../components/ColorConvert/ColorContrast.vue";
+import ColorContrastChecker from "../components/ColorConvert/ColorContrastChecker.vue";
 import ColorGradient from "../components/ColorConvert/ColorGradient.vue";
 import ColorInput from "../components/ColorConvert/ColorInput.vue";
 import ButtonConvert from "../components/ColorConvert/ButtonConvert.vue";
@@ -57,6 +63,7 @@ import { normalize } from "../services/utils";
 export default {
   components: {
     ColorContrast,
+    ColorContrastChecker,
     ButtonRandomColor,
     ColorGradient,
     ColorInput,
@@ -87,6 +94,7 @@ export default {
     this.setSelectedType();
   },
   computed: {
+    ...mapState(useAppStore, ["colors"]),
     ...mapState(useDataStore, ["bookmarks", "history"]),
     hexColor() {
       const hex = this.types.find((type) => type.id === "hex");
@@ -103,7 +111,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAppStore, ["setContrast"]),
+    ...mapActions(useAppStore, ["setContrast", "setColors"]),
     ...mapActions(useDataStore, ["addHistory"]),
     initialize() {
       const params = this.$route.params;
@@ -134,7 +142,11 @@ export default {
       this.gradients = gradients;
     },
     onColorChanged([id, value]) {
-      const { colors, contrast, gradients } = calculateColor(id, value, true);
+      const { colors, contrast, gradients, variable } = calculateColor(
+        id,
+        value,
+        true
+      );
 
       this.contrast = contrast.yiq;
       this.gradients = gradients;
@@ -146,6 +158,7 @@ export default {
       });
 
       this.setContrast(contrast.result);
+      this.setColors(variable);
       this.addHistory({
         type: this.activeColor.id,
         value: this.activeColor.value,
