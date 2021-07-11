@@ -57,7 +57,11 @@ import ModalStyle from "../components/ColorConvert/ModalStyle.vue";
 import { useAppStore } from "../store/app";
 import { useDataStore } from "../store/data";
 
-import { calculateColor, yiqContrastColor } from "../services/colors";
+import {
+  calculateColor,
+  generateCssColor,
+  yiqContrastColor,
+} from "../services/colors";
 import { normalize } from "../services/utils";
 
 export default {
@@ -126,17 +130,14 @@ export default {
         }
 
         this.onColorChanged([type, color]);
-      } else {
-        this.setContrast("white");
       }
     },
     setSelectedType() {
       const selected = this.types.find((type) => type.selected);
-      const { contrast, gradients } = calculateColor(
-        selected.id,
-        selected.value,
-        false
-      );
+      const { contrast, gradients } = generateCssColor({
+        type: selected.id,
+        value: selected.value,
+      });
 
       this.contrast = contrast.yiq;
       this.gradients = gradients;

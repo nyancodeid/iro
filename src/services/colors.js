@@ -1,7 +1,7 @@
 import gradstop from "gradstop";
 
 import * as converter from "./converter";
-import { getRange, normalize } from "./utils";
+import { getRange, normalize, minmax } from "./utils";
 
 /**
  * Color Validation
@@ -358,5 +358,89 @@ export const calculateContrast = (foreground, background) => {
     aa_lvl_sm: ratio < 1 / 4.5,
     aaa_lvl_lg: ratio < 1 / 4.5,
     aaa_lvl_sm: ratio < 1 / 7,
+  };
+};
+
+/**
+ * @param {Number[]|String} color
+ * @source https://github.com/leodido/material-palette/blob/master/index.m.js
+ */
+export const generateMaterialPalette = (color) => {
+  if (typeof color === "string") {
+    color = converter.hex.toHsl(color);
+  }
+
+  const [h, s, l] = color;
+
+  const palettes = {
+    50: [h, s, minmax(l + 52)],
+    100: [h, s, minmax(l + 37)],
+    200: [h, s, minmax(l + 26)],
+    300: [h, s, minmax(l + 12)],
+    400: [h, s, minmax(l + 6)],
+    500: [h, s, l],
+    600: [h, s, minmax(l - 6)],
+    700: [h, s, minmax(l - 12)],
+    800: [h, s, minmax(l - 18)],
+    900: [h, s, minmax(l - 24)],
+    A100: [h + 5, s, minmax(l + 24)],
+    A200: [h + 5, s, minmax(l + 16)],
+    A400: [h + 5, s, minmax(l - 1)],
+    A700: [h + 5, s, minmax(l - 12)],
+  };
+
+  return {
+    ...palettes,
+    toGradient(type, withFormat = false) {
+      const gradients = [];
+      const typeProps = getColorProperties(type);
+      for (const index in palettes) {
+        gradients.push(palettes[index]);
+      }
+      return gradients
+        .map((color) => colorConvert("hsl", color)[type])
+        .map((color) => (withFormat ? typeProps.toString(color) : color))
+        .slice(0, 9);
+    },
+  };
+};
+
+/**
+ * Get harmonize color base on hsl color and deggress.
+ * @param {Number[]} color hsl color [h, s, l]
+ * @param {Number} start degg
+ * @param {Number} end degg
+ * @param {Number} interval interval degg
+ * @returns
+ */
+export const harmonize = (color, start, end, interval) => {
+  const colors = [];
+  const [h, s, l] = color;
+  for (let i = start; i <= end; i += interval) {
+    const new_h = (h + i) % 360;
+    const result = [new_h, s, l];
+    colors.push(result);
+  }
+
+  return colors;
+};
+
+/**
+ * Get Color Harmonies (Complementary, Analogous, and Triad)
+ * @param {String|Number[]} color
+ */
+export const getColorHarmonies = (color) => {
+  if (typeof color === "string") {
+    color = converter.hex.toHsl(color);
+  }
+
+  const complement = harmonize(color, 180, 180, 1).map(generateMaterialPalette);
+  const analogous = harmonize(color, 30, 90, 60).map(generateMaterialPalette);
+  const triad = harmonize(color, 120, 240, 120).map(generateMaterialPalette);
+
+  return {
+    complement,
+    analogous,
+    triad,
   };
 };
