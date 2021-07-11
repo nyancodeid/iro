@@ -56,39 +56,32 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAppStore, ["contrast"]),
+    ...mapState(useAppStore, { contrast: "contrast", style: "colors" }),
     code() {
       return this.generateStyleCode();
     },
   },
-  mounted() {
-    this.generateStyleCode();
-  },
   methods: {
     generateStyleCode() {
-      const color = this.colors.find((color) => color.id == "rgb");
-      const style = generateCssColor({
-        type: "rgb",
-        value: color.value,
-      });
+      const style = this.style.variables;
 
       if (this.isCSS) {
-        let css = style.cssVariable
-          .map((item, index) => {
-            if (style.cssVariable.length - 1 != index) return `  ${item}\n`;
+        let css = style
+          .map(([name, value], index) => {
+            if (style.length - 1 != index) return `  ${name}: ${value}\n`;
 
-            return `  ${item}`;
+            return `  ${name}: ${value}`;
           })
           .join("");
 
         return `:host {\n${css}\n}`;
       } else {
-        let css = style.cssVariable
-          .map((item, index) => {
-            if (style.cssVariable.length - 1 != index)
-              return `  ${item.replace("--", "$")}\n`;
+        let css = style
+          .map(([name, value], index) => {
+            if (style.length - 1 != index)
+              return `  ${name.replace("--", "$")}: ${value}\n`;
 
-            return `  ${item.replace("--", "$")}`;
+            return `  ${name.replace("--", "$")}: ${value}`;
           })
           .join("");
 

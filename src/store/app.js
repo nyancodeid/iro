@@ -10,6 +10,7 @@ export const useAppStore = defineStore({
       secondary: [33, 33, 33],
       text: [33, 33, 33],
       contrast: [255, 255, 255],
+      variables: [],
     },
   }),
   actions: {
@@ -19,12 +20,13 @@ export const useAppStore = defineStore({
     toggleHistoryPage() {
       this.historyPage = !this.historyPage;
     },
-    setColors({ primary, secondary, text, contrast }) {
+    setColors({ primary, secondary, text, contrast, variables }) {
       this.colors = {
         primary,
         secondary,
         text,
         contrast,
+        variables,
       };
     },
   },

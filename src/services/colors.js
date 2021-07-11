@@ -161,20 +161,18 @@ export const generateRandomColor = () => {
 /**
  * @param {String} type
  * @param {String|Number[]} value
- * @param {Boolean} animated
  **/
-export const calculateColor = (type, value, animated) => {
+export const calculateColor = (type, value) => {
   const { variable, cssVariable, colors, contrast, gradients } =
     generateCssColor({
       type,
       value,
     });
 
-  document.body.style.cssText = cssVariable.join("");
-
-  document.body.style.cssText += animated
-    ? `transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);`
-    : "";
+  const root = document.documentElement;
+  cssVariable.forEach(([name, value]) => {
+    root.style.setProperty(name, value);
+  });
 
   if (contrast.result === "black") {
     document.body.classList.add("dark");
@@ -185,7 +183,7 @@ export const calculateColor = (type, value, animated) => {
   return {
     colors,
     contrast,
-    gradients: gradients.reverse(),
+    gradients,
     variable,
   };
 };
@@ -195,6 +193,9 @@ export const generateCssColor = ({ type, value }) => {
   const contrast = yiqContrastRatio(colors.rgb);
   const gradients = generateGrandients(colors.hex);
   const rgb = getColorProperties("rgb");
+
+  const material = generateMaterialPalette(colors.hsl);
+  console.log(material.toGradient("rgb", true));
 
   const textColor =
     contrast.result === "black" ? gradients[7] : rgb.toString(colors.rgb);
@@ -215,29 +216,30 @@ export const generateCssColor = ({ type, value }) => {
     ["contrast-color", contrast.result],
   ];
 
+  cssVariable = cssVariable
+    .filter(([name, value]) => name !== null)
+    .map(([name, value]) => {
+      return [`--${name}`, value];
+    });
+
+  for (const [index, gradient] of Object.entries(gradients.slice().reverse())) {
+    const n = (Number(index) + 1) * 100;
+
+    cssVariable.push([`--gradient-${n}`, gradient]);
+  }
+
   let variable = {
     primary: normalize(colors.rgb),
     secondary: rgb.toArray(secondaryColor),
     text: rgb.toArray(textColor),
     contrast: contrast.result === "black" ? [0, 0, 0] : [255, 255, 255],
+    variables: cssVariable,
   };
-
-  cssVariable = cssVariable
-    .filter(([name, value]) => name !== null)
-    .map(([name, value]) => {
-      return `--${name}: ${value};`;
-    });
-
-  for (const [index, gradient] of Object.entries(gradients.reverse())) {
-    const n = (Number(index) + 1) * 100;
-
-    cssVariable.push(`--gradient-${n}: ${gradient};`);
-  }
 
   return {
     colors,
     contrast,
-    gradients,
+    gradients: material.toGradient("rgb", true),
     cssVariable,
     variable,
   };
