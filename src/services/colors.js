@@ -362,45 +362,48 @@ export const calculateContrast = (foreground, background) => {
 };
 
 /**
- * @param {Number[]|String} color
+ * @param {String} color hex
  * @source https://github.com/leodido/material-palette/blob/master/index.m.js
  */
 export const generateMaterialPalette = (color) => {
-  if (typeof color === "string") {
-    color = converter.hex.toHsl(color);
-  }
+  const hex = getColorProperties("hex");
+  const hexColor = hex.toString(color).toLowerCase();
+  const palette = new Matercolor(hexColor);
 
-  const [h, s, l] = color;
-
-  const palettes = {
-    50: [h, s, minmax(l + 52)],
-    100: [h, s, minmax(l + 37)],
-    200: [h, s, minmax(l + 26)],
-    300: [h, s, minmax(l + 12)],
-    400: [h, s, minmax(l + 6)],
-    500: [h, s, l],
-    600: [h, s, minmax(l - 6)],
-    700: [h, s, minmax(l - 12)],
-    800: [h, s, minmax(l - 18)],
-    900: [h, s, minmax(l - 24)],
-    A100: [h + 5, s, minmax(l + 24)],
-    A200: [h + 5, s, minmax(l + 16)],
-    A400: [h + 5, s, minmax(l - 1)],
-    A700: [h + 5, s, minmax(l - 12)],
-  };
+  const primaryIndex = Object.entries(palette.palette.primary)
+    .slice(1, 10)
+    .reverse()
+    .findIndex(([index, value]) => hexColor === value);
 
   return {
-    ...palettes,
-    toGradient(type, withFormat = false) {
+    ...palette.palette.primary,
+    primaryIndex,
+    toGradient(type, withFormat = false, palette_color = "default") {
+      let colors = palette.palette.primary;
+
+      if (palette_color === "complementary") {
+        colors = palette.palette.complementary;
+      } else if (palette_color === "analogous.primary") {
+        colors = palette.palette.analogous.primary;
+      } else if (palette_color === "analogous.secondary") {
+        colors = palette.palette.analogous.secondary;
+      } else if (palette_color === "triadic.primary") {
+        colors = palette.palette.triadic.primary;
+      } else if (palette_color === "triadic.secondary") {
+        colors = palette.palette.triadic.secondary;
+      }
+
       const gradients = [];
       const typeProps = getColorProperties(type);
-      for (const index in palettes) {
-        gradients.push(palettes[index]);
+      for (const index in colors) {
+        gradients.push(colors[index]);
       }
       return gradients
-        .map((color) => colorConvert("hsl", color)[type])
+        .map((color) => colorConvert("hex", hex.toRaw(color))[type])
         .map((color) => (withFormat ? typeProps.toString(color) : color))
-        .slice(0, 9);
+        .slice(1, 10)
+        .reverse();
     },
+    _raw_: palette,
   };
 };
