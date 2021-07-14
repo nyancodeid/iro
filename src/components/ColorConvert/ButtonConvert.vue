@@ -2,16 +2,16 @@
   <div class="section convert-wrapper">
     <div class="label"><span class="heading">Convert</span> to:</div>
     <div class="content">
-      <ul class="convert-wrapper">
-        <li
+      <div class="button-convert--items">
+        <div
           v-for="type in types"
           :key="type.id"
           class="button"
           @click="$emit('typeChanged', type.id)"
         >
           to {{ type.title }}
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -24,3 +24,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.convert-wrapper .content {
+  margin: .5em 0;
+
+  .button-convert--items {
+    display: flex;
+    justify-content: space-between;
+    
+    >.button:last-child {
+      margin-right: 0;
+    }
+
+    >.button {
+      width: calc((100% / 3) - (43px));
+    }
+  }
+}
+</style>
