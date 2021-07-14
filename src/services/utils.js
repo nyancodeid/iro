@@ -41,12 +41,6 @@ export const normalize = (numbers) => {
   });
 };
 
-/**
- * Minimize the maximum possible loss
- * @param {Number} number
- * @returns
- */
-export const minmax = (number) => Math.min(100, Math.max(0, number));
 
 /**
  * Check is website running on PWA mode.
