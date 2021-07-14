@@ -2,34 +2,34 @@
   <div id="content">
     <div class="main">
       <div class="main-wrapper">
-        <color-input
+        <ColorInput
           :type="activeColor"
           :hex="hexColor"
           :color="contrastColor"
           @colorChanged="onColorChanged"
-          @toggleStyle="toggleModalStyle"
-        ></color-input>
-        <color-contrast :contrast="contrast"></color-contrast>
-        <color-contrast-checker
+          @toggleModal="toggleModalStatus"
+        />
+        <ColorContrast :contrast="contrast" />
+        <ColorContrastChecker
           :foreground="colors.text"
           :background="colors.contrast"
           :color="contrastColor"
-        ></color-contrast-checker>
+        />
       </div>
     </div>
     <div class="navbar">
-      <color-gradient
+      <ColorGradient
         :gradients="gradients"
         @colorChanged="onColorChanged"
-      ></color-gradient>
-      <button-convert
+      />
+      <ButtonConvert
         :types="inactiveColor"
         @typeChanged="onColorTypeChanged"
-      ></button-convert>
-      <button-random-color @colorChanged="onColorChanged"></button-random-color>
+      />
+      <ButtonRandomColor @colorChanged="onColorChanged" />
     </div>
 
-    <history :contrast="contrastColor" @colorChanged="onColorChanged"></history>
+    <History :contrast="contrastColor" @colorChanged="onColorChanged" />
   </div>
 
   <div id="modal" :class="{ active: modalStatus }">

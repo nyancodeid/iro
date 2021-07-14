@@ -1,7 +1,7 @@
 <template>
   <div id="content" class="color-picker--page">
-    <video-picker />
-    <color-result />
+    <VideoPicker />
+    <ColorResult />
   </div>
 </template>
 
