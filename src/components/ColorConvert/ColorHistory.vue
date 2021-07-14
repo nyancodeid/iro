@@ -55,7 +55,7 @@ import { copyToClipboard } from "../../services/utils";
 import { useAppStore, useDataStore } from "../../store";
 
 export default {
-  name: "History",
+  name: "ColorHistory",
   props: {
     contrast: String,
   },

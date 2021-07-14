@@ -29,7 +29,7 @@
       <ButtonRandomColor @colorChanged="onColorChanged" />
     </div>
 
-    <History :contrast="contrastColor" @colorChanged="onColorChanged" />
+    <ColorHistory :contrast="contrastColor" @colorChanged="onColorChanged" />
   </div>
 
   <div id="modal" :class="{ active: modalStatus }">
@@ -45,7 +45,7 @@
 <script>
 import { mapState, mapActions } from "pinia";
 
-import History from "../components/History.vue";
+import ColorHistory from "../components/ColorConvert/ColorHistory.vue";
 import ColorContrast from "../components/ColorConvert/ColorContrast.vue";
 import ColorContrastChecker from "../components/ColorConvert/ColorContrastChecker.vue";
 import ColorGradient from "../components/ColorConvert/ColorGradient.vue";
