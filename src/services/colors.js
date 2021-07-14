@@ -163,6 +163,11 @@ export const calculateColor = (type, value) => {
   };
 };
 
+/**
+ *
+ * @param {String} type
+ * @param {String|Number[]} value
+ */
 export const generateCssColor = ({ type, value }) => {
   const colors = colorConvert(type, value);
   const contrast = yiqContrastRatio(colors.rgb);
@@ -220,10 +225,6 @@ export const generateCssColor = ({ type, value }) => {
   };
 };
 
-/**
- * Get color properties by type
- * @param {String} id hex,rgb,rgba,hsl
- */
 /**
  * Get color properties by type
  * @param {String} type hex,rgb,rgba,hsl
