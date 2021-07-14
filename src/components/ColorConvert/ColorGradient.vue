@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { useAppStore } from "../../store";
 export default {
   name: "ColorGradient",
   props: {

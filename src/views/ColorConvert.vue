@@ -32,13 +32,19 @@
     <ColorHistory :contrast="contrastColor" @colorChanged="onColorChanged" />
   </div>
 
-  <div id="modal" :class="{ active: modalStatus }">
-    <modal-style
-      :status="modalStatus"
-      :colors="types"
-      :gradients="gradients"
-      @closed="toggleModalStyle"
-    ></modal-style>
+  <div id="modal" :class="{ active: modal.status }">
+    <transition name="modal">
+      <ModalStyle
+        v-if="modal.status && modal.activeId === 'style'"
+        @closed="toggleModalStatus"
+      />
+      <ModalPalette
+        v-else-if="modal.status && modal.activeId === 'palette'"
+        :color="hexColor"
+        @closed="toggleModalStatus"
+        @colorChanged="onColorChanged"
+      />
+    </transition>
   </div>
 </template>
 
@@ -53,16 +59,17 @@ import ColorInput from "../components/ColorConvert/ColorInput.vue";
 import ButtonConvert from "../components/ColorConvert/ButtonConvert.vue";
 import ButtonRandomColor from "../components/ColorConvert/ButtonRandomColor.vue";
 import ModalStyle from "../components/ColorConvert/ModalStyle.vue";
+import ModalPalette from "../components/ColorConvert/ModalPalette.vue";
 
-import { useAppStore } from "../store/app";
-import { useDataStore } from "../store/data";
+import { useAppStore, useDataStore } from "../store";
 
 import {
   calculateColor,
   generateCssColor,
   yiqContrastColor,
+  generateRandomColor,
 } from "../services/colors";
-import { normalize } from "../services/utils";
+import { normalize, isString } from "../services/utils";
 
 export default {
   components: {
@@ -73,11 +80,15 @@ export default {
     ColorInput,
     ButtonConvert,
     ModalStyle,
-    History,
+    ModalPalette,
+    ColorHistory,
   },
   data() {
     return {
-      modalStatus: false,
+      modal: {
+        activeId: "style",
+        status: false,
+      },
       contrast: 0,
       gradients: [],
       types: [
@@ -88,17 +99,15 @@ export default {
       ],
     };
   },
-  beforeMount() {
-    this.initialize();
-  },
   activated() {
+    window.addEventListener("keyup", this.onKeyPressed);
     this.initialize();
   },
   mounted() {
-    this.setSelectedType();
+    this.onColorChanged(["hex", "212121"]);
   },
   computed: {
-    ...mapState(useAppStore, ["colors"]),
+    ...mapState(useAppStore, ["colors", "historyPage"]),
     ...mapState(useDataStore, ["bookmarks", "history"]),
     hexColor() {
       const hex = this.types.find((type) => type.id === "hex");
@@ -115,21 +124,30 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAppStore, ["setContrast", "setColors"]),
+    ...mapActions(useAppStore, ["setContrast", "setColors", "toggleHistory"]),
     ...mapActions(useDataStore, ["addHistory"]),
     initialize() {
       const params = this.$route.params;
 
-      if (params?.type && params?.color) {
+      if (isString(params.type) && isString(params.color)) {
         let { type, color } = params;
 
-        if (type != "hex") {
+        if (type !== "hex") {
           color = color.split(",");
 
           this.onColorTypeChanged(type);
         }
 
         this.onColorChanged([type, color]);
+      }
+    },
+    onKeyPressed($event) {
+      if (this.modal.status && $event.code === "Escape") {
+        this.modal.status = false;
+      } else if (this.historyPage && $event.code === "Escape") {
+        this.toggleHistoryPage();
+      } else if ($event.code === "Space") {
+        this.onColorChanged(["rgb", generateRandomColor()]);
       }
     },
     setSelectedType() {
@@ -171,10 +189,29 @@ export default {
         return { ...type, selected: type.id === id };
       });
     },
-    toggleModalStyle() {
-      this.modalStatus = !this.modalStatus;
+    toggleModalStatus(type) {
+      this.modal.activeId = type;
+      this.modal.status = !this.modal.status;
     },
   },
-  deactivate() {},
+  deactivated() {
+    window.removeEventListener("keyup", this.onKeyPressed);
+  },
 };
 </script>
+
+<style lang="scss">
+.modal-enter-active,
+.modal-leave-active {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  transform: scale(0);
+}
+.modal-enter-to,
+.modal-leave-from {
+  transform: scale(1);
+}
+</style>
