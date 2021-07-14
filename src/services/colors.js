@@ -125,30 +125,6 @@ export const yiqContrastColor = (yiq) => {
 };
 
 /**
- * Generate Gradient
- * @param {String} hex
- * @returns {String[]}
- */
-export const generateGrandients = (hex) => {
-  const isValidColor = colorValidate("hex", hex);
-
-  if (!isValidColor) return [];
-
-  const rgbColor = converter.hex.toRgb(hex);
-  const hexResult = gradstop({
-    stops: 8,
-    inputFormat: "hex",
-    colorArray: ["#212121", `#${hex}`, "#FFFFFF"],
-  });
-
-  return gradstop({
-    stops: 8,
-    inputFormat: "rgb",
-    colorArray: [hexResult[1], `rgb(${rgbColor.join(",")})`, hexResult[6]],
-  });
-};
-
-/**
  * Random RGB Color
  * @returns {Number[]}
  */
