@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <AppHeader />
   
   <router-view v-slot="{ Component }">
     <keep-alive>
@@ -14,7 +14,7 @@
 import { Notyf } from 'notyf';
 import { provide } from 'vue';
 
-import Header from "./components/Header.vue";
+import AppHeader from "./components/AppHeader.vue";
 import ReloadPrompt from "./components/ReloadPrompt.vue";
 
 provide('notyf', new Notyf({

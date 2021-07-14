@@ -6,7 +6,7 @@
     </div>
     <div class="header-menu">
       <nav class="header-navbar">
-        <a v-if="$route.name == 'convert'" @click="toggleHistory">History</a>
+        <a v-if="$route.name === 'convert'" @click="toggleHistory">History</a>
 
         <router-link :to="{ name: 'convert' }" active-class="active" exact
           >Convert</router-link
@@ -24,24 +24,20 @@
 </template>
 
 <script>
-import { useAppStore } from "../store/app";
+import { computed } from "vue";
+import { useAppStore } from "../store";
 
 export default {
-  name: "Header",
+  name: "AppHeader",
   setup() {
     const store = useAppStore();
     const toggleHistory = () => {
       store.toggleHistoryPage();
     };
     return {
-      store,
+      contrast: computed(() => store.contrast),
       toggleHistory,
     };
-  },
-  computed: {
-    contrast() {
-      return this.store.contrast;
-    },
   },
 };
 </script>
