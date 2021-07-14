@@ -49,19 +49,21 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from "vue";
 import { mapState, mapActions } from "pinia";
 
-import ColorHistory from "../components/ColorConvert/ColorHistory.vue";
+import { useAppStore, useDataStore } from "../store";
+
 import ColorContrast from "../components/ColorConvert/ColorContrast.vue";
 import ColorContrastChecker from "../components/ColorConvert/ColorContrastChecker.vue";
 import ColorGradient from "../components/ColorConvert/ColorGradient.vue";
 import ColorInput from "../components/ColorConvert/ColorInput.vue";
 import ButtonConvert from "../components/ColorConvert/ButtonConvert.vue";
 import ButtonRandomColor from "../components/ColorConvert/ButtonRandomColor.vue";
-import ModalStyle from "../components/ColorConvert/ModalStyle.vue";
-import ModalPalette from "../components/ColorConvert/ModalPalette.vue";
 
-import { useAppStore, useDataStore } from "../store";
+const ColorHistory = defineAsyncComponent(() => import("../components/ColorConvert/ColorHistory.vue"));
+const ModalStyle = defineAsyncComponent(() => import("../components/ColorConvert/ModalStyle.vue"));
+const ModalPalette = defineAsyncComponent(() => import("../components/ColorConvert/ModalPalette.vue"));
 
 import {
   calculateColor,
@@ -79,9 +81,9 @@ export default {
     ColorGradient,
     ColorInput,
     ButtonConvert,
+    ColorHistory,
     ModalStyle,
     ModalPalette,
-    ColorHistory,
   },
   data() {
     return {
