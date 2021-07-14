@@ -1,7 +1,7 @@
 {
   "name": "iro",
   "version": "2.0.0",
-  "description": "color inspect for HEX, RGB, and CMYK",
+  "description": "color inspect for HEX, RGB, HSL, and CMYK",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,8 +13,7 @@
     "Muhammad Zainul Mutaqqin <zalepik@outlook.com>"
   ],
   "dependencies": {
-    "gradstop": "^2.2.3",
-    "lowdb": "^2.1.0",
+    "matercolors": "^2.2.10",
     "notyf": "^3.10.0",
     "pinia": "^2.0.0-beta.3",
     "vue": "^3.0.5",

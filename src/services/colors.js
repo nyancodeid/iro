@@ -1,4 +1,4 @@
-import gradstop from "gradstop";
+import Matercolor from "matercolors";
 
 import * as converter from "./converter";
 import { getRange, normalize, minmax } from "./utils";
