@@ -5,9 +5,15 @@
       <div class="label-action">
         <div
           class="icon"
+          :class="`icon-palette--${color}`"
+          @click="$emit('toggleModal', 'palette')"
+          title="Palette Color"
+        ></div>
+        <div
+          class="icon"
           :class="`icon-style--${color}`"
-          @click="$emit('toggleStyle')"
-          title="Open css style"
+          @click="$emit('toggleModal', 'style')"
+          title="CSS/SCSS Style"
         ></div>
         <div
           class="icon"
@@ -22,7 +28,7 @@
       :class="{ error: isError, [type.id]: true }"
       :style="`color: ${hex}`"
     >
-      <template v-if="property.inputType == 'number'">
+      <template v-if="property.inputType === 'number'">
         <div
           class="color-input--wrapper"
           v-for="n in property.inputLength"
@@ -92,7 +98,7 @@ export default {
   },
   methods: {
     onInitialized() {
-      if (this.type.id == "hex") {
+      if (this.type.id === "hex") {
         this.values = [this.type.value];
       } else {
         this.values = [...this.type.value];
@@ -106,17 +112,9 @@ export default {
       this.notyf.success("Color copied to clipboard!");
     },
     onInputChanged() {
-      // if (this.timeoutId) {
-      //   clearTimeout(this.timeoutId);
-      //   this.timeoutId = null;
-      // }
-
-      // this.timeoutId = setTimeout(() => {
-
-      // }, 500);
       let color = [...this.values];
 
-      if (this.type.id == "hex") {
+      if (this.type.id === "hex") {
         color = color[0];
       }
 
@@ -266,5 +264,16 @@ export default {
       }
     }
   }
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: #000000;
+  background: var(--gradient-200);
+}
+
+::selection {
+  color: #000000;
+  background: var(--gradient-200);
 }
 </style>

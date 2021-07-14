@@ -47,10 +47,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
-import { colorConvert } from "../../services/colors";
-import { useAppStore } from "../../store/app";
-import { useDataStore } from "../../store/data";
+import {mapActions, mapState} from "pinia";
+
+import {colorConvert} from "../../services/colors";
+import {useAppStore, useDataStore} from "../../store";
 
 const DEFAULT_WIDTH = 436;
 const DEFAULT_HEIGHT = 414;
@@ -141,8 +141,8 @@ export default {
       const capabilities = track.getCapabilities();
       const setting = track.getSettings();
 
-      this.isTorchAvailable = capabilities.torch ? true : false;
-      this.isTorch = setting.torch ? true : false;
+      this.isTorchAvailable = !!capabilities.torch;
+      this.isTorch = !!setting.torch;
     },
     handlerVideoSuccess(stream) {
       const [track] = stream.getVideoTracks();
@@ -173,9 +173,7 @@ export default {
         const sy = DEFAULT_HEIGHT / 2;
 
         const imageData = ctx.getImageData(sx, sy, 1, 1);
-        const rgbColor = imageData.data.slice(0, 3);
-
-        this.color = rgbColor;
+        this.color = imageData.data.slice(0, 3);
       }, 100);
     },
     handleVideoError(error) {
@@ -185,7 +183,7 @@ export default {
         error.name
       );
 
-      if (error.name == "NotAllowedError") {
+      if (error.name === "NotAllowedError") {
         this.notyf.error(
           "Camera Permission is DENIED. Plase enable it to make function normally."
         );
@@ -202,7 +200,7 @@ export default {
 
       if (this.isSwitchAvailable) {
         const facingMode =
-          track.getSettings().facingMode == "user" ? "environment" : "user";
+          track.getSettings().facingMode === "user" ? "environment" : "user";
 
         track.stop();
 

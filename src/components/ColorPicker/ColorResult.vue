@@ -27,8 +27,7 @@
 <script>
 import { mapState } from "pinia";
 
-import { useAppStore } from "../../store/app";
-import { useDataStore } from "../../store/data";
+import { useAppStore, useDataStore } from "../../store";
 
 export default {
   name: "ColorResult",
