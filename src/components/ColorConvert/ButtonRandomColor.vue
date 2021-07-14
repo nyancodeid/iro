@@ -19,7 +19,7 @@ export default {
     onRandomColor() {
       this.$emit("colorChanged", ["rgb", generateRandomColor()]);
     },
-  },
+  }
 };
 </script>
 
