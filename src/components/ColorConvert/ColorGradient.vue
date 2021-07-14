@@ -1,58 +1,146 @@
 <template>
-  <div class="section gradstop-wrapper">
+  <div
+    class="section gradstop-wrapper"
+    :class="`gradstop-wrapper--${contrast}`"
+  >
     <div class="label"><span class="heading">Gradient</span> color:</div>
     <div class="content">
-      <ul class="gradient-boxs">
-        <li
-          v-for="(grandient, index) in gradients"
+      <div class="gradient-boxs">
+        <div
+          v-for="(gradient, index) in gradients"
           v-bind:key="index"
           class="gradient-box"
-          title="Click to set color"
-          :style="`background-color: ${grandient};`"
-          @click="onColorChanged(grandient)"
-        ></li>
-      </ul>
+          :class="{ primary: isPrimary(gradient) }"
+          :title="hexColor(gradient)"
+          @click="onColorChanged(gradient)"
+        >
+          <span class="primary-label" v-if="isPrimary(gradient)">P</span>
+
+          <span class="color-label">{{ (9 - index) * 100 }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+import { getColorProperties } from "../../services/colors";
+import { rgb as converter } from "../../services/converter";
 import { useAppStore } from "../../store";
+
+const rgb = getColorProperties("rgb");
+
 export default {
   name: "ColorGradient",
   props: {
     gradients: Array,
   },
+  setup() {
+    const store = useAppStore();
+    const color = computed(() => store.colors.primary);
+    return {
+      color,
+      contrast: store.contrast,
+      store,
+    };
+  },
   methods: {
-    onColorChanged(color) {
-      const extract = color.replace("rgb(", "").replace(")", "").split(", ");
+    isPrimary(gradient) {
+      const primaryColor = this.color.join(",");
+      const gradientColor = rgb.toArray(gradient).join(",");
 
-      this.$emit("colorChanged", ["rgb", extract]);
+      return gradientColor === primaryColor;
+    },
+    onColorChanged(color) {
+      this.$emit("colorChanged", ["rgb", rgb.toArray(color)]);
+    },
+    hexColor(gradient) {
+      const color = rgb.toArray(gradient);
+      return `#${converter.toHex(color)}`;
     },
   },
 };
 </script>
 
 <style lang="scss">
-.gradient-boxs,
-.color-boxs {
-  padding-inline-start: unset;
-  list-style: none;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
+.gradstop-wrapper {
+  .gradient-boxs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
-  > .gradient-box,
-  > .color-box {
-    cursor: pointer;
-    height: 40px;
-    width: 40px;
+    margin: 0.5rem 0;
 
-    &:hover {
-      transform: scale(1.5);
-      z-index: 100;
+    .gradient-box {
+      position: relative;
+      cursor: pointer;
+      height: 48px;
+      width: 48px;
+      transition: transform 165ms cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms,
+        background 500ms linear;
+
+      &:nth-child(1) {
+        background-color: var(--gradient-900);
+      }
+      &:nth-child(2) {
+        background-color: var(--gradient-800);
+      }
+      &:nth-child(3) {
+        background-color: var(--gradient-700);
+      }
+      &:nth-child(4) {
+        background-color: var(--gradient-600);
+      }
+      &:nth-child(5) {
+        background-color: var(--gradient-500);
+      }
+      &:nth-child(6) {
+        background-color: var(--gradient-400);
+      }
+      &:nth-child(7) {
+        background-color: var(--gradient-300);
+      }
+      &:nth-child(8) {
+        background-color: var(--gradient-200);
+      }
+      &:nth-child(9) {
+        background-color: var(--gradient-100);
+      }
+
+      &.primary {
+        box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+        border-radius: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .primary-label {
+          font-size: 16px;
+          color: var(--contrast-color);
+        }
+      }
+
+      .color-label {
+        position: absolute;
+        display: block;
+        font-size: 11px;
+        bottom: -16px;
+        width: 100%;
+
+        text-align: center;
+      }
     }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gradstop-wrapper .gradient-boxs .gradient-box:not(.primary):hover {
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+    transform: scale(1.25);
+    z-index: 100;
   }
 }
 </style>
