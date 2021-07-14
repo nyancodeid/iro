@@ -41,6 +41,11 @@ export const normalize = (numbers) => {
   });
 };
 
+export const isString = (data) => {
+  if (!data) return false;
+
+  return typeof data === "string";
+};
 
 /**
  * Check is website running on PWA mode.
