@@ -1,11 +1,20 @@
 import { defineStore } from "pinia";
-import { LowSync, LocalStorage } from "lowdb";
 import { getColorProperties } from "../services/colors";
+import Storage from "../services/storage";
 
-const db = new LowSync(new LocalStorage("app-db"));
+const VERSION = "2.0.5";
+const DEFAULT_DATA = { bookmarks: [], history: [], pickers: [], version: VERSION };
+
+// const db = new LowSync(new LocalStorage("app-db"));
+const db = new Storage("app-db");
 
 db.read();
-db.data ||= { bookmarks: [], history: [], pickers: [] };
+db.data ||= DEFAULT_DATA;
+
+if (db.data.version !== VERSION) {
+  db.data = DEFAULT_DATA;
+  db.write();
+}
 
 export const useDataStore = defineStore({
   id: "data",
@@ -16,7 +25,7 @@ export const useDataStore = defineStore({
   }),
   getters: {
     histories(state) {
-      const history = [...state.history];
+      const history = [...this.history];
 
       history.pop();
 
@@ -36,22 +45,28 @@ export const useDataStore = defineStore({
   },
   actions: {
     addBookmarks(data) {
-      this.bookmarks.push(data);
-      this.bookmarks = this.bookmarks.slice(
-        Math.max(this.bookmarks.length - 20, 0)
+      db.data.bookmarks.push(data);
+      db.data.bookmarks = db.data.bookmarks.slice(
+        Math.max(db.data.bookmarks.length - 20, 0)
       );
+
+      this.bookmarks = db.data.bookmarks;
 
       db.write();
     },
     addHistory(data) {
-      this.history.push(data);
-      this.history = this.history.slice(Math.max(this.history.length - 20, 0));
+      db.data.history.push(data);
+      db.data.history = db.data.history.slice(Math.max(db.data.history.length - 20, 0));
+
+      this.history = db.data.history;
 
       db.write();
     },
     addPicker(data) {
-      this.pickers.push(data);
-      this.pickers = this.pickers.slice(Math.max(this.pickers.length - 20, 0));
+      db.data.pickers.push(data);
+      db.data.pickers = db.data.pickers.slice(Math.max(db.data.pickers.length - 20, 0));
+
+      this.pickers = db.data.pickers;
 
       db.write();
     },
