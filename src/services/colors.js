@@ -145,10 +145,9 @@ export const calculateColor = (type, value) => {
       value,
     });
 
-  const root = document.documentElement;
-  cssVariable.forEach(([name, value]) => {
-    root.style.setProperty(name, value);
-  });
+  document.body.style.cssText = cssVariable
+    .map(([ name, value ]) => `${name}: ${value};`)
+    .join("");
 
   if (contrast.result === "black") {
     document.body.classList.add("dark");
