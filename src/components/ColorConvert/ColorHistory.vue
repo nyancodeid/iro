@@ -49,9 +49,10 @@
 </template>
 
 <script>
-import { copyToClipboard } from "../services/utils";
-import { useAppStore } from "../store/app";
-import { useDataStore } from "../store/data";
+import { mapState, mapActions } from "pinia";
+
+import { copyToClipboard } from "../../services/utils";
+import { useAppStore, useDataStore } from "../../store";
 
 export default {
   name: "History",
@@ -59,32 +60,21 @@ export default {
     contrast: String,
   },
   inject: ["notyf"],
-  setup() {
-    const appStore = useAppStore();
-    const dataStore = useDataStore();
-
-    return {
-      appStore,
-      dataStore,
-    };
-  },
   computed: {
-    historyPage() {
-      return this.appStore.historyPage;
-    },
-    histories() {
-      return this.dataStore.histories;
-    },
+    ...mapState(useAppStore, [ "historyPage" ]),
+    ...mapState(useDataStore, [ "histories" ])
   },
   methods: {
+    ...mapActions(useAppStore, [ "toggleHistoryPage" ]),
+    ...mapActions(useDataStore, [ "addBookmarks" ]),
     openHistory(history) {
       this.$emit("colorChanged", [history.type, history.value]);
-      this.appStore.toggleHistoryPage();
+      this.toggleHistoryPage();
     },
     addToBookmark(history) {
       const clean = JSON.parse(JSON.stringify(history));
 
-      this.dataStore.addBookmarks(clean);
+      this.addBookmarks(clean);
       this.notyf.success("Color successfuly bookmarked!");
     },
     addToClipboard(history) {
@@ -92,7 +82,7 @@ export default {
       this.notyf.success("Copied!");
     },
     closePage() {
-      this.appStore.toggleHistoryPage();
+      this.toggleHistoryPage();
     },
   },
 };
@@ -182,7 +172,6 @@ export default {
         font-weight: bold;
       }
       .subtitle {
-        color: --text-color;
         font-size: 12.5px;
       }
     }
