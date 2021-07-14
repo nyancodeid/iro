@@ -1,7 +1,7 @@
 import Matercolor from "matercolors";
 
 import * as converter from "./converter";
-import { getRange, normalize, minmax } from "./utils";
+import { getRange, normalize } from "./utils";
 
 /**
  * Color Validation
@@ -13,7 +13,7 @@ export const colorValidate = (from, value) => {
   switch (from) {
     case "hex":
       const hex = getColorProperties("hex");
-      if (typeof value == "object" && value.length == hex.inputLength) {
+      if (typeof value == "object" && value.length === hex.inputLength) {
         value = value[0];
       }
 
@@ -29,7 +29,7 @@ export const colorValidate = (from, value) => {
           (item) => typeof item === "number" && item <= rgb.inputMaxLength()
         );
 
-        return mapValue.length === rgb.inputLength ? true : false;
+        return mapValue.length === rgb.inputLength;
       } else {
         return false;
       }
@@ -41,7 +41,7 @@ export const colorValidate = (from, value) => {
             typeof item === "number" && item <= hsl.inputMaxLength(index)
         );
 
-        return mapValue.length === hsl.inputLength ? true : false;
+        return mapValue.length === hsl.inputLength;
       } else {
         return false;
       }
@@ -52,7 +52,7 @@ export const colorValidate = (from, value) => {
           (item) => typeof item === "number" && item <= cmyk.inputMaxLength()
         );
 
-        return mapValue.length === cmyk.inputLength ? true : false;
+        return mapValue.length === cmyk.inputLength;
       } else {
         return false;
       }
@@ -166,17 +166,16 @@ export const calculateColor = (type, value) => {
 export const generateCssColor = ({ type, value }) => {
   const colors = colorConvert(type, value);
   const contrast = yiqContrastRatio(colors.rgb);
-  const gradients = generateGrandients(colors.hex);
   const rgb = getColorProperties("rgb");
 
-  const material = generateMaterialPalette(colors.hsl);
-  console.log(material.toGradient("rgb", true));
+  const material = generateMaterialPalette(colors.hex);
+  const gradients = material.toGradient("rgb", true);
 
   const textColor =
-    contrast.result === "black" ? gradients[7] : rgb.toString(colors.rgb);
+    contrast.result === "black" ? gradients[8] : rgb.toString(colors.rgb);
   const secondaryColor =
-    contrast.result === "black" ? gradients[1] : gradients[7];
-  const darkColor = contrast.result === "black" ? gradients[7] : gradients[1];
+    contrast.result === "black" ? gradients[1] : gradients[8];
+  const darkColor = contrast.result === "black" ? gradients[8] : gradients[1];
 
   const darkTransparent = darkColor
     .replace("rgb", "rgba")
@@ -209,12 +208,13 @@ export const generateCssColor = ({ type, value }) => {
     text: rgb.toArray(textColor),
     contrast: contrast.result === "black" ? [0, 0, 0] : [255, 255, 255],
     variables: cssVariable,
+    primaryIndex: material.primaryIndex,
   };
 
   return {
     colors,
     contrast,
-    gradients: material.toGradient("rgb", true),
+    gradients,
     cssVariable,
     variable,
   };
@@ -237,11 +237,14 @@ export const getColorProperties = (type) => {
       },
       inputType: "text",
       toString(color) {
-        if (typeof color == "object" && color.length == 1) {
+        if (typeof color == "object" && color.length === 1) {
           color = color[0];
         }
 
         return `#${color}`;
+      },
+      toRaw(color) {
+        return color.replace("#", "").toUpperCase();
       },
     },
     rgb: {
@@ -259,6 +262,7 @@ export const getColorProperties = (type) => {
        */
       toArray(color) {
         const numbs = color
+          .toLowerCase()
           .replace("rgb(", "")
           .replace(")", "")
           .replace(" ", "")
@@ -299,7 +303,7 @@ export const getColorProperties = (type) => {
  * @returns {Number}
  */
 export const getLuminance = (rgb) => {
-  var a = rgb.map(function (v) {
+  const a = rgb.map(function (v) {
     v /= 255;
     return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
   });
