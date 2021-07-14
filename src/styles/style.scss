@@ -5,7 +5,7 @@
   letter-spacing: 0.05786em;
 }
 
-:root {
+body {
   --dark-color: rgb(39, 39, 39);
   --dark-transparent-color: rgba(39, 39, 39, 0.99);
   --primary-color: #212121;
@@ -14,9 +14,7 @@
   --contrast-color: white;
   --black-contrast: rgba(0, 0, 0, 0.15);
   --white-contrast: rgba(255, 255, 255, 0.15);
-}
 
-body {
   background-color: var(--primary-color);
   transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
