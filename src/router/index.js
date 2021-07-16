@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import ColorConvert from "@src/views/ColorConvert.vue";
 
-const ColorConvert = () => import("../views/ColorConvert.vue");
 const ColorPicker = () => import("@src/views/ColorPicker.vue");
 
 const routes = [
