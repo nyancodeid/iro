@@ -285,14 +285,4 @@ export default {
   }
 }
 
-::-moz-selection {
-  /* Code for Firefox */
-  color: #000000;
-  background: var(--gradient-200);
-}
-
-::selection {
-  color: #000000;
-  background: var(--gradient-200);
-}
 </style>
