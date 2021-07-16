@@ -41,7 +41,7 @@
             :maxlength="property.inputMaxLength(n - 1)"
             :id="`${type.id}-input-${n}`"
             @input="onInputChanged"
-            @paste.prevent="onColorPaste"
+            @paste="onColorPaste"
           />
         </label>
       </template>
@@ -127,6 +127,8 @@ export default {
       let data = $event.clipboardData.getData('text')
 
       if (data.indexOf(",") > 0) {
+        $event.preventDefault();
+
         let colors = data.split(",")
             .slice(0, this.property.inputLength);
 
