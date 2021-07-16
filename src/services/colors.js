@@ -149,9 +149,9 @@ export const calculateColor = (type, value) => {
     .map(([ name, value ]) => `${name}: ${value};`)
     .join("");
 
-  if (contrast.result === "black") {
+  if (contrast.result === "black" && !document.body.classList.contains("dark")) {
     document.body.classList.add("dark");
-  } else {
+  } else if (contrast.result === "white" && document.body.classList.contains("dark")) {
     document.body.classList.remove("dark");
   }
 
