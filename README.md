@@ -17,7 +17,6 @@ IRO build with Latest Web Technology that makes us can access this app even in o
 | Vite       | `^2.3.7`        | Next Generation Frontend Tooling                | [https://vitejs.dev/](https://vitejs.dev/)             |
 | Pinia      | `^2.0.0-beta.3` | Intuitive, type safe and flexible Store for Vue | [https://pinia.esm.dev/](https://pinia.esm.dev/)       |
 | Vue-Router | `^4.0.8`        | The official router for Vue.js.                 | [https://router.vuejs.org/](https://router.vuejs.org/) |
-| LowDB      | `^2.1.0`        | Tiny local JSON database                        | [typicode/lowdb](https://github.com/typicode/lowdb)    |
 
 ## Development
 ```bash
@@ -29,7 +28,8 @@ $ npm run build
 ```
 
 ## Screenshot
-
 <p align="center">
-  <img alt="IRO" src="public/thumbnail/iro.screenshot.png" width="100%" />
+  <img alt="IRO" src="screenshot/iro-v2.2-main.png" style="width:100%" />
+  <img alt="IRO" src="screenshot/iro-v2.2-ch.png" style="width:100%" />
+  <img alt="IRO" src="screenshot/iro-v2.2-styl.png" style="width:100%" />
 </p>
