@@ -14,6 +14,6 @@ const pinia = createPinia();
 
 app.use(pinia).use(router);
 
-if (isRunningOnPWA) window.resizeTo(400, 850);
+if (isRunningOnPWA) window.resizeTo(400, 800);
 
 app.mount("#app");
