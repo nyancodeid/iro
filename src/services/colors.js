@@ -319,13 +319,6 @@ export const getLuminance = (rgb) => {
  * @returns
  */
 export const calculateContrast = (foreground, background) => {
-  if (typeof foreground === "string") {
-    foreground = converter.hex.toRgb(foreground);
-  }
-  if (typeof background === "string") {
-    background = converter.hex.toRgb(background);
-  }
-
   const fg_luminance = getLuminance(foreground);
   const bg_luminance = getLuminance(background);
 
