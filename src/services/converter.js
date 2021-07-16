@@ -1,10 +1,9 @@
 /**
  * Extracted from: https://github.com/Qix-/color-convert/blob/master/conversions.js
  **/
-
 export const hex = {
   toRgb(args) {
-    const match = args.toString(16).match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
+    const match = args.match(/[a-f0-9]{6}|[a-f0-9]{3}/i);
     if (!match) {
       return [0, 0, 0];
     }
@@ -32,18 +31,8 @@ export const hex = {
     return rgb.toHsl(_rgb);
   },
   toCmyk(args) {
-    const rgb = hex.toRgb(args);
-
-    const r = rgb[0] / 255;
-    const g = rgb[1] / 255;
-    const b = rgb[2] / 255;
-
-    const k = Math.min(1 - r, 1 - g, 1 - b);
-    const c = (1 - r - k) / (1 - k) || 0;
-    const m = (1 - g - k) / (1 - k) || 0;
-    const y = (1 - b - k) / (1 - k) || 0;
-
-    return [c * 100, m * 100, y * 100, k * 100];
+    const _rgb = hex.toRgb(args);
+    return rgb.toCmyk(_rgb);
   },
 };
 
@@ -58,9 +47,7 @@ export const rgb = {
     return "000000".substring(string.length) + string;
   },
   toHsl(args) {
-    const r = args[0] / 255;
-    const g = args[1] / 255;
-    const b = args[2] / 255;
+    const [ r, g, b ] = args.map(i => i / 255);
     const min = Math.min(r, g, b);
     const max = Math.max(r, g, b);
     const delta = max - min;
@@ -96,9 +83,7 @@ export const rgb = {
     return [h, s * 100, l * 100];
   },
   toCmyk(args) {
-    const r = args[0] / 255;
-    const g = args[1] / 255;
-    const b = args[2] / 255;
+    const [ r, g, b ] = args.map(i => i / 255);
 
     const k = Math.min(1 - r, 1 - g, 1 - b);
     const c = (1 - r - k) / (1 - k) || 0;
@@ -173,14 +158,11 @@ export const cmyk = {
     return rgb.toHex(_rgb);
   },
   toRgb(args) {
-    const c = args[0] / 100;
-    const m = args[1] / 100;
-    const y = args[2] / 100;
-    const k = args[3] / 100;
+    const [ c, m, y, k ] = args.map(i => i / 100);
 
-    const r = 1 - Math.min(1, c * (1 - k) + k);
-    const g = 1 - Math.min(1, m * (1 - k) + k);
-    const b = 1 - Math.min(1, y * (1 - k) + k);
+    const r = 1 - Math.min(1, (c / 100) * (1 - k) + k);
+    const g = 1 - Math.min(1, (m / 100) * (1 - k) + k);
+    const b = 1 - Math.min(1, (y / 100) * (1 - k) + k);
 
     return [r * 255, g * 255, b * 255];
   },
