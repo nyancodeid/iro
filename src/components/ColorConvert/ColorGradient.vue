@@ -107,7 +107,7 @@ export default {
       .color-label--hex {
         position: absolute;
         top: -28px;
-        width: 100%;
+        width: 50px;
         height: 22px;
         display: none;
         background: var(--secondary-color);
