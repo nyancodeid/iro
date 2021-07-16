@@ -12,9 +12,6 @@ import { generateRandomColor } from "@src/services/colors";
 
 export default {
   name: "ButtonRandomColor",
-  props: {
-    onChange: Function,
-  },
   methods: {
     onRandomColor() {
       this.$emit("colorChanged", ["rgb", generateRandomColor()]);
