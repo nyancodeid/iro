@@ -11,12 +11,11 @@
           v-bind:key="index"
           class="gradient-box"
           :class="{ primary: isPrimary(gradient) }"
-          :title="hexColor(gradient)"
           @click="onColorChanged(gradient)"
         >
-          <span class="primary-label" v-if="isPrimary(gradient)">P</span>
-
-          <span class="color-label">{{ (9 - index) * 100 }}</span>
+          <span class="color-label--hex">{{ hexColor(gradient) }}</span>
+          <span class="color-label--primary" v-if="isPrimary(gradient)">P</span>
+          <span class="color-label--index">{{ (9 - index) * 100 }}</span>
         </div>
       </div>
     </div>
@@ -132,15 +131,36 @@ export default {
 
         text-align: center;
       }
+      .color-label--hex {
+        position: absolute;
+        top: -28px;
+        width: 100%;
+        height: 22px;
+        display: none;
+        background: var(--secondary-color);
+        border-radius: 2px;
+        color: var(--text-color);
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 22px;
+        text-align: center;
+        text-transform: uppercase;
+      }
     }
   }
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .gradstop-wrapper .gradient-boxs .gradient-box:not(.primary):hover {
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-    transform: scale(1.25);
-    z-index: 100;
+  .gradstop-wrapper .gradient-boxs .gradient-box {
+    &:hover {
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+      transform: scale(1.25);
+      z-index: 100;
+
+      .color-label--hex {
+        display: block;
+      }
+    }
   }
 }
 </style>
