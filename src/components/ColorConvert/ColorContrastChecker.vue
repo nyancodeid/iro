@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { calculateContrast } from "../../services/colors";
+import { calculateContrast } from "@src/services/colors";
 
 export default {
   name: "ColorContrastChecker",

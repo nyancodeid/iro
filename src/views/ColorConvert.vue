@@ -52,18 +52,18 @@
 import { defineAsyncComponent } from "vue";
 import { mapState, mapActions } from "pinia";
 
-import { useAppStore, useDataStore } from "../store";
+import { useAppStore, useDataStore } from "@src/store";
 
-import ColorContrast from "../components/ColorConvert/ColorContrast.vue";
-import ColorContrastChecker from "../components/ColorConvert/ColorContrastChecker.vue";
-import ColorGradient from "../components/ColorConvert/ColorGradient.vue";
-import ColorInput from "../components/ColorConvert/ColorInput.vue";
-import ButtonConvert from "../components/ColorConvert/ButtonConvert.vue";
-import ButtonRandomColor from "../components/ColorConvert/ButtonRandomColor.vue";
+import ColorContrast from "@src/components/ColorConvert/ColorContrast.vue";
+import ColorContrastChecker from "@src/components/ColorConvert/ColorContrastChecker.vue";
+import ColorGradient from "@src/components/ColorConvert/ColorGradient.vue";
+import ColorInput from "@src/components/ColorConvert/ColorInput.vue";
+import ButtonConvert from "@src/components/ColorConvert/ButtonConvert.vue";
+import ButtonRandomColor from "@src/components/ColorConvert/ButtonRandomColor.vue";
 
-const ColorHistory = defineAsyncComponent(() => import("../components/ColorConvert/ColorHistory.vue"));
-const ModalStyle = defineAsyncComponent(() => import("../components/ColorConvert/ModalStyle.vue"));
-const ModalPalette = defineAsyncComponent(() => import("../components/ColorConvert/ModalPalette.vue"));
+const ColorHistory = defineAsyncComponent(() => import("@src/components/ColorConvert/ColorHistory.vue"));
+const ModalStyle = defineAsyncComponent(() => import("@src/components/ColorConvert/ModalStyle.vue"));
+const ModalPalette = defineAsyncComponent(() => import("@src/components/ColorConvert/ModalPalette.vue"));
 
 import {
   calculateColor,

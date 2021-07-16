@@ -49,8 +49,8 @@
 <script>
 import {mapActions, mapState} from "pinia";
 
-import {colorConvert} from "../../services/colors";
-import {useAppStore, useDataStore} from "../../store";
+import {colorConvert} from "@src/services/colors";
+import {useAppStore, useDataStore} from "@src/store";
 
 const DEFAULT_WIDTH = 436;
 const DEFAULT_HEIGHT = 414;

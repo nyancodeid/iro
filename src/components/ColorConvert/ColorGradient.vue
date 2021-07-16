@@ -25,9 +25,9 @@
 
 <script>
 import { computed } from "vue";
-import { getColorProperties } from "../../services/colors";
-import { rgb as converter } from "../../services/converter";
-import { useAppStore } from "../../store";
+import { getColorProperties } from "@src/services/colors";
+import { rgb as converter } from "@src/services/converter";
+import { useAppStore } from "@src/store";
 
 const rgb = getColorProperties("rgb");
 

@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import { copyToClipboard } from "../../services/utils";
-import { colorValidate, getColorProperties } from "../../services/colors";
+import {copyToClipboard, normalize} from "@src/services/utils";
+import { colorValidate, getColorProperties } from "@src/services/colors";
 
 export default {
   name: "ColorInput",

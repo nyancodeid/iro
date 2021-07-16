@@ -1,7 +1,7 @@
 import Matercolor from "matercolors";
 
-import * as converter from "./converter";
-import { getRange, normalize } from "./utils";
+import * as converter from "@src/services/converter";
+import { getRange, normalize } from "@src/services/utils";
 
 /**
  * Color Validation

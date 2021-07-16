@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import ColorResult from "../components/ColorPicker/ColorResult.vue";
-import VideoPicker from "../components/ColorPicker/VideoPicker.vue";
+import ColorResult from "@src/components/ColorPicker/ColorResult.vue";
+import VideoPicker from "@src/components/ColorPicker/VideoPicker.vue";
 
 export default {
   name: "ColorPicker",

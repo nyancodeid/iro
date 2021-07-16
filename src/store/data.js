@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { getColorProperties } from "../services/colors";
-import Storage from "../services/storage";
+import { getColorProperties } from "@src/services/colors";
+import Storage from "@src/services/storage";
 
 const VERSION = "2.0.5";
 const DEFAULT_DATA = { bookmarks: [], history: [], pickers: [], version: VERSION };

@@ -92,8 +92,8 @@
 <script>
 import { mapState } from "pinia";
 
-import { useAppStore } from "../../store";
-import { generateMaterialPalette } from "../../services/colors";
+import { useAppStore } from "@src/store";
+import { generateMaterialPalette } from "@src/services/colors";
 
 export default {
   name: "ModalPalette",

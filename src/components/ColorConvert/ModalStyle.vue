@@ -34,7 +34,7 @@
 <script>
 import { mapState } from "pinia";
 
-import { useAppStore } from "../../store";
+import { useAppStore } from "@src/store";
 
 export default {
   name: "ModalStyle",

@@ -51,8 +51,8 @@
 <script>
 import { mapState, mapActions } from "pinia";
 
-import { copyToClipboard } from "../../services/utils";
-import { useAppStore, useDataStore } from "../../store";
+import { copyToClipboard } from "@src/services/utils";
+import { useAppStore, useDataStore } from "@src/store";
 
 export default {
   name: "ColorHistory",

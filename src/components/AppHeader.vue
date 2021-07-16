@@ -25,7 +25,7 @@
 
 <script>
 import { computed } from "vue";
-import { useAppStore } from "../store";
+import { useAppStore } from "@src/store";
 
 export default {
   name: "AppHeader",

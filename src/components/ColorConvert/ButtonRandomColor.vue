@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { generateRandomColor } from "../../services/colors";
+import { generateRandomColor } from "@src/services/colors";
 
 export default {
   name: "ButtonRandomColor",

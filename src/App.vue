@@ -14,8 +14,8 @@
 import { Notyf } from 'notyf';
 import { provide } from 'vue';
 
-import AppHeader from "./components/AppHeader.vue";
-import ReloadPrompt from "./components/ReloadPrompt.vue";
+import AppHeader from "@src/components/AppHeader.vue";
+import ReloadPrompt from "@src/components/ReloadPrompt.vue";
 
 provide('notyf', new Notyf({
   duration: 2000,

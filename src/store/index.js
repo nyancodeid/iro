@@ -1,2 +1,2 @@
-export { useAppStore } from "./app";
-export { useDataStore } from "./data";
+export { useAppStore } from "@src/store/app";
+export { useDataStore } from "@src/store/data";
