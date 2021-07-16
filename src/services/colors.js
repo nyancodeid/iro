@@ -146,6 +146,7 @@ export const calculateColor = (type, value) => {
     });
 
   document.body.style.cssText = cssVariable
+    .filter(([name]) => name.indexOf("gradient") === -1)
     .map(([ name, value ]) => `${name}: ${value};`)
     .join("");
 
