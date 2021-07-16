@@ -1,5 +1,5 @@
 <template>
-  <div class="history" :class="{ open: historyPage }">
+  <div class="history">
     <div class="history-title">
       <div class="history-title--content">
         <h1>History</h1>
@@ -92,27 +92,17 @@ export default {
 .history {
   left: 0;
   bottom: -16px;
-  opacity: 0;
+  opacity: 1;
 
   position: fixed;
   background-color: var(--dark-transparent-color);
-  height: 0;
   width: calc(100vw - 32px);
+  height: calc(100vh - 92px);
 
   box-shadow: 0 -3px 4px rgba(0, 0, 0, 0.1);
-
   padding: 0 16px;
-
-  transition: height 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
-  -moz-transition: height 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
-
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-
-  &.open {
-    opacity: 1;
-    height: calc(100vh - 92px);
-  }
 
   .history-title {
     padding-bottom: 16px;
@@ -188,5 +178,16 @@ export default {
       }
     }
   }
+}
+
+.history-enter-active,
+.history-leave-active {
+  transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  -moz-transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+.history-enter-from,
+.history-leave-to {
+  opacity: 0;
+  height: 0;
 }
 </style>

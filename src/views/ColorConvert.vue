@@ -29,7 +29,9 @@
       <ButtonRandomColor @colorChanged="onColorChanged" />
     </div>
 
-    <ColorHistory :contrast="contrastColor" @colorChanged="onColorChanged" />
+    <transition name="history">
+      <ColorHistory v-if="historyPage" :contrast="contrastColor" @colorChanged="onColorChanged" />
+    </transition>
   </div>
 
   <div id="modal" :class="{ active: modal.status }">
@@ -208,7 +210,6 @@ export default {
 .modal-leave-active {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .modal-enter-from,
 .modal-leave-to {
   transform: scale(0);
