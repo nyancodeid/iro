@@ -11,6 +11,7 @@
           v-bind:key="index"
           class="gradient-box"
           :class="{ primary: isPrimary(gradient) }"
+          :style="`background-color: ${gradient}`"
           @click="onColorChanged(gradient)"
         >
           <span class="color-label--hex">{{ hexColor(gradient) }}</span>
@@ -80,34 +81,6 @@ export default {
         border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms,
         background 500ms linear;
 
-      &:nth-child(1) {
-        background-color: var(--gradient-900);
-      }
-      &:nth-child(2) {
-        background-color: var(--gradient-800);
-      }
-      &:nth-child(3) {
-        background-color: var(--gradient-700);
-      }
-      &:nth-child(4) {
-        background-color: var(--gradient-600);
-      }
-      &:nth-child(5) {
-        background-color: var(--gradient-500);
-      }
-      &:nth-child(6) {
-        background-color: var(--gradient-400);
-      }
-      &:nth-child(7) {
-        background-color: var(--gradient-300);
-      }
-      &:nth-child(8) {
-        background-color: var(--gradient-200);
-      }
-      &:nth-child(9) {
-        background-color: var(--gradient-100);
-      }
-
       &.primary {
         box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
         border-radius: 100%;
@@ -116,13 +89,13 @@ export default {
         justify-content: center;
         align-items: center;
 
-        .primary-label {
+        .color-label--primary {
           font-size: 16px;
           color: var(--contrast-color);
         }
       }
 
-      .color-label {
+      .color-label--index {
         position: absolute;
         display: block;
         font-size: 11px;
