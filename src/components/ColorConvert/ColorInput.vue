@@ -123,6 +123,24 @@ export default {
         this.$emit("colorChanged", [this.type.id, color]);
       }
     },
+    onColorPaste($event) {
+      let data = $event.clipboardData.getData('text')
+
+      if (data.indexOf(",") > 0) {
+        let colors = data.split(",")
+            .slice(0, this.property.inputLength);
+
+        colors = normalize(colors);
+
+        if (colorValidate(this.type.id, colors)) {
+          this.$nextTick(() => {
+            this.$emit("colorChanged", [this.type.id, colors]);
+          });
+        } else {
+          this.notyf.error("Invalid color format on clipboard");
+        }
+      }
+    }
   },
   watch: {
     hex() {
