@@ -29,7 +29,7 @@
       :style="`color: ${hex}`"
     >
       <template v-if="property.inputType === 'number'">
-        <div
+        <label
           class="color-input--wrapper"
           v-for="n in property.inputLength"
           :key="`input-${n}`"
@@ -41,11 +41,12 @@
             :maxlength="property.inputMaxLength(n - 1)"
             :id="`${type.id}-input-${n}`"
             @input="onInputChanged"
+            @paste.prevent="onColorPaste"
           />
-        </div>
+        </label>
       </template>
       <template v-else>
-        <div
+        <label
           class="color-input--wrapper"
           v-for="n in property.inputLength"
           :key="`input-${n}`"
@@ -58,7 +59,7 @@
             :id="`${type.id}-input-${n}`"
             @input="onInputChanged"
           />
-        </div>
+        </label>
       </template>
     </div>
   </div>
