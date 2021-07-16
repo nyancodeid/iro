@@ -70,8 +70,8 @@ import {
   generateCssColor,
   yiqContrastColor,
   generateRandomColor,
-} from "../services/colors";
-import { normalize, isString } from "../services/utils";
+} from "@src/services/colors";
+import { normalize, isString } from "@src/services/utils";
 
 export default {
   components: {
@@ -126,7 +126,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAppStore, ["setContrast", "setColors", "toggleHistory"]),
+    ...mapActions(useAppStore, ["setContrast", "setColors", "toggleHistoryPage"]),
     ...mapActions(useDataStore, ["addHistory"]),
     initialize() {
       const params = this.$route.params;
@@ -165,8 +165,7 @@ export default {
     onColorChanged([id, value]) {
       const { colors, contrast, gradients, variable } = calculateColor(
         id,
-        value,
-        true
+        value
       );
 
       this.contrast = contrast.yiq;
@@ -178,12 +177,14 @@ export default {
         return { ...type, value: colorValues };
       });
 
-      this.setContrast(contrast.result);
-      this.setColors(variable);
-      this.addHistory({
-        type: this.activeColor.id,
-        value: this.activeColor.value,
-        colors,
+      this.$nextTick(() => {
+        this.setContrast(contrast.result);
+        this.setColors(variable);
+        this.addHistory({
+          type: this.activeColor.id,
+          value: this.activeColor.value,
+          colors,
+        });
       });
     },
     onColorTypeChanged(id) {
