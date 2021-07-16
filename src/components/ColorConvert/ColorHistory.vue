@@ -92,6 +92,7 @@ export default {
 .history {
   left: 0;
   bottom: -16px;
+  opacity: 0;
 
   position: fixed;
   background-color: var(--dark-transparent-color);
@@ -102,13 +103,14 @@ export default {
 
   padding: 0 16px;
 
-  transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
-  -moz-transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: height 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  -moz-transition: height 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
 
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
 
   &.open {
+    opacity: 1;
     height: calc(100vh - 92px);
   }
 
