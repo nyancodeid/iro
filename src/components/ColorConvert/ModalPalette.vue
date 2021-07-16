@@ -1,11 +1,11 @@
 <template>
-  <div class="modal modal-palette" tabindex="0">
+  <div class="modal modal-palette" tabindex="0" :style="`background-color: ${palette[100]}`">
     <div class="modal-header">
       <div class="modal-header--title label">
         <span class="heading">Palette</span> color harmonies:
       </div>
 
-      <div class="model-header--action">
+      <div class="modal-header--action">
         <div
           class="icon icon-close--black"
           @click="$emit('closed', 'palette')"
@@ -150,7 +150,6 @@ export default {
 
 <style lang="scss">
 .modal.modal-palette {
-  background-color: var(--gradient-100);
   color: black;
 
   .modal-content {
