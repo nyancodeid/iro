@@ -54,3 +54,7 @@ export const isString = (data) => {
 export const isRunningOnPWA = () => {
   return window.matchMedia("(display-mode: standalone)").matches;
 };
+
+export const removeDuplicate = (items) => {
+  return items.filter((v,i,a)=>a.findIndex(t=>(t.colors.hex === v.colors.hex))===i);
+}

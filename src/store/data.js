@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { getColorProperties } from "@src/services/colors";
+import { removeDuplicate } from "@src/services/utils";
 import Storage from "@src/services/storage";
 
 const VERSION = "2.0.5";
@@ -24,7 +25,7 @@ export const useDataStore = defineStore({
     pickers: db.data.pickers,
   }),
   getters: {
-    histories(state) {
+    histories() {
       const history = [...this.history];
 
       history.pop();
@@ -46,9 +47,8 @@ export const useDataStore = defineStore({
   actions: {
     addBookmarks(data) {
       db.data.bookmarks.push(data);
-      db.data.bookmarks = db.data.bookmarks.slice(
-        Math.max(db.data.bookmarks.length - 20, 0)
-      );
+      db.data.bookmarks = db.data.bookmarks
+        .slice(Math.max(db.data.bookmarks.length - 20, 0));
 
       this.bookmarks = db.data.bookmarks;
 
@@ -56,7 +56,8 @@ export const useDataStore = defineStore({
     },
     addHistory(data) {
       db.data.history.push(data);
-      db.data.history = db.data.history.slice(Math.max(db.data.history.length - 20, 0));
+      db.data.history = removeDuplicate(db.data.history)
+        .slice(Math.max(db.data.history.length - 20, 0));
 
       this.history = db.data.history;
 
@@ -64,7 +65,8 @@ export const useDataStore = defineStore({
     },
     addPicker(data) {
       db.data.pickers.push(data);
-      db.data.pickers = db.data.pickers.slice(Math.max(db.data.pickers.length - 20, 0));
+      db.data.pickers = db.data.pickers
+        .slice(Math.max(db.data.pickers.length - 20, 0));
 
       this.pickers = db.data.pickers;
 
