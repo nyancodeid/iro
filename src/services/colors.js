@@ -259,7 +259,7 @@ export const getColorProperties = (type) => {
         return `rgb(${normalize(color).join(", ")})`;
       },
       /**
-       * @param {String[]} colors
+       * @param {String} color
        * @return {Number[]} rgb array of number
        */
       toArray(color) {
@@ -314,8 +314,8 @@ export const getLuminance = (rgb) => {
 
 /**
  *
- * @param {Number[]|String} foreground
- * @param {Number[]|String} background
+ * @param {Number[]} foreground
+ * @param {Number[]} background
  * @returns
  */
 export const calculateContrast = (foreground, background) => {
@@ -377,7 +377,9 @@ export const generateMaterialPalette = (color) => {
       const gradients = [];
       const typeProps = getColorProperties(type);
       for (const index in colors) {
-        gradients.push(colors[index]);
+        if (colors.hasOwnProperty(index)) {
+          gradients.push(colors[index]);
+        }
       }
       return gradients
         .map((color) => colorConvert("hex", hex.toRaw(color))[type])
