@@ -10,20 +10,27 @@
   <ReloadPrompt />
 </template>
 
-<script setup>
+<script>
 import { Notyf } from 'notyf';
-import { provide } from 'vue';
-
 import AppHeader from "@src/components/AppHeader.vue";
 import ReloadPrompt from "@src/components/ReloadPrompt.vue";
 
-provide('notyf', new Notyf({
+const NotfyProvider = new Notyf({
   duration: 2000,
   position: {
     x: 'center',
     y: 'bottom'
   }
-}))
-</script>
+})
 
-<style></style>
+export default {
+  name: "App",
+  components: {
+    AppHeader,
+    ReloadPrompt
+  },
+  provide: {
+    notyf: NotfyProvider
+  }
+}
+</script>
