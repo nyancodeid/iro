@@ -2,8 +2,8 @@
   <div class="video-wrapper">
     <div class="video-wrapper--view" :class="`bg-${contrast}-contrast`">
       <video
+        autoplay
         class="video-wrapper--view-video"
-        autoplay="true"
         ref="video_ctx"
       ></video>
       <canvas class="video-wrapper--view-canvas" ref="canvas_ctx"></canvas>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       isInitialized: false,
-      color: "",
+      color: [ 33, 33, 33 ],
       interval: null,
       cameraDevices: [],
       isTorch: false,
@@ -249,7 +249,7 @@ export default {
   activated() {
     this.stopVideoStream();
 
-    this.color = "";
+    this.color = [ 33, 33, 33 ];
     this.isInitialized = false;
   },
   deactivated() {

@@ -11,7 +11,7 @@ import VideoPicker from "@src/components/ColorPicker/VideoPicker.vue";
 
 export default {
   name: "ColorPicker",
-  components: { ColorResult, VideoPicker },
+  components: { VideoPicker, ColorResult },
 };
 </script>
 
