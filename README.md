@@ -11,12 +11,13 @@ IRO (色 / iro / color) is a web-based application that has the main feature to 
 ## Tech
 IRO build with Latest Web Technology that makes us can access this app even in offline mode (cache-first). And the other cool thing is PWA (Progressive Web App) makes this app installable on Android devices, allow us to use this app to run natively on an Android.
 
-| Tools      | Version         | Desc                                            | Website                                                |
-| ---------- | --------------- | ----------------------------------------------- | ------------------------------------------------------ |
-| Vue        | `^3.0.5`        | Web Framework                                   | [https://v3.vuejs.org/](https://v3.vuejs.org/)         |
-| Vite       | `^2.3.7`        | Next Generation Frontend Tooling                | [https://vitejs.dev/](https://vitejs.dev/)             |
-| Pinia      | `^2.0.0-beta.3` | Intuitive, type safe and flexible Store for Vue | [https://pinia.esm.dev/](https://pinia.esm.dev/)       |
-| Vue-Router | `^4.0.8`        | The official router for Vue.js.                 | [https://router.vuejs.org/](https://router.vuejs.org/) |
+| Tools       | Version         | Desc                                                                                    | Website                                                                                    |
+| ----------- | --------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Vue         | `^3.0.5`        | Web Framework                                                                           | [https://v3.vuejs.org/](https://v3.vuejs.org/)                                             |
+| Vite        | `^2.3.7`        | Next Generation Frontend Tooling                                                        | [https://vitejs.dev/](https://vitejs.dev/)                                                 |
+| Pinia       | `^2.0.0-beta.3` | Intuitive, type safe and flexible Store for Vue                                         | [https://pinia.esm.dev/](https://pinia.esm.dev/)                                           |
+| Vue-Router  | `^4.0.8`        | The official router for Vue.js.                                                         | [https://router.vuejs.org/](https://router.vuejs.org/)                                     |
+| Matercolors | `^2.2.10`       | A tiny, zero-dependency libary for building harmonious material palettes for any color. | [https://github.com/arvindcheenu/Matercolors](https://github.com/arvindcheenu/Matercolors) |
 
 ## Development
 ```bash
