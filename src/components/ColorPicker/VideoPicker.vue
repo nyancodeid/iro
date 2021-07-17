@@ -152,13 +152,13 @@ export default {
       window.stream = stream;
       video.srcObject = stream;
 
-      video.addEventListener("loadedmetadata", (e) => {
+      video.onloadedmetadata = () => {
         this.isInitialized = true;
 
         setTimeout(() => {
           this.onCapabilitiesReady(track);
         }, 500);
-      });
+      };
 
       if (this.interval) {
         clearInterval(this.interval);
