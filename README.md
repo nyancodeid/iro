@@ -4,6 +4,7 @@ Amazing Color Tools. Build with Vue 3 and Vite.
 [![Repository](https://img.shields.io/badge/github-iro-green?logo=github&style=flat)](https://github.com/nyancodeid/iro)
 ![License MIT](https://img.shields.io/github/license/nyancodeid/iro)
 [![Issues](https://img.shields.io/github/issues/nyancodeid/iro)](https://github.com/nyancodeid/iro/issues)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnyancodeid%2Firo.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnyancodeid%2Firo?ref=badge_shield)
 
 ## Description
 IRO (色 / iro / color) is a web-based application that has the main feature to find out the color of several color formats for example HEX, RGB, HSL, and CMYK. Not only that, but IRO also has a feature that can find out the color code of objects or other colored things around through a cellphone camera or even a laptop.
@@ -34,3 +35,7 @@ $ npm run build
   <img alt="IRO" src="screenshot/iro-v2.2-ch.png" style="width:100%" />
   <img alt="IRO" src="screenshot/iro-v2.2-styl.png" style="width:100%" />
 </p>
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnyancodeid%2Firo.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnyancodeid%2Firo?ref=badge_large)
