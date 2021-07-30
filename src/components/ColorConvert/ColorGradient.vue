@@ -41,8 +41,7 @@ export default {
     const color = computed(() => store.colors.primary);
     return {
       color,
-      contrast: store.contrast,
-      store,
+      contrast: store.contrast
     };
   },
   methods: {
