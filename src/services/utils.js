@@ -58,3 +58,28 @@ export const isRunningOnPWA = () => {
 export const removeDuplicate = (items) => {
   return items.filter((v,i,a)=>a.findIndex(t=>(t.colors.hex === v.colors.hex))===i);
 }
+
+export const generateCssStyle = (style) => {
+  let css = style
+    .map(([name, value], index) => {
+      if (style.length - 1 !== index) return `  ${name}: ${value};\n`;
+
+      return `  ${name}: ${value};`;
+    })
+    .join("");
+
+  return `:host {\n${css}\n}`;
+}
+
+export const generateScssStyle = (style) => {
+  let css = style
+    .map(([name, value], index) => {
+      if (style.length - 1 !== index)
+        return `  ${name.replace("--", "$")}: ${value};\n`;
+
+      return `  ${name.replace("--", "$")}: ${value};`;
+    })
+    .join("");
+
+  return `body {\n${css}\n}`;
+}

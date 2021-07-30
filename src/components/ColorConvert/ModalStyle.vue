@@ -35,6 +35,7 @@
 import { mapState } from "pinia";
 
 import { useAppStore } from "@src/store";
+import { generateCssStyle, generateScssStyle } from "@src/services/utils";
 
 export default {
   name: "ModalStyle",
@@ -55,26 +56,9 @@ export default {
       const style = this.colors.variables;
 
       if (this.selected === "css") {
-        let css = style
-          .map(([name, value], index) => {
-            if (style.length - 1 !== index) return `  ${name}: ${value}\n`;
-
-            return `  ${name}: ${value}`;
-          })
-          .join("");
-
-        return `:host {\n${css}\n}`;
+        return generateCssStyle(style);
       } else if (this.selected === "scss") {
-        let css = style
-          .map(([name, value], index) => {
-            if (style.length - 1 !== index)
-              return `  ${name.replace("--", "$")}: ${value}\n`;
-
-            return `  ${name.replace("--", "$")}: ${value}`;
-          })
-          .join("");
-
-        return `body {\n${css}\n}`;
+        return generateScssStyle(style);
       }
     },
   },
@@ -83,10 +67,13 @@ export default {
 
 <style lang="scss">
 .modal.modal-style {
+  width: 536px;
   background-color: var(--dark-transparent-color);
 }
 @media only screen and (max-width: 768px) {
   .modal-style .modal-content pre {
+    padding-bottom: 1rem;
+    
     font-size: 14px;
     overflow-x: auto;
   }
