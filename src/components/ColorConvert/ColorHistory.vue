@@ -44,6 +44,10 @@
           ></div>
         </div>
       </div>
+
+      <div class="history-items--empty" v-if="histories.length == 0">
+        <span>Your history color will show here.</span>
+      </div>
     </div>
   </div>
 </template>
@@ -136,6 +140,16 @@ export default {
 
     .history-item:last-child {
       margin-bottom: 120px;
+    }
+
+    .history-items--empty {
+      width: 100%;
+      padding: 1rem;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+
+      font-size: 0.8rem;
     }
   }
   .history-item {
