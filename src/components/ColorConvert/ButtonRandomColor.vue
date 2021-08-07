@@ -1,6 +1,9 @@
 <template>
   <div class="section random-wrapper">
-    <div class="label"><span class="heading">Generate</span> random color:</div>
+    <div class="label-wrapper">
+      <div class="label"><span class="heading">Generate</span> random color:</div>
+      <span class="label-right">or tab <strong>space</strong></span>
+    </div>
     <div class="content">
       <button class="button" @click="onRandomColor">RANDOM COLOR</button>
     </div>
@@ -20,4 +23,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  .label-right {
+    text-align: right;
+    font-size: 0.7rem;
+  }
+}
+</style>
