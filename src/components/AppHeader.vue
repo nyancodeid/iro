@@ -14,6 +14,8 @@
         <router-link :to="{ name: 'picker' }" active-class="active" exact
           >Picker</router-link
         >
+
+        <a href="https://github.com/nyancodeid/iro" target="_blank" rel="noopener">Github</a>
       </nav>
       <div
         class="icon icon-lg"
