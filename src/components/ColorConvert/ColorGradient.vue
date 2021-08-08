@@ -16,7 +16,7 @@
         >
           <span class="color-label--hex">{{ hexColor(gradient) }}</span>
           <span class="color-label--primary" v-if="isPrimary(gradient)">P</span>
-          <span class="color-label--index">{{ (9 - index) * 100 }}</span>
+          <span class="color-label--index">{{ colorIndexName(index) }}</span>
         </div>
       </div>
     </div>
@@ -58,6 +58,9 @@ export default {
       const color = rgb.toArray(gradient);
       return `#${converter.toHex(color)}`;
     },
+    colorIndexName(index) {
+      return (9 - index) * 100;
+    }
   },
 };
 </script>

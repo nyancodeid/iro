@@ -27,7 +27,7 @@
             :title="gradient"
             @click="onColorChanged(gradient)"
           >
-            <span class="color-label">{{ (9 - index) * 100 }}</span>
+            <span class="color-label">{{ colorIndexName(index) }}</span>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
             :title="gradient"
             @click="onColorChanged(gradient)"
           >
-            <span class="color-label">{{ (9 - index) * 100 }}</span>
+            <span class="color-label">{{ colorIndexName(index) }}</span>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
             :title="gradient"
             @click="onColorChanged(gradient)"
           >
-            <span class="color-label">{{ (9 - index) * 100 }}</span>
+            <span class="color-label">{{ colorIndexName(index) }}</span>
           </div>
         </div>
       </div>
@@ -139,6 +139,9 @@ export default {
     onColorChanged(color) {
       this.$emit("colorChanged", ["hex", color.replace("#", "")]);
     },
+    colorIndexName(index) {
+      return (9 - index) * 100;
+    }
   },
   watch: {
     color() {
