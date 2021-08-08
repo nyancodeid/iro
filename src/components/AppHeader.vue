@@ -6,16 +6,17 @@
     </div>
     <div class="header-menu">
       <nav class="header-navbar">
-        <a v-if="$route.name === 'convert'" @click="toggleHistory">History</a>
+        <a v-if="$route.name === 'convert'" @click="toggleHistory" v-t="'navbar.history'"></a>
 
-        <router-link :to="{ name: 'convert' }" active-class="active" exact
-          >Convert</router-link
-        >
-        <router-link :to="{ name: 'picker' }" active-class="active" exact
-          >Picker</router-link
-        >
+        <router-link :to="{ name: 'convert' }" active-class="active" exact v-t="'navbar.convert'"></router-link>
+        <router-link :to="{ name: 'picker' }" active-class="active" exact v-t="'navbar.picker'"></router-link>
 
         <a href="https://github.com/nyancodeid/iro" target="_blank" rel="noopener">Github</a>
+
+        <select class="select-locale" v-model="locale" :title="t('tooltip.select_lang')">
+          <option value="en">🇺🇸 EN</option>
+          <option value="id">🇮🇩 ID</option>
+        </select>
       </nav>
       <div
         class="icon icon-lg"
@@ -26,17 +27,27 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import {computed, watch} from "vue";
 import { useAppStore } from "@src/store";
+import { useI18n } from "vue-i18n";
 
 export default {
   name: "AppHeader",
   setup() {
+    const { t, locale } = useI18n();
     const store = useAppStore();
+
     const toggleHistory = () => {
       store.toggleHistoryPage();
     };
+
+    watch(locale, (now, prev) => {
+      localStorage.setItem("iro-locale", now);
+    });
+
     return {
+      t,
+      locale,
       contrast: computed(() => store.contrast),
       toggleHistory,
     };
@@ -45,6 +56,20 @@ export default {
 </script>
 
 <style lang="scss">
+header {
+  .select-locale {
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    outline: none;
+    background-color: var(--contrast-color);
+    color: var(--text-color);
+    border: none;
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%), 0 1px 3px 0 rgb(0 0 0 / 20%);
+
+    font-weight: bold;
+  }
+}
+
 .icon.icon-lg {
   transition: background-image 0.3s ease-in-out;
 

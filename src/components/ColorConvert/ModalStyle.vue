@@ -2,7 +2,7 @@
   <div class="modal modal-style" tabindex="0">
     <div class="modal-header">
       <div class="modal-header--title label">
-        <span class="heading">Style</span> color:
+        <span class="heading" v-t="'modal.style.label_title'"></span> {{ t("modal.style.label_small") }}:
       </div>
 
       <div class="modal-header--action">
@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import { mapState } from "pinia";
+import {mapState} from "pinia";
+import {useI18n} from "vue-i18n";
 
 import { useAppStore } from "@src/store";
 import { generateCssStyle, generateScssStyle } from "@src/services/utils";
@@ -44,6 +45,11 @@ export default {
       tabs: ["css", "scss"],
       selected: "css",
     };
+  },
+  setup () {
+    const { t } = useI18n();
+
+    return { t };
   },
   computed: {
     ...mapState(useAppStore, ["contrast", "colors"]),

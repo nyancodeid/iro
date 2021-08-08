@@ -3,16 +3,22 @@ import { resolve } from "path";
 import { VitePWA } from "vite-plugin-pwa";
 
 import vue from "@vitejs/plugin-vue";
+import vueI18n from "@intlify/vite-plugin-vue-i18n";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
       "@src": resolve(__dirname, "src"),
+      "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-bundler.js"
     },
   },
   plugins: [
     vue(),
+    vueI18n({
+      include: resolve(__dirname, "./src/locales/*.json"),
+      compositionOnly: true
+    }),
     VitePWA({
       manifest: {
         name: "IRO - Amazing Color Tools",

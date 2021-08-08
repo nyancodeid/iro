@@ -1,0 +1,73 @@
+{
+  "navbar": {
+    "history": "History",
+    "convert": "Convert",
+    "picker": "Picker"
+  },
+  "tooltip": {
+    "palette_icon": "Palette Color",
+    "style_icon": "CSS/SCSS Style",
+    "copy_icon": "Copy color to clipboard",
+    "select_lang": "Select Language"
+  },
+  "yiq": {
+    "label_small": "contrast ratio",
+    "contrast_black": "black",
+    "contrast_white": "white"
+  },
+  "wcag": {
+    "label_small": "result",
+    "large_text": "Large Text",
+    "normal_text": "Normal Text"
+  },
+  "gradient": {
+    "label_title": "Gradient",
+    "label_small": "color"
+  },
+  "convert": {
+    "label_title": "Convert",
+    "label_small": "to",
+    "btn_to": "to"
+  },
+  "random": {
+    "label_title": "Generate",
+    "label_small": "random color",
+    "label_space": "or press space",
+    "btn_text": "Random Color"
+  },
+  "modal": {
+    "palette": {
+      "label_title": "Palette",
+      "label_small": "color harmonies",
+      "p1_label_small": "color:",
+      "p2_label_small": "color:",
+      "p3_label_small": "color:"
+    },
+    "style": {
+      "label_title": "Style",
+      "label_small": "color"
+    },
+    "history": {
+      "label_title": "History",
+      "label_small": "Last color you generate:",
+      "empty": "Your history color will show here."
+    }
+  },
+  "camera.start_camera": "Start Camera",
+  "color_result": {
+    "label_title": "Result",
+    "label_small": "color",
+    "empty": "Your captured color will show here."
+  },
+  "notyf": {
+    "copy_success": "Color copied to clipboard!",
+    "error_general": "Ops, something happend!",
+    "color_invlid": "Invalid color format on clipboard",
+    "torch_error": "Error while toggle torch/light",
+    "camera_permission_denied": "Camera Permission is DENIED. Please enable it to make function normally."
+  },
+  "pwa": {
+    "offline_ready": "Offline Mode Ready",
+    "update_ready": "Working Auto Update"
+  }
+}

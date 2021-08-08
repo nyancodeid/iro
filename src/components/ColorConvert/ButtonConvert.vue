@@ -1,6 +1,6 @@
 <template>
   <div class="section convert-wrapper">
-    <div class="label"><span class="heading">Convert</span> to:</div>
+    <div class="label"><span class="heading" v-t="'convert.label_title'"></span> {{ t("convert.label_small") }}:</div>
     <div class="content">
       <div class="button-convert--items">
         <div
@@ -9,7 +9,7 @@
           class="button"
           @click="$emit('typeChanged', type.id)"
         >
-          to {{ type.title }}
+          {{ t("convert.btn_to") }} {{ type.title }}
         </div>
       </div>
     </div>
@@ -17,11 +17,17 @@
 </template>
 
 <script>
+import {useI18n} from "vue-i18n";
+
 export default {
   name: "ButtonConvert",
   props: {
     types: Array,
   },
+  setup () {
+    const { t } = useI18n();
+    return { t };
+  }
 };
 </script>
 

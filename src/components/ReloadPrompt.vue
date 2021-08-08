@@ -1,61 +1,79 @@
 <template>
   <div v-if="offlineReady || needRefresh" class="pwa-toast" role="alert">
-    <div class="message">
-      <span v-if="offlineReady"> App ready to work offline </span>
-      <span v-else>
-        New content available, click on reload button to update.
-      </span>
+    <div class="pwa-toast--offline" v-if="offlineReady">
+      <i class="icon icon-offline"></i>
+      <span v-t="'pwa.offline_ready'"></span>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">Reload</button>
-    <button @click="close">Close</button>
+
+    <div class="pwa-toast--update" v-if="needRefresh">
+      <i class="icon icon-loading"></i>
+      <span v-t="'pwa.update_ready'"></span>
+    </div>
   </div>
 </template>
 
-<script setup>
+<script>
+import {watch} from 'vue';
+import {useI18n} from "vue-i18n";
+
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
+export default {
+  name: "ReloadPrompt",
+  setup() {
+    const { t } = useI18n();
+    const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
 
-const close = async () => {
-  offlineReady.value = false;
-  needRefresh.value = false;
+    const watcherStop = watch([ offlineReady, needRefresh ], (now, prev) => {
+      const [ offlineNow, refreshNow ] = now;
+      const [ offlinePrev, refreshPrev ] = prev;
+      if (offlineNow === true && offlinePrev === false) {
+        setTimeout(() => {
+          offlineReady.value = false;
+          watcherStop();
+        }, 3000);
+      } else if (refreshNow === true && refreshPrev === false) {
+        setTimeout(() => {
+          needRefresh.value = false;
+          updateServiceWorker();
+          watcherStop();
+        }, 3000);
+      }
+    });
+
+    return {
+      t,
+      offlineReady,
+      needRefresh
+    }
+  }
 };
 </script>
 
 <style lang="scss">
 .pwa-toast {
   position: fixed;
-  right: 0;
-  bottom: 0;
-  margin: 16px;
-  padding: 12px;
+  right: 64px;
+  bottom: 142px;
   border-radius: 4px;
   z-index: 1;
-  text-align: left;
-  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%),
-      0 1px 3px 0 rgb(0 0 0 / 20%);
-  background-color: var(--dark-color);
-  color: var(--secondary-color);
 
-  .message {
-    margin-bottom: 8px;
-  }
-  button {
-    margin-right: 5px;
-    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%),
-      0 1px 3px 0 rgb(0 0 0 / 20%);
-    background: var(--secondary-color);
-    color: var(--text-color);
-    border-radius: 2px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    padding: 11px 16px;
-    display: inline-block;
-    width: 120px;
+  .pwa-toast--offline,
+  .pwa-toast--update {
+    box-shadow: var(--box-shadow);
+    background-color: var(--darken-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+
+    font-size: 0.8rem;
+    i.icon {
+      display: inline-flex;
+      margin-right: 0.4rem;
+    }
   }
 }
 </style>

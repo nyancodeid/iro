@@ -190,6 +190,7 @@ export const generateCssColor = ({ type, value }) => {
     ["secondary-color", secondaryColor],
     ["text-color", textColor],
     ["dark-color-value", darkColorValue],
+    ["darken-color", gradients[1]],
     ["contrast-color", contrast.result],
   ];
 
