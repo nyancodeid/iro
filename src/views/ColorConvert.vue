@@ -218,4 +218,14 @@ export default {
 .modal-leave-from {
   transform: scale(1);
 }
+
+@media only screen and (max-width: 768px) {
+  .navbar .section {
+    margin-bottom: 1em;
+
+    &.gradient-wrapper {
+      margin-bottom: 2em;
+    }
+  }
+}
 </style>

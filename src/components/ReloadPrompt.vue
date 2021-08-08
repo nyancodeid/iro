@@ -29,11 +29,11 @@ const close = async () => {
   bottom: 0;
   margin: 16px;
   padding: 12px;
-  border: 1px solid #8885;
   border-radius: 4px;
   z-index: 1;
   text-align: left;
-  box-shadow: 3px 4px 5px 0 #8885;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%),
+      0 1px 3px 0 rgb(0 0 0 / 20%);
   background-color: var(--dark-color);
   color: var(--secondary-color);
 

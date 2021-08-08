@@ -111,7 +111,7 @@ export const yiqContrastRatio = ([r, g, b]) => {
   // Check contrast
   return {
     yiq,
-    result: yiq >= 128 ? "black" : "white",
+    result: yiqContrastColor(yiq),
   };
 };
 
