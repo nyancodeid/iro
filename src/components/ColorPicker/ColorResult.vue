@@ -4,7 +4,7 @@
       <span class="heading" v-t="'color_result.label_title'"></span> {{ t("color_result.label_small") }} :
     </div>
     <div class="video-color--result-wrapper">
-      <div class="video-color--result-empty" v-if="pickers.length == 0">
+      <div class="video-color--result-empty bg-black-contrast" v-if="pickers.length == 0">
         <span v-t="'color_result.empty'"></span>
       </div>
 
@@ -83,7 +83,6 @@ export default {
     justify-content: start;
 
     .video-color--result-empty {
-      background-color: var(--black-contrast);
       text-align: center;
       width: 100%;
       border-radius: 0.5em;
