@@ -24,14 +24,20 @@ export default {
 </script>
 
 <style lang="scss">
-.label-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+.random-wrapper {
+  .label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 
-  .label-right {
-    text-align: right;
-    font-size: 0.7rem;
+    .label-right {
+      text-align: right;
+      font-size: 0.7rem;
+    }
+  }
+
+  .content .button {
+    text-transform: uppercase;
   }
 }
 </style>
