@@ -67,9 +67,7 @@
     "camera_permission_denied": "Camera Permission is DENIED. Please enable it to make function normally."
   },
   "pwa": {
-    "offline_ready": "App ready to work offline",
-    "update_ready": "New content available, click on reload button to update.",
-    "btn_update": "Reload",
-    "btn_close": "Close"
+    "offline_ready": "Offline Mode Ready",
+    "update_ready": "Working Auto Update"
   }
 }

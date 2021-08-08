@@ -67,9 +67,7 @@
     "camera_permission_denied": "Izin Kamera DITOLAK. Harap izinkan kamera agar berfungsi secara normal."
   },
   "pwa": {
-    "offline_ready": "Aplikasi siap bekerja secara offline",
-    "update_ready": "Konten baru tersedia, klik tombol muat ulang untuk memperbarui.",
-    "btn_update": "Muat Ulang",
-    "btn_close": "Tutup"
+    "offline_ready": "Mode Offline Siap",
+    "update_ready": "Sedang update content"
   }
 }
