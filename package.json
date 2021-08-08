@@ -1,6 +1,6 @@
 {
   "name": "iro",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "color inspect for HEX, RGB, HSL, and CMYK",
   "scripts": {
     "dev": "vite",
