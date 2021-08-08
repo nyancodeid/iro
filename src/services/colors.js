@@ -183,16 +183,13 @@ export const generateCssColor = ({ type, value }) => {
     contrast.result === "black" ? gradients[1] : gradients[8];
   const darkColor = contrast.result === "black" ? gradients[8] : gradients[1];
 
-  const darkTransparent = darkColor
-    .replace("rgb", "rgba")
-    .replace(")", ", 0.98)");
+  const darkColorValue = darkColor.replace('rgb(', '').replace(')', '');
 
   let cssVariable = [
     ["primary-color", rgb.toString(colors.rgb)],
     ["secondary-color", secondaryColor],
     ["text-color", textColor],
-    ["dark-color", darkColor],
-    ["dark-transparent-color", darkTransparent],
+    ["dark-color-value", darkColorValue],
     ["contrast-color", contrast.result],
   ];
 

@@ -99,7 +99,7 @@ export default {
   opacity: 1;
 
   position: fixed;
-  background-color: var(--dark-transparent-color);
+  background-color: rgba(var(--dark-color-value), 0.98);
   width: calc(100vw - 32px);
   height: calc(100vh - 92px);
 

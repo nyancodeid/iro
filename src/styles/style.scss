@@ -1,15 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap');
-
 * {
   font-family: 'IBM Plex Mono', monospace;
   letter-spacing: 0.05786em;
 }
 
 body {
-  --dark-color: rgb(39, 39, 39);
-  --dark-transparent-color: rgba(39, 39, 39, 0.99);
+  --dark-color-value: 39, 39, 39;
+
   --primary-color: #212121;
   --secondary-color: rgb(196, 196, 196);
+  --dark-color: rgb(var(--dark-color-value));
   --text-color: #212121;
   --contrast-color: white;
   --black-contrast: rgba(0, 0, 0, 0.15);

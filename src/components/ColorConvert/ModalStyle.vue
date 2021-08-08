@@ -68,7 +68,7 @@ export default {
 <style lang="scss">
 .modal.modal-style {
   width: 536px;
-  background-color: var(--dark-transparent-color);
+  background-color: rgba(var(--dark-color-value), .98);
 }
 @media only screen and (max-width: 768px) {
   .modal-style .modal-content pre {
