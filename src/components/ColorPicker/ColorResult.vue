@@ -118,7 +118,7 @@ export default {
     width: calc(100% - 24px);
 
     .video-color--result-wrapper .video-color--result-item {
-      width: calc((100% / 6) - 5px);
+      width: calc((100% / 5) - 1px);
 
       .result-item--text {
         font-size: 12px;
