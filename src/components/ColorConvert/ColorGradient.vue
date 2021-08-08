@@ -3,7 +3,7 @@
     class="section gradient-wrapper"
     :class="`gradient-wrapper--${contrast}`"
   >
-    <div class="label"><span class="heading">Gradient</span> color:</div>
+    <div class="label"><span class="heading" v-t="'gradient.label_title'"></span> {{ t("gradient.label_small") }}:</div>
     <div class="content">
       <div class="gradient-boxs">
         <div
@@ -25,6 +25,8 @@
 
 <script>
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
 import { getColorProperties } from "@src/services/colors";
 import { rgb as converter } from "@src/services/converter";
 import { useAppStore } from "@src/store";
@@ -37,9 +39,11 @@ export default {
     gradients: Array,
   },
   setup() {
+    const { t } = useI18n();
     const store = useAppStore();
     const color = computed(() => store.colors.primary);
     return {
+      t,
       color,
       contrast: store.contrast
     };

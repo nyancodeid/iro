@@ -20,7 +20,7 @@
       </div>
 
       <div class="helper-initialize" v-if="!isInitialized">
-        <span>Start Camera</span>
+        <span v-t="'camera.start_camera'"></span>
       </div>
     </div>
 
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import {useI18n} from "vue-i18n";
 import {mapActions, mapState} from "pinia";
 
 import {colorConvert} from "@src/services/colors";
@@ -69,7 +70,12 @@ export default {
       isSwitchAvailable: false,
     };
   },
-  async mounted() {
+  setup() {
+    const { t } = useI18n();
+
+    return { t };
+  },
+  mounted() {
     this.$refs.canvas_ctx.width = DEFAULT_WIDTH;
     this.$refs.canvas_ctx.height = DEFAULT_HEIGHT;
   },
@@ -177,16 +183,14 @@ export default {
       }, 100);
     },
     handleVideoError(error) {
-      console.log(
+      console.error(
         "navigator.MediaDevices.getUserMedia error: ",
         error.message,
         error.name
       );
 
       if (error.name === "NotAllowedError") {
-        this.notyf.error(
-          "Camera Permission is DENIED. Plase enable it to make function normally."
-        );
+        this.notyf.error(this.t("notyf.camera_permission_denied"));
       }
 
       this.isInitialized = false;
@@ -205,7 +209,7 @@ export default {
         track.stop();
 
         this.initializeCamera(facingMode).catch((e) => {
-          this.notyf.error("Error");
+          this.notyf.error(this.t("notyf.error_general"));
         });
       }
     },
@@ -226,7 +230,7 @@ export default {
             this.isTorch = setting.torch;
           })
           .catch((e) => {
-            this.notyf.error("Error while toggle torch/light");
+            this.notyf.error(this.t("notyf.torch_error"));
           });
       }
     },

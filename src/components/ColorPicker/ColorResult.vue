@@ -1,11 +1,11 @@
 <template>
   <div class="video-color--result" :class="`bg-${contrast}-contrast`">
     <div class="video-color--result-label">
-      <span class="heading">Result</span> color:
+      <span class="heading" v-t="'color_result.label_title'"></span> {{ t("color_result.label_small") }} :
     </div>
     <div class="video-color--result-wrapper">
       <div class="video-color--result-empty" v-if="pickers.length == 0">
-        <span>Your captured color will show here.</span>
+        <span v-t="'color_result.empty'"></span>
       </div>
 
       <div
@@ -28,11 +28,17 @@
 import { mapState } from "pinia";
 
 import { useAppStore, useDataStore } from "@src/store";
+import {useI18n} from "vue-i18n";
 
 export default {
   name: "ColorResult",
   props: {
     colors: Array,
+  },
+  setup() {
+    const { t } = useI18n();
+
+    return { t };
   },
   computed: {
     ...mapState(useAppStore, ["contrast"]),

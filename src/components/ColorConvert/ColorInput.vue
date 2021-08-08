@@ -7,19 +7,19 @@
           class="icon"
           :class="`icon-palette--${color}`"
           @click="$emit('toggleModal', 'palette')"
-          title="Palette Color"
+          :title="t('tooltip.palette_icon')"
         ></div>
         <div
           class="icon"
           :class="`icon-style--${color}`"
           @click="$emit('toggleModal', 'style')"
-          title="CSS/SCSS Style"
+          :title="t('tooltip.style_icon')"
         ></div>
         <div
           class="icon"
           :class="`icon-copy--${color}`"
           @click="onCopyClick"
-          title="Copy color to clipboard"
+          :title="t('tooltip.copy_icon')"
         ></div>
       </div>
     </div>
@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import {useI18n} from "vue-i18n";
+
 import {copyToClipboard, normalize} from "@src/services/utils";
 import { colorValidate, getColorProperties } from "@src/services/colors";
 
@@ -82,6 +84,11 @@ export default {
       timeoutId: null,
       values: [],
     };
+  },
+  setup () {
+    const { t } = useI18n();
+
+    return { t };
   },
   mounted() {
     this.onInitialized();
@@ -110,7 +117,7 @@ export default {
 
       copyToClipboard(color);
 
-      this.notyf.success("Color copied to clipboard!");
+      this.notyf.success(this.t("notyf.copy_success"));
     },
     onInputChanged() {
       let color = [...this.values];
@@ -139,7 +146,7 @@ export default {
             this.$emit("colorChanged", [this.type.id, colors]);
           });
         } else {
-          this.notyf.error("Invalid color format on clipboard");
+          this.notyf.error(this.t("notyf.color_invlid"));
         }
       }
     }

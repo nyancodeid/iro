@@ -2,8 +2,8 @@
   <div class="history">
     <div class="history-title">
       <div class="history-title--content">
-        <h1>History</h1>
-        <span>Last color you generate: </span>
+        <h1 v-t="'modal.history.label_title'"></h1>
+        <span v-t="'modal.history.label_small'"></span>
       </div>
 
       <div
@@ -39,20 +39,21 @@
           <div
             class="history-item--action-item copy icon"
             :class="`icon-copy--${contrast}`"
-            title="Copy to clipboard"
+            :title="t('tooltip.copy_icon')"
             @click="addToClipboard(history)"
           ></div>
         </div>
       </div>
 
       <div class="history-items--empty" v-if="histories.length == 0">
-        <span>Your history color will show here.</span>
+        <span v-t="'modal.history.empty'"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {useI18n} from "vue-i18n";
 import { mapState, mapActions } from "pinia";
 
 import { copyToClipboard } from "@src/services/utils";
@@ -64,6 +65,10 @@ export default {
     contrast: String,
   },
   inject: ["notyf"],
+  setup () {
+    const { t } = useI18n();
+    return { t };
+  },
   computed: {
     ...mapState(useAppStore, [ "historyPage" ]),
     ...mapState(useDataStore, [ "histories" ])

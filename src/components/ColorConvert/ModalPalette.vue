@@ -2,7 +2,7 @@
   <div class="modal modal-palette" tabindex="0" :style="`background-color: ${palette[100]}`">
     <div class="modal-header">
       <div class="modal-header--title label">
-        <span class="heading">Palette</span> color harmonies:
+        <span class="heading">{{ t("modal.palette.label_title") }}</span> {{ t("modal.palette.label_small") }}:
       </div>
 
       <div class="modal-header--action">
@@ -15,7 +15,7 @@
     <div class="modal-content">
       <div class="content-section">
         <div class="content-section--title">
-          Complementary <span>color:</span>
+          Complementary <span v-t="'modal.palette.p1_label_small'"></span>
         </div>
         <div class="content-section--items">
           <div
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="content-section">
-        <div class="content-section--title">Analogous <span>color:</span></div>
+        <div class="content-section--title">Analogous <span v-t="'modal.palette.p2_label_small'"></span></div>
         <div class="content-section--items without-label">
           <div
             v-for="(gradient, index) in gradients.analogous[0]"
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="content-section">
-        <div class="content-section--title">Triadic <span>color:</span></div>
+        <div class="content-section--title">Triadic <span v-t="'modal.palette.p3_label_small'"></span></div>
         <div class="content-section--items without-label">
           <div
             v-for="(gradient, index) in gradients.triadic[0]"
@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import {useI18n} from "vue-i18n";
 import { mapState } from "pinia";
 
 import { useAppStore } from "@src/store";
@@ -105,6 +106,11 @@ export default {
     return {
       palette,
     };
+  },
+  setup () {
+    const { t } = useI18n();
+
+    return { t };
   },
   computed: {
     ...mapState(useAppStore, { contrast: "contrast" }),

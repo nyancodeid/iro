@@ -1,6 +1,6 @@
 <template>
   <div class="section contrast-checker--wrapper">
-    <div class="label"><span class="heading">WCAG</span> result :</div>
+    <div class="label"><span class="heading">WCAG</span> {{ t("wcag.label_small") }}:</div>
     <div class="content">
       <div class="contrast-result--items">
         <div
@@ -11,7 +11,7 @@
             [color]: true,
           }"
         >
-          <span class="item-subtitle">Large Text</span>
+          <span class="item-subtitle" v-t="'wcag.large_text'"></span>
           <span class="item-title">AA</span>
         </div>
         <div
@@ -22,7 +22,7 @@
             [color]: true,
           }"
         >
-          <span class="item-subtitle">Normal Text</span>
+          <span class="item-subtitle" v-t="'wcag.normal_text'"></span>
           <span class="item-title">AA</span>
         </div>
         <div
@@ -33,7 +33,7 @@
             [color]: true,
           }"
         >
-          <span class="item-subtitle">Large Text</span>
+          <span class="item-subtitle" v-t="'wcag.large_text'"></span>
           <span class="item-title">AAA</span>
         </div>
         <div
@@ -44,7 +44,7 @@
             [color]: true,
           }"
         >
-          <span class="item-subtitle">Normal Text</span>
+          <span class="item-subtitle" v-t="'wcag.normal_text'"></span>
           <span class="item-title">AAA</span>
         </div>
       </div>
@@ -53,6 +53,9 @@
 </template>
 
 <script>
+import {computed} from "vue";
+import {useI18n} from "vue-i18n";
+
 import { calculateContrast } from "@src/services/colors";
 
 export default {
@@ -62,11 +65,13 @@ export default {
     foreground: Array,
     background: Array,
   },
-  computed: {
-    contrast() {
-      return calculateContrast(this.foreground, this.background);
-    },
-  },
+  setup (props) {
+    const { t } = useI18n();
+
+    const contrast = computed(() => calculateContrast(props.foreground, props.background));
+
+    return { t, contrast };
+  }
 };
 </script>
 

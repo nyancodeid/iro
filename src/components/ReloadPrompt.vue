@@ -1,17 +1,16 @@
 <template>
   <div v-if="offlineReady || needRefresh" class="pwa-toast" role="alert">
     <div class="message">
-      <span v-if="offlineReady"> App ready to work offline </span>
-      <span v-else>
-        New content available, click on reload button to update.
-      </span>
+      <span v-if="offlineReady" v-t="'pwa.offline_ready'"></span>
+      <span v-else v-t="'pwa.update_ready'"></span>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">Reload</button>
-    <button @click="close">Close</button>
+    <button v-if="needRefresh" @click="updateServiceWorker()" v-t="'pwa.btn_update'"></button>
+    <button @click="close" v-t="'pwa.btn_close'"></button>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
@@ -20,6 +19,8 @@ const close = async () => {
   offlineReady.value = false;
   needRefresh.value = false;
 };
+
+const { t } = useI18n();
 </script>
 
 <style lang="scss">
