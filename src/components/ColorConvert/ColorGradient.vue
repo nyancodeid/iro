@@ -1,7 +1,7 @@
 <template>
   <div
-    class="section gradstop-wrapper"
-    :class="`gradstop-wrapper--${contrast}`"
+    class="section gradient-wrapper"
+    :class="`gradient-wrapper--${contrast}`"
   >
     <div class="label"><span class="heading">Gradient</span> color:</div>
     <div class="content">
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss">
-.gradstop-wrapper {
+.gradient-wrapper {
   .gradient-boxs {
     display: flex;
     justify-content: flex-start;
@@ -118,12 +118,19 @@ export default {
         text-align: center;
         text-transform: uppercase;
       }
+
+      @media only screen and (max-width: 768px) {
+        .color-label--index {
+          bottom: -17px;
+          font-size: 10px;
+        }
+      }
     }
   }
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .gradstop-wrapper .gradient-boxs .gradient-box {
+  .gradient-wrapper .gradient-boxs .gradient-box {
     &:hover {
       box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
       transform: scale(1.25);
