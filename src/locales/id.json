@@ -1,0 +1,75 @@
+{
+  "navbar": {
+    "history": "Riwayat",
+    "convert": "Konversi",
+    "picker": "Periksa"
+  },
+  "tooltip": {
+    "palette_icon": "Palet warna",
+    "style_icon": "Style CSS/SCSS",
+    "copy_icon": "Salin warna ke papan klip",
+    "select_lang": "Pilih Bahasa"
+  },
+  "yiq": {
+    "label_small": "rasio kontras",
+    "contrast_black": "hitam",
+    "contrast_white": "putih"
+  },
+  "wcag": {
+    "label_small": "hasil",
+    "large_text": "Teks Besar",
+    "normal_text": "Teks Normal"
+  },
+  "gradient": {
+    "label_title": "Gradien",
+    "label_small": "warna"
+  },
+  "convert": {
+    "label_title": "Konversi",
+    "label_small": "ke",
+    "btn_to": "ke"
+  },
+  "random": {
+    "label_title": "Hasilkan",
+    "label_small": "warna acak",
+    "label_space": "atau tekan spasi",
+    "btn_text": "Acak Warna"
+  },
+  "modal": {
+    "palette": {
+      "label_title": "Palet",
+      "label_small": "harmoni warna",
+      "p1_label_small": "warna:",
+      "p2_label_small": "warna:",
+      "p3_label_small": "warna:"
+    },
+    "style": {
+      "label_title": "Style",
+      "label_small": "warna"
+    },
+    "history": {
+      "label_title": "Riwayat",
+      "label_small": "Warna terakhir yang anda hasilkan",
+      "empty": "Riwayat warna Anda akan ditampilkan di sini."
+    }
+  },
+  "camera.start_camera": "Mulai Kamera",
+  "color_result": {
+    "label_title": "Hasil",
+    "label_small": "warna",
+    "empty": "Warna yang Anda tangkap akan ditampilkan di sini."
+  },
+  "notyf": {
+    "copy_success": "Warna berhasil disalin ke papan klip!",
+    "error_general": "Ops, terjadi sesuatu!",
+    "color_invlid": "Format warna di papan klip tidak valid",
+    "torch_error": "Galat saat mengaktifkan senter/lampu",
+    "camera_permission_denied": "Izin Kamera DITOLAK. Harap izinkan kamera agar berfungsi secara normal."
+  },
+  "pwa": {
+    "offline_ready": "Aplikasi siap bekerja secara offline",
+    "update_ready": "Konten baru tersedia, klik tombol muat ulang untuk memperbarui.",
+    "btn_update": "Muat Ulang",
+    "btn_close": "Tutup"
+  }
+}
