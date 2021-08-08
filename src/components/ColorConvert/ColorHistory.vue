@@ -30,12 +30,12 @@
         </div>
 
         <div class="history-item--action">
-          <div
+          <!-- <div
             class="history-item--action-item bookmarked icon"
             :class="`icon-bookmark--${contrast}`"
             title="Add to bookmark"
             @click="addToBookmark(history)"
-          ></div>
+          ></div> -->
           <div
             class="history-item--action-item copy icon"
             :class="`icon-copy--${contrast}`"
