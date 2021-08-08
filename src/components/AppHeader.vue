@@ -46,6 +46,8 @@ export default {
 
 <style lang="scss">
 .icon.icon-lg {
+  transition: background-image 0.3s ease-in-out;
+
   &.icon-theme-indicator--white {
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 51 51' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M23.7078 4.24246C25.9996 6.42838 27.7388 9.25142 28.6184 12.5343C31.1715 22.0625 25.517 31.8564 15.9888 34.4095C12.7058 35.2891 9.3914 35.1945 6.35245 34.3027C10.6877 42.8354 20.5352 47.4724 30.1493 44.8963C41.1876 41.9386 47.7382 30.5926 44.7805 19.5544C42.2044 9.94031 33.265 3.73059 23.7078 4.24246Z' fill='white'/%3E%3C/svg%3E%0A");
   }
