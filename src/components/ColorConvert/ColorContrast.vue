@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {yiqContrastColor} from "@src/services/colors";
 export default {
   name: "ColorContrast",
   props: {
@@ -15,9 +16,10 @@ export default {
   },
   computed: {
     result() {
-      const color = this.contrast >= 128 ? "black" : "white";
+      const contrast = yiqContrastColor(this.contrast);
+      const contrastText = this.t(`yiq.contrast_${contrast}`);
 
-      return `${this.contrast.toFixed(0)} (${color})`;
+      return `${this.contrast.toFixed(0)} (${contrastText})`;
     },
   },
 };
