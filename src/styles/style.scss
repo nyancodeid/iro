@@ -58,6 +58,7 @@ body {
 
       nav {
         display: flex;
+        align-items: center;
         text-align: right;
         padding-right: 32px;
 
@@ -344,9 +345,22 @@ body {
         }
 
         .icon.icon-lg {
-          position: fixed;
+          position: absolute;
+          top: 1.05em;
+          left: 4.5em;
+
+          height: 28px;
+          width: 28px;
+
+          background-size: cover;
+        }
+
+        .select-locale {
+          position: absolute;
           top: 1em;
           right: 1em;
+
+          padding: 0.4rem;
         }
       }
     }
