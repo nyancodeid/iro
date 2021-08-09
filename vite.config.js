@@ -22,7 +22,7 @@ export default defineConfig({
     VitePWA({
       manifest: {
         name: "IRO - Amazing Color Tools",
-        shortName: "IRO",
+        short_name: "IRO",
         theme_color: "#212121",
         registerType: "autoUpdate",
         includeAssets: ["/favicon.ico"],
