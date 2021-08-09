@@ -76,4 +76,16 @@ export default {
     }
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .pwa-toast {
+    bottom: unset;
+    top: 2rem;
+    right: 0;
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
 </style>
