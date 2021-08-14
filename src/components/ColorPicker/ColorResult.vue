@@ -131,4 +131,10 @@ export default {
     }
   }
 }
+
+@media only screen and (max-width: 640px) {
+  .video-color--result {
+    margin-bottom: 16px;
+  }
+}
 </style>
