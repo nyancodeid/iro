@@ -81,8 +81,8 @@ export default {
     .gradient-box {
       position: relative;
       cursor: pointer;
-      height: 48px;
-      width: 48px;
+      width: 40px;
+      height: 40px;
       transition: transform 165ms cubic-bezier(0.4, 0, 0.2, 1),
         border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms,
         background 500ms linear;
