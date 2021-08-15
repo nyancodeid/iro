@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "opxop",
+      "name": "Opa Kholis Majid",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49778014?v=4",
+      "profile": "https://opakholis.dev/",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "iro",
+  "projectOwner": "nyancodeid",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
