@@ -87,15 +87,13 @@ export default {
       width: 100%;
       border-radius: 0.5em;
       padding: 16px;
-      margin: 8px 8px 16px 8px;
+      margin: 8px 8px 16px;
       color: var(--darker-color);
       font-size: 14px;
     }
 
     .video-color--result-item {
-      margin-bottom: 12px;
-      margin-right: 8px;
-      margin-left: 8px;
+      margin: 0 8px 12px;
       width: calc((100% / 6) - 3px);
       cursor: pointer;
 
@@ -118,7 +116,7 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .video-color--result {
-    margin-top: 16px;
+    margin: 16px 0;
     justify-content: center;
     width: calc(100% - 24px);
 
@@ -129,12 +127,6 @@ export default {
         font-size: 12px;
       }
     }
-  }
-}
-
-@media only screen and (max-width: 640px) {
-  .video-color--result {
-    margin-bottom: 16px;
   }
 }
 </style>
