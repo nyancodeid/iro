@@ -1,5 +1,5 @@
 <template>
-  <div class="modal modal-palette" tabindex="0" :style="`background-color: ${palette[100]}`">
+  <div class="modal modal-palette" tabindex="0">
     <div class="modal-header">
       <div class="modal-header--title label">
         <span class="heading">{{ t("modal.palette.label_title") }}</span> {{ t("modal.palette.label_small") }}:
@@ -13,77 +13,82 @@
       </div>
     </div>
     <div class="modal-content">
-      <div class="content-section">
-        <div class="content-section--title">
-          Complementary <span v-t="'modal.palette.p1_label_small'"></span>
+      <div class="modal-content--sections" v-if="palette">
+        <div class="content-section">
+          <div class="content-section--title">
+            Complementary <span v-t="'modal.palette.p1_label_small'"></span>
+          </div>
+          <div class="content-section--items">
+            <div
+              v-for="(gradient, index) in gradients.complementary"
+              v-bind:key="index"
+              class="content-section--item"
+              :class="{ primary: isPrimary('complementary', gradient) }"
+              :style="`background-color: ${gradient}`"
+              :title="gradient"
+              @click="onColorChanged(gradient)"
+            >
+              <span class="color-label">{{ colorIndexName(index) }}</span>
+            </div>
+          </div>
         </div>
-        <div class="content-section--items">
-          <div
-            v-for="(gradient, index) in gradients.complementary"
-            v-bind:key="index"
-            class="content-section--item"
-            :class="{ primary: isPrimary('complementary', gradient) }"
-            :style="`background-color: ${gradient}`"
-            :title="gradient"
-            @click="onColorChanged(gradient)"
-          >
-            <span class="color-label">{{ colorIndexName(index) }}</span>
+        <div class="content-section">
+          <div class="content-section--title">Analogous <span v-t="'modal.palette.p2_label_small'"></span></div>
+          <div class="content-section--items without-label">
+            <div
+              v-for="(gradient, index) in gradients.analogous[0]"
+              :key="index"
+              class="content-section--item"
+              :class="{ primary: isPrimary('analogous.primary', gradient) }"
+              :style="`background-color: ${gradient}`"
+              :title="gradient"
+              @click="onColorChanged(gradient)"
+            ></div>
+          </div>
+          <div class="content-section--items">
+            <div
+              v-for="(gradient, index) in gradients.analogous[1]"
+              :key="index"
+              class="content-section--item"
+              :class="{ primary: isPrimary('analogous.secondary', gradient) }"
+              :style="`background-color: ${gradient}`"
+              :title="gradient"
+              @click="onColorChanged(gradient)"
+            >
+              <span class="color-label">{{ colorIndexName(index) }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="content-section">
+          <div class="content-section--title">Triadic <span v-t="'modal.palette.p3_label_small'"></span></div>
+          <div class="content-section--items without-label">
+            <div
+              v-for="(gradient, index) in gradients.triadic[0]"
+              :key="index"
+              class="content-section--item"
+              :class="{ primary: isPrimary('triadic.primary', gradient) }"
+              :style="`background-color: ${gradient}`"
+              :title="gradient"
+              @click="onColorChanged(gradient)"
+            ></div>
+          </div>
+          <div class="content-section--items">
+            <div
+              v-for="(gradient, index) in gradients.triadic[1]"
+              :key="index"
+              class="content-section--item"
+              :class="{ primary: isPrimary('triadic.secondary', gradient) }"
+              :style="`background-color: ${gradient}`"
+              :title="gradient"
+              @click="onColorChanged(gradient)"
+            >
+              <span class="color-label">{{ colorIndexName(index) }}</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="content-section">
-        <div class="content-section--title">Analogous <span v-t="'modal.palette.p2_label_small'"></span></div>
-        <div class="content-section--items without-label">
-          <div
-            v-for="(gradient, index) in gradients.analogous[0]"
-            :key="index"
-            class="content-section--item"
-            :class="{ primary: isPrimary('analogous.primary', gradient) }"
-            :style="`background-color: ${gradient}`"
-            :title="gradient"
-            @click="onColorChanged(gradient)"
-          ></div>
-        </div>
-        <div class="content-section--items">
-          <div
-            v-for="(gradient, index) in gradients.analogous[1]"
-            :key="index"
-            class="content-section--item"
-            :class="{ primary: isPrimary('analogous.secondary', gradient) }"
-            :style="`background-color: ${gradient}`"
-            :title="gradient"
-            @click="onColorChanged(gradient)"
-          >
-            <span class="color-label">{{ colorIndexName(index) }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="content-section">
-        <div class="content-section--title">Triadic <span v-t="'modal.palette.p3_label_small'"></span></div>
-        <div class="content-section--items without-label">
-          <div
-            v-for="(gradient, index) in gradients.triadic[0]"
-            :key="index"
-            class="content-section--item"
-            :class="{ primary: isPrimary('triadic.primary', gradient) }"
-            :style="`background-color: ${gradient}`"
-            :title="gradient"
-            @click="onColorChanged(gradient)"
-          ></div>
-        </div>
-        <div class="content-section--items">
-          <div
-            v-for="(gradient, index) in gradients.triadic[1]"
-            :key="index"
-            class="content-section--item"
-            :class="{ primary: isPrimary('triadic.secondary', gradient) }"
-            :style="`background-color: ${gradient}`"
-            :title="gradient"
-            @click="onColorChanged(gradient)"
-          >
-            <span class="color-label">{{ colorIndexName(index) }}</span>
-          </div>
-        </div>
+      <div class="modal-content--sections" v-else>
+        <span>Loading</span>
       </div>
     </div>
   </div>
@@ -102,15 +107,18 @@ export default {
     color: String,
   },
   data() {
-    const palette = generateMaterialPalette(this.color);
     return {
-      palette,
+      palette: null
     };
   },
   setup () {
     const { t } = useI18n();
-
     return { t };
+  },
+  async mounted() {
+    const palette = await generateMaterialPalette(this.color);
+
+    this.palette = palette;
   },
   computed: {
     ...mapState(useAppStore, { contrast: "contrast" }),
@@ -131,15 +139,15 @@ export default {
   methods: {
     isPrimary(type, gradient) {
       if (type === "complementary") {
-        return this.palette._raw_.complementary() === gradient.toLowerCase();
+        return this.palette.harmonies.complementary === gradient.toLowerCase();
       } else if (type === "analogous.primary") {
-        return this.palette._raw_.firstAnalogous() === gradient.toLowerCase();
+        return this.palette.harmonies.analogous[0] === gradient.toLowerCase();
       } else if (type === "analogous.secondary") {
-        return this.palette._raw_.secondAnalogous() === gradient.toLowerCase();
+        return this.palette.harmonies.analogous[1] === gradient.toLowerCase();
       } else if (type === "triadic.primary") {
-        return this.palette._raw_.firstTriadic() === gradient.toLowerCase();
+        return this.palette.harmonies.triadic[0] === gradient.toLowerCase();
       } else if (type === "triadic.secondary") {
-        return this.palette._raw_.secondTriadic() === gradient.toLowerCase();
+        return this.palette.harmonies.triadic[1] === gradient.toLowerCase();
       }
     },
     onColorChanged(color) {
@@ -150,8 +158,8 @@ export default {
     }
   },
   watch: {
-    color() {
-      this.palette = generateMaterialPalette(this.color);
+    async color() {
+      this.palette = await generateMaterialPalette(this.color);
     },
   },
 };
@@ -160,6 +168,7 @@ export default {
 <style lang="scss">
 .modal.modal-palette {
   color: black;
+  background-color: var(--modal-color, #F5F5F5);
 
   .modal-content {
     .content-section {
