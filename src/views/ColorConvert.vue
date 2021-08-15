@@ -17,17 +17,19 @@
         />
       </div>
     </div>
-    <div class="navbar">
-      <ColorGradient
-        :gradients="gradients"
-        @colorChanged="onColorChanged"
-      />
-      <ButtonConvert
-        :types="inactiveColor"
-        @typeChanged="onColorTypeChanged"
-      />
-      <ButtonRandomColor @colorChanged="onColorChanged" />
-    </div>
+    <Lazy>
+      <div class="navbar">
+        <ColorGradient
+          :gradients="gradients"
+          @colorChanged="onColorChanged"
+        />
+        <ButtonConvert
+          :types="inactiveColor"
+          @typeChanged="onColorTypeChanged"
+        />
+        <ButtonRandomColor @colorChanged="onColorChanged" />
+      </div>
+    </Lazy>
 
     <transition name="history">
       <ColorHistory v-if="historyPage" :contrast="contrastColor" @colorChanged="onColorChanged" />
@@ -56,6 +58,7 @@ import { mapState, mapActions } from "pinia";
 
 import { useAppStore, useDataStore } from "@src/store";
 
+import Lazy from "@src/components/Lazy.vue";
 import ColorContrast from "@src/components/ColorConvert/ColorContrast.vue";
 import ColorContrastChecker from "@src/components/ColorConvert/ColorContrastChecker.vue";
 import ColorGradient from "@src/components/ColorConvert/ColorGradient.vue";
@@ -86,6 +89,7 @@ export default {
     ColorHistory,
     ModalStyle,
     ModalPalette,
+    Lazy
   },
   data() {
     return {
