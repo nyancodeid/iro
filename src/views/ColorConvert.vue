@@ -94,7 +94,17 @@ export default {
         status: false,
       },
       contrast: 0,
-      gradients: [],
+      gradients: [
+        "rgb(33, 33, 33)",
+        "rgb(66, 66, 66)",
+        "rgb(97, 97, 97)",
+        "rgb(117, 117, 117)",
+        "rgb(158, 158, 158)",
+        "rgb(189, 189, 189)",
+        "rgb(224, 224, 224)",
+        "rgb(238, 238, 238)",
+        "rgb(245, 245, 245)"
+      ],
       types: [
         { title: "HEX", id: "hex", selected: true, value: "212121" },
         { title: "RGB", id: "rgb", selected: false, value: [33, 33, 33] },
@@ -106,9 +116,6 @@ export default {
   activated() {
     window.addEventListener("keyup", this.onKeyPressed);
     this.initialize();
-  },
-  mounted() {
-    this.onColorChanged(["hex", "212121"]);
   },
   computed: {
     ...mapState(useAppStore, ["colors", "historyPage"]),
@@ -164,14 +171,15 @@ export default {
       this.contrast = contrast.yiq;
       this.gradients = gradients;
     },
-    onColorChanged([id, value]) {
-      const { colors, contrast, gradients, variable } = calculateColor(
+    async onColorChanged([id, value]) {
+      const { colors, contrast, gradients, variable } = await calculateColor(
         id,
         value
       );
 
       this.contrast = contrast.yiq;
       this.gradients = gradients;
+
       this.types = this.types.map((type) => {
         let colorValues =
           type.id !== "hex" ? normalize(colors[type.id]) : colors[type.id];
