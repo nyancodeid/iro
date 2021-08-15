@@ -1,7 +1,13 @@
-import Matercolor from "matercolors";
+import { wrap } from "comlink";
 
+import ColorWorker from "@src/worker.js?worker";
 import * as converter from "@src/services/converter";
 import { getRange, normalize } from "@src/services/utils";
+
+/**
+ * Initialize Worker with Comlink Wrapper
+ */
+const worker = wrap(new ColorWorker());
 
 /**
  * Color Validation
@@ -138,9 +144,9 @@ export const generateRandomColor = () => {
  * @param {String} type
  * @param {String|Number[]} value
  **/
-export const calculateColor = (type, value) => {
+export const calculateColor = async (type, value) => {
   const { variable, cssVariable, colors, contrast, gradients } =
-    generateCssColor({
+    await generateCssColor({
       type,
       value,
     });
@@ -169,12 +175,12 @@ export const calculateColor = (type, value) => {
  * @param {String} type
  * @param {String|Number[]} value
  */
-export const generateCssColor = ({ type, value }) => {
+export const generateCssColor = async ({ type, value }) => {
   const colors = colorConvert(type, value);
   const contrast = yiqContrastRatio(colors.rgb);
   const rgb = getColorProperties("rgb");
 
-  const material = generateMaterialPalette(colors.hex);
+  const material = await generateMaterialPalette(colors.hex);
   const gradients = material.toGradient("rgb", true);
 
   const textColor =
@@ -191,6 +197,7 @@ export const generateCssColor = ({ type, value }) => {
     ["text-color", textColor],
     ["dark-color-value", darkColorValue],
     ["darken-color", gradients[1]],
+    ["modal-color", gradients[8]],
     ["contrast-color", contrast.result],
   ];
 
@@ -337,19 +344,15 @@ export const calculateContrast = (foreground, background) => {
  * @param {String} color hex
  * @source https://github.com/leodido/material-palette/blob/master/index.m.js
  */
-export const generateMaterialPalette = (color) => {
+export const generateMaterialPalette = async (color) => {
   const hex = getColorProperties("hex");
   const hexColor = hex.toString(color).toLowerCase();
-  const palette = new Matercolor(hexColor);
-
-  const primaryIndex = Object.entries(palette.palette.primary)
-    .slice(1, 10)
-    .reverse()
-    .findIndex(([index, value]) => hexColor === value);
+  
+  const palette = await worker.generatePalette(hexColor);
 
   return {
     ...palette.palette.primary,
-    primaryIndex,
+    primaryIndex: palette.primaryIndex,
     toGradient(type, withFormat = false, palette_color = "default") {
       let colors = palette.palette.primary;
 
@@ -378,6 +381,10 @@ export const generateMaterialPalette = (color) => {
         .slice(1, 10)
         .reverse();
     },
-    _raw_: palette,
+    harmonies: {
+      complementary: palette.complementaryPrimaryColor,
+      analogous: palette.analogousPrimaryColor,
+      triadic: palette.triadicPrimaryColor
+    },
   };
 };
