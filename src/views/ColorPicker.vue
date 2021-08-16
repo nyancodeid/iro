@@ -1,17 +1,20 @@
 <template>
   <div id="content" class="color-picker--page">
     <VideoPicker />
-    <ColorResult />
+    <Lazy>
+      <ColorResult />
+    </Lazy>
   </div>
 </template>
 
 <script>
+import Lazy from "@src/components/Lazy.vue";
 import ColorResult from "@src/components/ColorPicker/ColorResult.vue";
 import VideoPicker from "@src/components/ColorPicker/VideoPicker.vue";
 
 export default {
   name: "ColorPicker",
-  components: { VideoPicker, ColorResult },
+  components: { VideoPicker, ColorResult, Lazy },
 };
 </script>
 
