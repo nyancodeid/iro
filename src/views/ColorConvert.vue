@@ -176,7 +176,7 @@ export default {
       this.gradients = gradients;
     },
     async onColorChanged([id, value]) {
-      const { colors, contrast, gradients, variable } = await calculateColor(
+      const { colors, contrast, gradients, variable, nextTick } = await calculateColor(
         id,
         value
       );
@@ -199,6 +199,8 @@ export default {
           value: this.activeColor.value,
           colors,
         });
+
+        nextTick();
       });
     },
     onColorTypeChanged(id) {
