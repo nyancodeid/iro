@@ -151,11 +151,15 @@ export const calculateColor = async (type, value) => {
       value,
     });
 
-  document.body.style.cssText = cssVariable
-    .filter(([name]) => name.indexOf("gradient") === -1)
+  const lowPriorityCss = ["--dark-color-value", "--darken-color", "--modal-color"];
+  const withoutGradientCss = cssVariable
+    .filter(([name]) => (name.indexOf("gradient") === -1));
+
+  document.body.style.cssText = withoutGradientCss
+    .filter(([name]) => !lowPriorityCss.includes(name))
     .map(([ name, value ]) => `${name}: ${value};`)
     .join("");
-
+    
   if (contrast.result === "black" && !document.body.classList.contains("dark")) {
     document.body.classList.add("dark");
   } else if (contrast.result === "white" && document.body.classList.contains("dark")) {
@@ -167,6 +171,14 @@ export const calculateColor = async (type, value) => {
     contrast,
     gradients,
     variable,
+    nextTick: () => {
+      const variables = withoutGradientCss
+        .filter(([name]) => lowPriorityCss.includes(name));
+
+      variables.forEach(function ([ name, value ]) {
+        document.body.style.setProperty(name, value);
+      });
+    }
   };
 };
 
@@ -195,10 +207,10 @@ export const generateCssColor = async ({ type, value }) => {
     ["primary-color", rgb.toString(colors.rgb)],
     ["secondary-color", secondaryColor],
     ["text-color", textColor],
+    ["contrast-color", contrast.result],
     ["dark-color-value", darkColorValue],
     ["darken-color", gradients[1]],
     ["modal-color", gradients[8]],
-    ["contrast-color", contrast.result],
   ];
 
   cssVariable = cssVariable
