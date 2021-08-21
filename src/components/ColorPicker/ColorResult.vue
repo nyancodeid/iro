@@ -78,9 +78,13 @@ export default {
     }
   }
   .video-color--result-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-auto-columns: 60px;
+    column-gap: 16px;
+    row-gap: 16px;
+
+    justify-items: center;
 
     .video-color--result-empty {
       text-align: center;
@@ -93,8 +97,6 @@ export default {
     }
 
     .video-color--result-item {
-      margin: 0 8px 12px;
-      width: calc((100% / 6) - 3px);
       cursor: pointer;
 
       .result-item--color {
@@ -120,11 +122,13 @@ export default {
     justify-content: center;
     width: calc(100% - 24px);
 
-    .video-color--result-wrapper .video-color--result-item {
-      width: calc((100% / 5) - 1px);
+    .video-color--result-wrapper {
+      grid-template-columns: auto auto auto auto;
 
-      .result-item--text {
-        font-size: 12px;
+      .video-color--result-item {
+        .result-item--text {
+          font-size: 12px;
+        }
       }
     }
   }
