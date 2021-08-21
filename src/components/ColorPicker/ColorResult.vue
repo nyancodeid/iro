@@ -84,14 +84,16 @@ export default {
     column-gap: 16px;
     row-gap: 16px;
 
+    padding: 8px 0;
     justify-items: center;
 
     .video-color--result-empty {
+      grid-column: 2 / 5;
+
       text-align: center;
       width: 100%;
       border-radius: 0.5em;
       padding: 16px;
-      margin: 8px 8px 16px;
       color: var(--darker-color);
       font-size: 14px;
     }
@@ -124,6 +126,10 @@ export default {
 
     .video-color--result-wrapper {
       grid-template-columns: auto auto auto auto;
+
+      .video-color--result-empty {
+        grid-column: 2 / 4;
+      }
 
       .video-color--result-item {
         .result-item--text {
