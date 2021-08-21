@@ -2,8 +2,8 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import { VitePWA } from "vite-plugin-pwa";
 
-import vue from "@vitejs/plugin-vue";
-import vueI18n from "@intlify/vite-plugin-vue-i18n";
+import Vue from "@vitejs/plugin-vue";
+import VueI18n from "@intlify/vite-plugin-vue-i18n";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,8 +14,8 @@ export default defineConfig({
     },
   },
   plugins: [
-    vue(),
-    vueI18n({
+    Vue(),
+    VueI18n({
       include: resolve(__dirname, "./src/locales/*.json"),
       compositionOnly: true
     }),
