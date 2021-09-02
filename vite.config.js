@@ -16,7 +16,7 @@ export default defineConfig({
   plugins: [
     Vue(),
     VueI18n({
-      include: resolve(__dirname, "./src/locales/*.json"),
+      include: resolve(__dirname, "./src/locales/*.yaml"),
       compositionOnly: true
     }),
     VitePWA({
