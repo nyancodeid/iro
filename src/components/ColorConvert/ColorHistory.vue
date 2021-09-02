@@ -70,7 +70,6 @@ export default {
     return { t };
   },
   computed: {
-    ...mapState(useAppStore, [ "historyPage" ]),
     ...mapState(useDataStore, [ "histories" ])
   },
   methods: {
@@ -78,7 +77,10 @@ export default {
     ...mapActions(useDataStore, [ "addBookmarks" ]),
     openHistory(history) {
       this.$emit("colorChanged", [history.type, history.value]);
-      this.toggleHistoryPage();
+      
+      setTimeout(() => {
+        this.toggleHistoryPage();
+      }, 300);
     },
     addToBookmark(history) {
       const clean = JSON.parse(JSON.stringify(history));
@@ -207,5 +209,27 @@ export default {
 .history-leave-to {
   opacity: 0;
   height: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .history {
+    bottom: 0;
+    right: 0;
+
+    left: unset;
+
+    width: 25vw;
+    height: 100vh;
+
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 16px;
+
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+  }
+  .history-enter-from,
+  .history-leave-to {
+    opacity: 0;
+    width: 0;
+  }
 }
 </style>

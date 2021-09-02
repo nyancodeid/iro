@@ -194,12 +194,20 @@ export const generateCssColor = async ({ type, value }) => {
 
   const material = await generateMaterialPalette(colors.hex);
   const gradients = material.toGradient("rgb", true);
+  
+  const isPrimaryEqualToDarkesColor = (gradients[0] === rgb.toString(colors.rgb));
 
   const textColor =
     contrast.result === "black" ? gradients[8] : rgb.toString(colors.rgb);
   const secondaryColor =
     contrast.result === "black" ? gradients[1] : gradients[8];
-  const darkColor = contrast.result === "black" ? gradients[8] : gradients[1];
+  
+  let darkColor = contrast.result === "black" ? gradients[8] : gradients[0];
+
+  if (contrast.result === "white" && isPrimaryEqualToDarkesColor) {
+    // lower gradient color level to 900 to 800
+    darkColor = gradients[1];
+  }
 
   const darkColorValue = darkColor.replace('rgb(', '').replace(')', '');
 
