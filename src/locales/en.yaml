@@ -32,6 +32,8 @@ modal:
   palette:
     label_title: Palette
     label_small: color harmonies
+    description: Basic techniques for combining colors. Below are shown the palette color based on the color wheel.
+    learn_more: Learn More about
     p1_label_small: 'color:'
     p2_label_small: 'color:'
     p3_label_small: 'color:'

@@ -32,6 +32,8 @@ modal:
   palette:
     label_title: Palet
     label_small: harmoni warna
+    description: Teknik dasar untuk menggabungkan warna. Di bawah ini ditampilkan palet warna berdasarkan roda warna.
+    learn_more: Belajar lebih jauh tentang
     p1_label_small: 'warna:'
     p2_label_small: 'warna:'
     p3_label_small: 'warna:'

@@ -13,6 +13,8 @@
       </div>
     </div>
     <div class="modal-content">
+      <p class="modal-content--description" v-t="'modal.palette.description'"></p>
+
       <div class="modal-content--sections" v-if="palette">
         <div class="content-section">
           <div class="content-section--title">
@@ -90,6 +92,10 @@
       <div class="modal-content--sections" v-else>
         <span>Loading</span>
       </div>
+
+      <p class="modal-content--description">
+        <span>{{ t('modal.palette.learn_more') }} <a href="https://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm" rel="noreferrer" v-t="'modal.palette.label_small'"></a></span>
+      </p>
     </div>
   </div>
 </template>
@@ -171,6 +177,11 @@ export default {
   background-color: var(--modal-color, #F5F5F5);
 
   .modal-content {
+    .modal-content--description {
+      width: calc(48px * 9);
+      display: block;
+      font-size: 0.7rem;
+    }
     .content-section {
       margin: 1rem 0 1.5rem 0;
 
@@ -235,9 +246,15 @@ export default {
   }
 }
 @media only screen and (max-width: 768px) {
-  .modal.modal-palette .modal-content .content-section .content-section--items .content-section--item {
-    height: calc((100vw - 32px) / 9);
-    width: calc((100vw - 32px) / 9);
+  .modal.modal-palette .modal-content {
+    .modal-content--description {
+      width: 100%;
+    }
+    
+    .content-section .content-section--items .content-section--item {
+      height: calc((100vw - 32px) / 9);
+      width: calc((100vw - 32px) / 9);
+    }
   }
 }
 </style>
