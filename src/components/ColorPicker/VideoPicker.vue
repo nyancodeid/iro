@@ -35,7 +35,9 @@
         class="video-control--capture"
         :class="controlCaptureClass"
         @click="onCaptureColor"
-      ></div>
+      >
+        <IconCamera />
+      </div>
       <div
         class="video-control--switch icon icon-switch--white"
         :class="{ disabled: !isSwitchAvailable }"
@@ -53,12 +55,17 @@ import {mapActions, mapState} from "pinia";
 import {colorConvert} from "@src/services/colors";
 import {useAppStore, useDataStore} from "@src/store";
 
+import IconCamera from "@src/components/Icons/Camera.vue";
+
 const DEFAULT_WIDTH = 436;
 const DEFAULT_HEIGHT = 414;
 
 export default {
   name: "VideoPicker",
   inject: ["notyf"],
+  components: {
+    IconCamera
+  },
   data() {
     return {
       isInitialized: false,
@@ -408,6 +415,10 @@ $box-shadow: var(--box-shadow);
 
       width: 42px;
       height: 42px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       cursor: pointer;
       box-shadow: $box-shadow;
