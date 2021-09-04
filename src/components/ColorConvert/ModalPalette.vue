@@ -94,7 +94,7 @@
       </div>
 
       <p class="modal-content--description">
-        <span>{{ t('modal.palette.learn_more') }} <a href="https://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm" rel="noreferrer" v-t="'modal.palette.label_small'"></a></span>
+        <span>{{ t('modal.palette.learn_more') }} <a href="https://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm" target="_blank" rel="noreferrer" v-t="'modal.palette.label_small'"></a></span>
       </p>
     </div>
   </div>
