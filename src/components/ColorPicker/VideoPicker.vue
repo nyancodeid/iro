@@ -69,6 +69,10 @@ export default {
   },
   data() {
     return {
+      size: {
+        width: DEFAULT_WIDTH,
+        height: DEFAULT_HEIGHT
+      },
       isInitialized: false,
       color: [ 33, 33, 33 ],
       interval: null,
@@ -84,8 +88,8 @@ export default {
     return { t };
   },
   mounted() {
-    this.$refs.canvas_ctx.width = DEFAULT_WIDTH;
-    this.$refs.canvas_ctx.height = DEFAULT_HEIGHT;
+    this.$refs.canvas_ctx.width = this.size.width;
+    this.$refs.canvas_ctx.height = this.size.height;
   },
   computed: {
     ...mapState(useAppStore, ["contrast"]),
@@ -102,7 +106,31 @@ export default {
   },
   methods: {
     ...mapActions(useDataStore, ["addPicker"]),
-    async initializeCamera(facingMode = "environment") {
+    async initializeCamera(facingMode) {
+      const constraints = {
+        audio: false,
+        video: {
+          width: {
+            ideal: 1920,
+            max: 2560,
+          },
+          height: {
+            ideal: 1080,
+            max: 1440
+          },
+        },
+      };
+
+      if (facingMode && this.isSwitchAvailable) {
+        constraints.video.facingMode = facingMode;
+      }
+
+      return navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(this.handlerVideoSuccess)
+        .catch(this.handleVideoError);
+    },
+    async setCameraDevices () {
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.find(
         (device) =>
@@ -113,28 +141,25 @@ export default {
         .filter((device) => device.kind === "videoinput")
         .slice(0, 2);
 
-      const constraints = {
-        audio: false,
-        video: true,
-      };
-
       if (videoDevices) {
         this.isSwitchAvailable = devices.length > 1;
-
-        constraints.video = {
-          facingMode,
-        };
+      }
+    },
+    getVideoSize () {
+      if (!this.$refs.video_ctx) return {
+        width: DEFAULT_WIDTH,
+        height: DEFAULT_HEIGHT
       }
 
-      return navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(this.handlerVideoSuccess)
-        .catch(this.handleVideoError);
+      return {
+        width: this.$refs.video_ctx.clientWidth,
+        height: this.$refs.video_ctx.clientHeight
+      }
     },
     onCaptureColor() {
       if (!this.isInitialized) {
         this.initializeCamera().then(() => {
-          // on initialize complete
+          return this.setCameraDevices();
         });
       } else {
         // Capture Color
@@ -181,10 +206,10 @@ export default {
       this.interval = setInterval(() => {
         const ctx = canvas.getContext("2d");
 
-        ctx.drawImage(video, 0, 0, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+        ctx.drawImage(video, 0, 0, this.size.width, this.size.height);
 
-        const sx = DEFAULT_WIDTH / 2;
-        const sy = DEFAULT_HEIGHT / 2;
+        const sx = this.size.width / 2;
+        const sy = this.size.height / 2;
 
         const imageData = ctx.getImageData(sx, sy, 1, 1);
         this.color = imageData.data.slice(0, 3);
@@ -259,6 +284,11 @@ export default {
     },
   },
   activated() {
+    const size = this.getVideoSize();
+    if (size.width !== this.size.width) {
+      this.size = { ...size };
+    }
+
     this.stopVideoStream();
 
     this.color = [ 33, 33, 33 ];
