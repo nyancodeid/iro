@@ -7,7 +7,7 @@
 <div align="center">
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![License MIT](https://img.shields.io/github/license/nyancodeid/iro)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
@@ -62,6 +62,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://opakholis.dev/"><img src="https://avatars.githubusercontent.com/u/49778014?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Opa Kholis Majid</b></sub></a><br /><a href="https://github.com/nyancodeid/iro/commits?author=opxop" title="Code">💻</a> <a href="#design-opxop" title="Design">🎨</a></td>
     <td align="center"><a href="http://zalepik.xyz"><img src="https://avatars.githubusercontent.com/u/51511976?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Moh. Zainul Muttaqin &#124; Zalepik</b></sub></a><br /><a href="#design-mzainulmuttaqin" title="Design">🎨</a></td>
+    <td align="center"><a href="https://santrikoding.com"><img src="https://avatars.githubusercontent.com/u/11194525?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fika Ridaul Maulayya</b></sub></a><br /><a href="https://github.com/nyancodeid/iro/pulls?q=is%3Apr+reviewed-by%3Amaulayyacyber" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
