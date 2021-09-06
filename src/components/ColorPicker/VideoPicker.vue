@@ -101,7 +101,31 @@ export default {
   },
   methods: {
     ...mapActions(useDataStore, ["addPicker"]),
-    async initializeCamera(facingMode = "environment") {
+    async initializeCamera(facingMode) {
+      const constraints = {
+        audio: false,
+        video: {
+          width: {
+            ideal: 1920,
+            max: 2560,
+          },
+          height: {
+            ideal: 1080,
+            max: 1440
+          },
+        },
+      };
+
+      if (facingMode && this.isSwitchAvailable) {
+        constraints.video.facingMode = facingMode;
+      }
+
+      return navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(this.handlerVideoSuccess)
+        .catch(this.handleVideoError);
+    },
+    async setCameraDevices () {
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.find(
         (device) =>
@@ -112,28 +136,25 @@ export default {
         .filter((device) => device.kind === "videoinput")
         .slice(0, 2);
 
-      const constraints = {
-        audio: false,
-        video: true,
-      };
-
       if (videoDevices) {
         this.isSwitchAvailable = devices.length > 1;
-
-        constraints.video = {
-          facingMode,
-        };
+      }
+    },
+    getVideoSize () {
+      if (!this.$refs.video_ctx) return {
+        width: DEFAULT_WIDTH,
+        height: DEFAULT_HEIGHT
       }
 
-      return navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(this.handlerVideoSuccess)
-        .catch(this.handleVideoError);
+      return {
+        width: this.$refs.video_ctx.clientWidth,
+        height: this.$refs.video_ctx.clientHeight
+      }
     },
     onCaptureColor() {
       if (!this.isInitialized) {
         this.initializeCamera().then(() => {
-          // on initialize complete
+          return this.setCameraDevices();
         });
       } else {
         // Capture Color
