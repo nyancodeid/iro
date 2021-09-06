@@ -3,6 +3,7 @@
     <div class="video-wrapper--view" :class="`bg-${contrast}-contrast`">
       <video
         autoplay
+        playsinline
         class="video-wrapper--view-video"
         ref="video_ctx"
       ></video>
