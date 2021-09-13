@@ -7,11 +7,11 @@
     <div class="content">
       <div class="gradient-boxs">
         <div
-          v-for="(gradient, index) in gradients"
-          v-bind:key="index"
           class="gradient-box"
+          v-for="(gradient, index) in gradients"
+          :key="index"
           :class="{ primary: isPrimary(gradient) }"
-          :style="`background-color: ${gradient}`"
+          :style="{ backgroundColor: gradient }"
           @click="onColorChanged(gradient)"
         >
           <span class="color-label--hex">{{ hexColor(gradient) }}</span>
@@ -84,8 +84,7 @@ export default {
       width: 40px;
       height: 40px;
       transition: transform 165ms cubic-bezier(0.4, 0, 0.2, 1),
-        border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms,
-        background 500ms linear;
+        border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms;
 
       &.primary {
         box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);

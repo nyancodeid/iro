@@ -152,18 +152,26 @@ export const calculateColor = async (type, value) => {
     });
 
   const lowPriorityCss = ["--dark-color-value", "--darken-color", "--modal-color"];
-  const withoutGradientCss = cssVariable
-    .filter(([name]) => (name.indexOf("gradient") === -1));
+  const bodyStyle = document.body.style;
+  const bodyClassList = document.body.classList;
+  const cssStyles = {
+    low: []
+  };
 
-  document.body.style.cssText = withoutGradientCss
-    .filter(([name]) => !lowPriorityCss.includes(name))
-    .map(([ name, value ]) => `${name}: ${value};`)
-    .join("");
+  for (const [ name, value ] of cssVariable) {
+    if (name.indexOf("gradient") >= 0) continue;
+
+    if (!lowPriorityCss.includes(name)) {
+      bodyStyle.setProperty(name, value);
+    } else {
+      cssStyles.low.push([ name, value ]);
+    }
+  }
     
-  if (contrast.result === "black" && !document.body.classList.contains("dark")) {
-    document.body.classList.add("dark");
-  } else if (contrast.result === "white" && document.body.classList.contains("dark")) {
-    document.body.classList.remove("dark");
+  if (contrast.result === "black" && !bodyClassList.contains("dark")) {
+    bodyClassList.add("dark");
+  } else if (contrast.result === "white" && bodyClassList.contains("dark")) {
+    bodyClassList.remove("dark");
   }
 
   return {
@@ -172,12 +180,9 @@ export const calculateColor = async (type, value) => {
     gradients,
     variable,
     nextTick: () => {
-      const variables = withoutGradientCss
-        .filter(([name]) => lowPriorityCss.includes(name));
-
-      variables.forEach(function ([ name, value ]) {
-        document.body.style.setProperty(name, value);
-      });
+      for (const [ name, value ] of cssStyles.low) {
+        bodyStyle.setProperty(name, value);
+      }
     }
   };
 };
@@ -288,12 +293,7 @@ export const getColorProperties = (type) => {
        * @return {Number[]} rgb array of number
        */
       toArray(color) {
-        const numbs = color
-          .toLowerCase()
-          .replace("rgb(", "")
-          .replace(")", "")
-          .replace(" ", "")
-          .split(",");
+        const numbs = color.match(/\d+/g);
 
         return normalize(numbs);
       },

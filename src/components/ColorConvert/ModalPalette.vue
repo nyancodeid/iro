@@ -24,7 +24,7 @@
               v-bind:key="index"
               class="content-section--item"
               :class="{ primary: isPrimary('complementary', gradient) }"
-              :style="`background-color: ${gradient}`"
+              :style="{ backgroundColor: gradient }"
               :title="gradient"
               @click="onColorChanged(gradient)"
             >
@@ -40,7 +40,7 @@
               :key="index"
               class="content-section--item"
               :class="{ primary: isPrimary('analogous.primary', gradient) }"
-              :style="`background-color: ${gradient}`"
+              :style="{ backgroundColor: gradient }"
               :title="gradient"
               @click="onColorChanged(gradient)"
             ></div>
@@ -51,7 +51,7 @@
               :key="index"
               class="content-section--item"
               :class="{ primary: isPrimary('analogous.secondary', gradient) }"
-              :style="`background-color: ${gradient}`"
+              :style="{ backgroundColor: gradient }"
               :title="gradient"
               @click="onColorChanged(gradient)"
             >
@@ -67,7 +67,7 @@
               :key="index"
               class="content-section--item"
               :class="{ primary: isPrimary('triadic.primary', gradient) }"
-              :style="`background-color: ${gradient}`"
+              :style="{ backgroundColor: gradient }"
               :title="gradient"
               @click="onColorChanged(gradient)"
             ></div>
@@ -78,7 +78,7 @@
               :key="index"
               class="content-section--item"
               :class="{ primary: isPrimary('triadic.secondary', gradient) }"
-              :style="`background-color: ${gradient}`"
+              :style="{ backgroundColor: gradient }"
               :title="gradient"
               @click="onColorChanged(gradient)"
             >
@@ -210,8 +210,7 @@ export default {
           height: 48px;
           width: 48px;
           transition: transform 165ms cubic-bezier(0.4, 0, 0.2, 1),
-            border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms,
-            background 500ms linear;
+            border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1) 215ms;
 
           &.primary {
             box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);

@@ -203,7 +203,7 @@ export default {
 .history-enter-active,
 .history-leave-active {
   transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
-  -moz-transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition-property: opacity, height, width;
 }
 .history-enter-from,
 .history-leave-to {
