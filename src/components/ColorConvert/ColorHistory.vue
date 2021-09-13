@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="history-items--empty" v-if="histories.length == 0">
+      <div class="history-items--empty" v-if="histories.length === 0">
         <span v-t="'modal.history.empty'"></span>
       </div>
     </div>

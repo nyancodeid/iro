@@ -162,8 +162,10 @@ export default {
     }
   },
   watch: {
-    async color() {
-      this.palette = await generateMaterialPalette(this.color);
+    color() {
+      generateMaterialPalette(this.color).then((palette) => {
+        this.palette = palette;
+      })
     },
   },
 };
