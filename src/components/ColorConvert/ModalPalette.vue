@@ -13,8 +13,6 @@
       </div>
     </div>
     <div class="modal-content">
-      <p class="modal-content--description" v-t="'modal.palette.description'"></p>
-
       <div class="modal-content--sections" v-if="palette">
         <div class="content-section">
           <div class="content-section--title">
