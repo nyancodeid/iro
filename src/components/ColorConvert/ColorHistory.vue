@@ -106,7 +106,10 @@ export default {
   opacity: 1;
 
   position: fixed;
-  background-color: rgba(var(--dark-color-value), 0.98);
+  background-color: rgba(var(--dark-color-value), 0.6);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+    
   width: calc(100vw - 32px);
   height: calc(100vh - 92px);
 
