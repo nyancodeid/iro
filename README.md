@@ -11,7 +11,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![License MIT](https://img.shields.io/github/license/nyancodeid/iro)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
-![Version](https://img.shields.io/badge/version-v2.3.0-brightgreen)
+![Version](https://img.shields.io/badge/version-v2.4.1-brightgreen)
 [![Issues](https://img.shields.io/github/issues/nyancodeid/iro)](https://github.com/nyancodeid/iro/issues)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnyancodeid%2Firo.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnyancodeid%2Firo?ref=badge_shield)
 
@@ -26,7 +26,7 @@ IRO build with Latest Web Technology that makes us can access this app even in o
 | Tools                                                      | Version                                                           | Description                                                                                             |
 | ---------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | [vue](https://v3.vuejs.org/)                               | ![Version](https://img.shields.io/badge/version-v3.2.4-blue)      | Web Framework                                                                                           |
-| [vite](https://vitejs.dev/)                                | ![Version](https://img.shields.io/badge/version-v2.5.0-blue)      | Next Generation Frontend Tooling                                                                        |
+| [vite](https://vitejs.dev/)                                | ![Version](https://img.shields.io/badge/version-v2.6.2-blue)      | Next Generation Frontend Tooling                                                                        |
 | [pinia](https://pinia.esm.dev/)                            | ![Version](https://img.shields.io/badge/version-v2.0.0.rc.6-blue) | Intuitive, type safe and flexible Store for Vue                                                         |
 | [vue-router](https://router.vuejs.org/)                    | ![Version](https://img.shields.io/badge/version-v4.0.8-blue)      | The official router for Vue.                                                                            |
 | [vue-i18n](https://github.com/intlify/vue-i18n-next)       | ![Version](https://img.shields.io/badge/version-v9.1.7-blue)      | Vue I18n is internationalization plugin for Vue.js                                                      |
