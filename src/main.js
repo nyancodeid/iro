@@ -18,6 +18,6 @@ app
   .use(i18n)
   .use(router);
 
-if (isRunningOnPWA) window.resizeTo(400, 800);
+if (isRunningOnPWA()) window.resizeTo(400, 800);
 
 app.mount("#app");
