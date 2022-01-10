@@ -12,6 +12,7 @@
   "contributors": [
     "Muhammad Zainul Mutaqqin <zalepik@outlook.com>"
   ],
+  "homepage": "https://iro.nyan.my.id",
   "dependencies": {
     "comlink": "^4.3.1",
     "matercolors": "^2.2.10",
